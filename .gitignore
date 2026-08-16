@@ -1,0 +1,28 @@
+# Angular / Node (frontend)
+node_modules/
+dist/
+.angular/
+npm-debug.log*
+yarn-error.log*
+
+# .NET (backend)
+bin/
+obj/
+*.user
+.vs/
+
+# Secrets e configs locais (nunca commitar)
+.env
+.env.*
+appsettings.Development.json
+appsettings.*.local.json
+**/secrets.json
+
+# Banco de dados local / docker
+*.pgdata/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
