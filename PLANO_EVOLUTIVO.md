@@ -27,14 +27,18 @@ Objetivo: reduzir pendências que bloqueiam decisões de design/estrutura, e org
 
 Saída: repositório git iniciado + acervo de fotos organizado e catalogado + pendências atualizadas no checklist.
 
-## Fase 1 — Fundação técnica
+## Fase 1 — Fundação técnica ✅ validada rodando localmente em 2026-08-17
 Objetivo: scaffolding rodando localmente, sem funcionalidade real ainda.
 
-- `frontend/`: Angular novo (standalone components, roteamento, mobile-first), Design System em CSS Custom Properties (cores, tipografia, espaçamento, radius, sombras, breakpoints).
-- `backend/`: ASP.NET Core Web API novo, estrutura de camadas (Controllers/Services/Repositories ou Minimal API + Endpoints), Swagger em dev.
-- `PostgreSQL` local via docker-compose (banco isolado, sem acesso direto do Angular).
-- Layout base do site público (Header, Footer, navegação do sitemap) só com placeholders.
-- Build e execução local de frontend e backend validados.
+- [x] `frontend/`: Angular novo (standalone components, roteamento, mobile-first), Design System em CSS Custom Properties (cores, tipografia, espaçamento, radius, sombras, breakpoints) — `frontend/src/styles.css`.
+- [x] `backend/`: ASP.NET Core Web API novo (Controllers, `HealthController`), OpenAPI em dev, CORS configurável via `Cors:AllowedOrigins`.
+- [x] `PostgreSQL` local via docker-compose — container `ibnelve-postgres` (postgres:16-alpine) rodando e saudável (`pg_isready` OK, porta 5432). Precisou de WSL2 instalado manualmente pelo usuário nesta máquina (Docker Desktop não iniciava sem nenhuma distro WSL); depois disso `docker compose up -d postgres` funcionou normalmente.
+- [x] Layout base do site público (Header, Footer, navegação do sitemap) só com placeholders — confirmado visualmente no browser.
+- [x] Build e execução local validados nesta sessão:
+  - Backend: `dotnet build` sem erros; `dotnet run --project backend/Ibnelve.Api` sobe em `http://localhost:5240`; `GET /api/health` → `{"status":"ok"}`.
+  - Frontend: `npm start` (Angular CLI) compila e serve em `http://localhost:4200`; header/footer/rotas (Início, Quem Somos, Ministérios, Agenda, Conecte-se, Contribuições) renderizando.
+  - Postgres: container up e `healthy` via docker-compose; ainda não há EF Core/Npgsql no backend (isso é escopo da Fase 3 — modelagem de dados), então a API não se conecta ao banco ainda, só o container está disponível.
+- Adicionado `.claude/launch.json` com os perfis `backend` (dotnet run, porta 5240) e `frontend` (npm start, porta 4200) para facilitar reexecução local via preview.
 
 ## Fase 2 — Site público com mock data
 Objetivo: todas as páginas públicas navegáveis, com dados mockados no Angular (sem API ainda).
