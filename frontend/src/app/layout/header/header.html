@@ -1,0 +1,25 @@
+<header class="site-header">
+  <div class="site-header__bar">
+    <a class="site-header__brand" routerLink="/" (click)="closeMenu()">IBNELVE</a>
+
+    <button
+      class="site-header__toggle"
+      type="button"
+      [attr.aria-expanded]="menuOpen()"
+      aria-controls="primary-navigation"
+      (click)="toggleMenu()"
+    >
+      <span class="sr-only">Abrir menu</span>
+      <span aria-hidden="true">☰</span>
+    </button>
+
+    <nav id="primary-navigation" class="site-header__nav" [class.site-header__nav--open]="menuOpen()">
+      <a routerLink="/" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()">Início</a>
+      <a routerLink="/quem-somos" routerLinkActive="is-active" (click)="closeMenu()">Quem Somos</a>
+      <a routerLink="/ministerios" routerLinkActive="is-active" (click)="closeMenu()">Ministérios</a>
+      <a routerLink="/agenda" routerLinkActive="is-active" (click)="closeMenu()">Agenda</a>
+      <a routerLink="/contato" routerLinkActive="is-active" (click)="closeMenu()">Conecte-se</a>
+      <a routerLink="/contribuicoes" routerLinkActive="is-active" (click)="closeMenu()">Contribuições</a>
+    </nav>
+  </div>
+</header>

@@ -14,7 +14,7 @@ obj/
 # Secrets e configs locais (nunca commitar)
 .env
 .env.*
-appsettings.Development.json
+!.env.example
 appsettings.*.local.json
 **/secrets.json
 
