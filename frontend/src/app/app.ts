@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject, signal } from '@angular/core';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { filter } from 'rxjs';
+
 import { Header } from './layout/header/header';
 import { Footer } from './layout/footer/footer';
 
@@ -9,4 +11,15 @@ import { Footer } from './layout/footer/footer';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {}
+export class App {
+  private readonly router = inject(Router);
+
+  /** A área /admin tem layout próprio — não usa o header/footer do site público. */
+  protected readonly isAdminRoute = signal(this.router.url.startsWith('/admin'));
+
+  constructor() {
+    this.router.events.pipe(filter((evento) => evento instanceof NavigationEnd)).subscribe(() => {
+      this.isAdminRoute.set(this.router.url.startsWith('/admin'));
+    });
+  }
+}

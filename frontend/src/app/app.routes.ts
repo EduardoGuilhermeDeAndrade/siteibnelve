@@ -13,5 +13,6 @@ export const routes: Routes = [
   { path: 'agenda', component: Agenda, title: 'IBNELVE — Agenda' },
   { path: 'contato', component: Contato, title: 'IBNELVE — Conecte-se' },
   { path: 'contribuicoes', component: Contribuicoes, title: 'IBNELVE — Contribuições' },
+  { path: 'admin', loadChildren: () => import('./admin/admin.routes').then((m) => m.ADMIN_ROUTES) },
   { path: '**', redirectTo: '' }
 ];

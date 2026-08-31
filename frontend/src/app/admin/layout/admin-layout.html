@@ -1,0 +1,21 @@
+<div class="admin-shell">
+  <header class="admin-shell__topbar">
+    <span class="admin-shell__brand">IBNELVE · Admin</span>
+    <div class="admin-shell__usuario">
+      <span>{{ authService.usuario()?.nomeCompleto }}</span>
+      <button class="button button--outline" type="button" (click)="sair()">Sair</button>
+    </div>
+  </header>
+
+  <div class="admin-shell__corpo">
+    <nav class="admin-shell__nav">
+      <a routerLink="/admin" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">
+        Início
+      </a>
+    </nav>
+
+    <main class="admin-shell__conteudo">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

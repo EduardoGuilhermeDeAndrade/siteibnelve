@@ -1,0 +1,63 @@
+.login {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  background: var(--color-primary-900);
+}
+
+.login__card {
+  width: 100%;
+  max-width: 24rem;
+}
+
+.login__titulo {
+  margin-bottom: var(--space-2);
+}
+
+.login__subtitulo {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.login__campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-4);
+}
+
+.login__campo label {
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+}
+
+.login__campo input {
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.login__erro-campo {
+  color: var(--color-danger);
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+
+.login__erro {
+  background: var(--color-bg);
+  border: 1px solid var(--color-danger);
+  color: var(--color-danger);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-4);
+}
+
+.login__botao {
+  width: 100%;
+}
