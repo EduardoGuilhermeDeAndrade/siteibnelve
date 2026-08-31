@@ -31,6 +31,10 @@ builder.Services.AddSwaggerGen(options =>
         In = Microsoft.OpenApi.ParameterLocation.Header,
         Description = "Cole aqui o accessToken retornado por POST /api/auth/login."
     });
+    options.AddSecurityRequirement(document => new()
+    {
+        [new Microsoft.OpenApi.OpenApiSecuritySchemeReference("Bearer", document)] = []
+    });
 });
 
 var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
