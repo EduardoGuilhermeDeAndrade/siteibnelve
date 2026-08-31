@@ -118,8 +118,9 @@ public class EventosController(IbnelveDbContext db) : ControllerBase
         evento.Categoria = EnumMappings.ParseCategoria(request.Categoria);
         evento.Visibilidade = EnumMappings.ParseVisibilidade(request.Visibilidade);
         evento.Status = EnumMappings.ParseStatus(request.Status);
-        evento.DataHoraInicio = request.DataHoraInicio;
-        evento.DataHoraFim = request.DataHoraFim;
+        // Npgsql só aceita DateTimeOffset com Offset=0 em colunas "timestamp with time zone".
+        evento.DataHoraInicio = request.DataHoraInicio.ToUniversalTime();
+        evento.DataHoraFim = request.DataHoraFim?.ToUniversalTime();
         evento.LocalId = request.LocalId;
         evento.LocalTexto = request.LocalTexto;
         evento.RecorrenciaSemanal = request.RecorrenciaSemanal;
