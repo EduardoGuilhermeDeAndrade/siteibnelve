@@ -1,0 +1,74 @@
+<section class="section">
+  <app-section-heading [level]="1" eyebrow="Conecte-se" title="Venha nos visitar"></app-section-heading>
+
+  <div class="card-grid">
+    @for (local of locais; track local.id) {
+      <article class="card">
+        <p class="eyebrow">{{ local.tipo }}</p>
+        <h2>{{ local.nome }}</h2>
+        <p>{{ local.endereco }} — {{ local.bairro }}<br>{{ local.cidade }}</p>
+        @if (local.uso) {
+          <p class="contato__uso">{{ local.uso }}</p>
+        }
+      </article>
+    }
+  </div>
+
+  <p class="contato__pendencia">
+    E-mail e redes sociais oficiais estão em validação e serão publicados assim que confirmados.
+  </p>
+</section>
+
+<section class="section section--muted">
+  <div class="contato__form-wrapper">
+    <app-section-heading
+      eyebrow="Pedido de oração"
+      title="Podemos orar por você"
+      subtitle="Conte-nos como podemos orar. Se preferir, envie sem se identificar."
+    ></app-section-heading>
+
+    @if (enviado()) {
+      <p class="contato__sucesso" role="status" aria-live="polite">
+        Pedido registrado por aqui. Em breve o envio será integrado ao Portal Administrativo.
+      </p>
+    } @else {
+      <form class="contato__form" novalidate (ngSubmit)="enviarPedido()">
+        <div class="contato__campo">
+          <label for="nome">Nome (opcional)</label>
+          <input
+            id="nome"
+            name="nome"
+            type="text"
+            autocomplete="name"
+            [(ngModel)]="nome"
+            [disabled]="anonimo"
+          >
+        </div>
+
+        <div class="contato__campo-checkbox">
+          <input id="anonimo" name="anonimo" type="checkbox" [(ngModel)]="anonimo">
+          <label for="anonimo">Prefiro não me identificar</label>
+        </div>
+
+        <div class="contato__campo">
+          <label for="mensagem">Seu pedido de oração</label>
+          <textarea
+            #mensagemInput
+            id="mensagem"
+            name="mensagem"
+            rows="4"
+            required
+            [(ngModel)]="mensagem"
+            [attr.aria-invalid]="erroMensagem() ? 'true' : null"
+            [attr.aria-describedby]="erroMensagem() ? 'mensagem-erro' : null"
+          ></textarea>
+          @if (erroMensagem()) {
+            <p id="mensagem-erro" class="contato__erro">Escreva seu pedido antes de enviar.</p>
+          }
+        </div>
+
+        <button class="button button--primary" type="submit">Enviar pedido</button>
+      </form>
+    }
+  </div>
+</section>

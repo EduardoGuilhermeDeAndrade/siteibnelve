@@ -1,0 +1,31 @@
+<section class="section">
+  <app-section-heading
+    [level]="1"
+    eyebrow="Agenda"
+    title="Programação"
+    subtitle="Próximas ocorrências da nossa programação regular. Eventos passados saem da lista automaticamente."
+  ></app-section-heading>
+
+  <div class="agenda__filtro">
+    <label for="filtro-categoria">Filtrar por categoria</label>
+    <select
+      id="filtro-categoria"
+      name="categoria"
+      (change)="selecionarCategoria($any($event.target).value)"
+    >
+      @for (filtro of filtros; track filtro.valor) {
+        <option [value]="filtro.valor">{{ filtro.rotulo }}</option>
+      }
+    </select>
+  </div>
+
+  @if (eventosFiltrados().length > 0) {
+    <div class="card-grid">
+      @for (evento of eventosFiltrados(); track evento.id) {
+        <app-event-card [evento]="evento"></app-event-card>
+      }
+    </div>
+  } @else {
+    <p>Nenhum evento encontrado para esta categoria.</p>
+  }
+</section>

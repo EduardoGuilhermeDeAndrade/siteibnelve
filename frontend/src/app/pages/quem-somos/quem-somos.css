@@ -1,0 +1,37 @@
+.quem-somos__intro {
+  display: grid;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+.quem-somos__texto h1 {
+  text-wrap: balance;
+}
+
+.quem-somos__foto {
+  border-radius: var(--radius-lg);
+  max-height: 28rem;
+  width: 100%;
+  object-fit: cover;
+}
+
+.quem-somos__lista,
+.quem-somos__cremos {
+  margin: 0;
+  padding-left: var(--space-6);
+}
+
+.quem-somos__cremos li {
+  margin-bottom: var(--space-2);
+}
+
+.quem-somos__cargo {
+  color: var(--color-text-muted);
+  margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .quem-somos__intro {
+    grid-template-columns: 3fr 2fr;
+  }
+}

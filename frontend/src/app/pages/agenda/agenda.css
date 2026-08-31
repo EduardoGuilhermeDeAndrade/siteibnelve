@@ -1,0 +1,21 @@
+.agenda__filtro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: 20rem;
+  margin-bottom: var(--space-8);
+}
+
+.agenda__filtro label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.agenda__filtro select {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-size: var(--font-size-base);
+}

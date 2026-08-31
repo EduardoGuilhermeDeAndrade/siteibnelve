@@ -1,0 +1,76 @@
+.hero {
+  position: relative;
+  min-height: min(38rem, 90vh);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.hero__imagem {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgb(15 42 63 / 0.92) 0%, rgb(15 42 63 / 0.55) 55%, rgb(15 42 63 / 0.25) 100%);
+  z-index: -1;
+}
+
+.hero__conteudo {
+  max-width: var(--content-max-width);
+  margin-inline: auto;
+  padding: var(--space-16) var(--content-padding-inline);
+  color: var(--color-neutral-0);
+}
+
+.hero__conteudo h1 {
+  font-size: var(--font-size-3xl);
+  text-wrap: balance;
+  max-width: 38rem;
+}
+
+.hero__subtitulo {
+  max-width: 34rem;
+  font-size: var(--font-size-lg);
+  color: var(--color-neutral-100);
+}
+
+.hero__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.home__link-ministerios {
+  margin-top: var(--space-8);
+}
+
+.home__local-uso {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  margin-bottom: 0;
+}
+
+.cta-band {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+}
+
+.cta-band h2 {
+  margin-bottom: var(--space-1);
+}
+
+.cta-band p {
+  margin-bottom: 0;
+  color: var(--color-text-muted);
+}

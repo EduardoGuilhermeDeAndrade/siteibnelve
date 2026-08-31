@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 
+import { SectionHeading } from '../../shared/ui/section-heading/section-heading';
+
 @Component({
   selector: 'app-quem-somos',
-  template: `
-    <section class="page-placeholder">
-      <h1>Quem Somos</h1>
-      <p>Texto institucional, Missão, Visão, Valores e "No que cremos" entram aqui na Fase 2.</p>
-    </section>
-  `
+  imports: [SectionHeading],
+  templateUrl: './quem-somos.html',
+  styleUrl: './quem-somos.css'
 })
 export class QuemSomos {}

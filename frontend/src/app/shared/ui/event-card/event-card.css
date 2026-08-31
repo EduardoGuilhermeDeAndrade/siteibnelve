@@ -1,0 +1,32 @@
+.event-card__categoria {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-accent-600);
+  margin-bottom: var(--space-2);
+}
+
+.event-card__titulo {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--space-2);
+}
+
+.event-card__data {
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+}
+
+.event-card__data::first-letter {
+  text-transform: uppercase;
+}
+
+.event-card__local {
+  color: var(--color-text-muted);
+  margin-bottom: 0;
+  font-size: var(--font-size-sm);
+}
+
+.event-card__observacao {
+  font-style: italic;
+}

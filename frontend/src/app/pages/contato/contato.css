@@ -1,0 +1,63 @@
+.contato__uso {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  margin-bottom: 0;
+}
+
+.contato__pendencia {
+  margin-top: var(--space-8);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.contato__form-wrapper {
+  max-width: 34rem;
+}
+
+.contato__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.contato__campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.contato__campo label {
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+}
+
+.contato__campo input,
+.contato__campo textarea {
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font: inherit;
+  resize: vertical;
+}
+
+.contato__campo-checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.contato__erro {
+  color: var(--color-danger);
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+
+.contato__sucesso {
+  background: var(--color-bg);
+  border: 1px solid var(--color-success);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  color: var(--color-success);
+}

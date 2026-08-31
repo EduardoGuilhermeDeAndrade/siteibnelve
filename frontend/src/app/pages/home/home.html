@@ -1,0 +1,83 @@
+<section class="hero">
+  <img
+    class="hero__imagem"
+    src="/img/comunidade-hero.png"
+    alt="Membros da IBNELVE reunidos, sorrindo e acenando, celebrando juntos em um culto"
+    width="1920"
+    height="1080"
+    fetchpriority="high"
+  >
+  <div class="hero__conteudo">
+    <p class="eyebrow">IBNELVE · Ribeirão das Neves/MG</p>
+    <h1>Uma igreja acolhedora, para conhecer a Cristo e crescer na fé</h1>
+    <p class="hero__subtitulo">
+      Há 29 anos servindo pessoas e famílias nos bairros Vereda e Liberdade, com a Palavra de Deus,
+      comunhão e discipulado.
+    </p>
+    <div class="hero__acoes">
+      <a class="button button--primary" routerLink="/agenda">Ver a agenda</a>
+      <a class="button button--secondary" routerLink="/quem-somos">Conheça a IBNELVE</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <app-section-heading
+    eyebrow="Agenda"
+    title="Próximos encontros"
+    subtitle="Os próximos eventos públicos, atualizados automaticamente."
+  ></app-section-heading>
+
+  <div class="card-grid">
+    @for (evento of proximosEventos; track evento.id) {
+      <app-event-card [evento]="evento"></app-event-card>
+    }
+  </div>
+</section>
+
+<section class="section section--muted">
+  <div>
+    <app-section-heading
+      eyebrow="Comunidade"
+      title="Ministérios em destaque"
+      subtitle="Espaços de serviço e comunhão para todas as idades."
+    ></app-section-heading>
+
+    <div class="card-grid">
+      @for (ministerio of ministerios; track ministerio.id) {
+        <app-ministerio-card [ministerio]="ministerio"></app-ministerio-card>
+      }
+    </div>
+
+    <a class="button button--outline home__link-ministerios" routerLink="/ministerios">
+      Ver todos os ministérios
+    </a>
+  </div>
+</section>
+
+<section class="section">
+  <app-section-heading eyebrow="Onde estamos" title="Nossos templos"></app-section-heading>
+
+  <div class="card-grid">
+    @for (local of locais; track local.id) {
+      <article class="card">
+        <p class="eyebrow">{{ local.tipo }}</p>
+        <h3>{{ local.nome }}</h3>
+        <p>{{ local.endereco }} — {{ local.bairro }}<br>{{ local.cidade }}</p>
+        @if (local.uso) {
+          <p class="home__local-uso">{{ local.uso }}</p>
+        }
+      </article>
+    }
+  </div>
+</section>
+
+<section class="section section--muted">
+  <div class="cta-band">
+    <div>
+      <h2>Contribua com a obra da IBNELVE</h2>
+      <p>Sua contribuição sustenta o trabalho da igreja em nossa comunidade.</p>
+    </div>
+    <a class="button button--primary" routerLink="/contribuicoes">Como contribuir</a>
+  </div>
+</section>

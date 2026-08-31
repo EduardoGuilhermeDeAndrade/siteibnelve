@@ -40,13 +40,21 @@ Objetivo: scaffolding rodando localmente, sem funcionalidade real ainda.
   - Postgres: container up e `healthy` via docker-compose; ainda não há EF Core/Npgsql no backend (isso é escopo da Fase 3 — modelagem de dados), então a API não se conecta ao banco ainda, só o container está disponível.
 - Adicionado `.claude/launch.json` com os perfis `backend` (dotnet run, porta 5240) e `frontend` (npm start, porta 4200) para facilitar reexecução local via preview.
 
-## Fase 2 — Site público com mock data
+## Fase 2 — Site público com mock data ✅ concluída em 2026-08-25
 Objetivo: todas as páginas públicas navegáveis, com dados mockados no Angular (sem API ainda).
 
-- Páginas: Início, Quem Somos, Ministérios, Agenda/Eventos, Conecte-se/Contato, Contribuições.
-- Home com Hero (foto candidata: letreiro + comunidade), 3 próximos eventos mockados, ministérios em destaque.
-- Página de Contribuições com chave PIX fixa e botão "Copiar chave PIX" funcional.
-- Aplicar Design System, acessibilidade básica (semântica, foco visível, alt text) e responsividade.
+- [x] 6 páginas públicas implementadas (Início, Quem Somos, Ministérios, Agenda, Conecte-se, Contribuições), todas com conteúdo real do `CLAUDE.md` — nenhum texto/descrição inventado; pendências (descrições de ministério, e-mail, local exato do culto de domingo à noite) marcadas na tela como "a confirmar"/"em validação" em vez de preenchidas.
+- [x] Fotos reais do acervo `Img Antigas/` copiadas para `frontend/public/img/`: `carrousel2.png` (Hero da Home), `IMG_8849.jpg` (Quem Somos), `WhatsApp...19.46.09(2).jpeg` (Ministério Infantil). Fotos de `lideranca-cutouts-pendente-confirmacao/` e `revisar/` não usadas (regra do `CLAUDE.md`). Logo atual não usada (baixo contraste, identidade pendente de validação) — mantido wordmark textual "IBNELVE".
+- [x] Mock data tipado e centralizado em `frontend/src/app/shared/data/` (`eventos.mock.ts`, `ministerios.mock.ts`, `locais.mock.ts`) + utilitário de recorrência simplificado (`recorrencia.util.ts`) que calcula a próxima ocorrência a partir de agora (Ceia 1º domingo 08h30, Culto domingos 18h exceto 1º domingo, EBD domingos de manhã, Mocidade quinzenal aos sábados) — não é o motor de recorrência completo, isso fica para a Fase 6.
+- [x] Componentes compartilhados em `frontend/src/app/shared/ui/`: `section-heading` (com `level` 1/2 para nunca faltar `<h1>` na página), `event-card`, `ministerio-card`.
+- [x] Home com Hero estático (sem carrossel automático), 3 próximos eventos públicos, ministérios em destaque, os dois templos e CTA de Contribuições.
+- [x] Agenda com filtro por categoria (client-side) sobre os eventos mock.
+- [x] Contato com os dois templos e formulário de Pedido de Oração (validação client-side, erro focado no campo, só front-end — sem envio real, isso é Fase 5).
+- [x] Contribuições com chave PIX fixa e botão "Copiar chave PIX" funcional (Clipboard API + confirmação acessível via `aria-live`).
+- [x] Locale `pt-BR` registrado no Angular (`app.config.ts`) para datas por extenso corretas na Agenda.
+- [x] Acessibilidade: skip link para o conteúdo, hierarquia de headings corrigida (cada página tem exatamente um `<h1>`), labels associados a todos os campos de formulário, `alt` descritivo e `width`/`height` em todas as fotos, `loading="lazy"` fora do Hero.
+- [x] Revisão aplicada com a skill `web-design-guidelines` (Web Interface Guidelines) sobre todos os arquivos novos; achados corrigidos (heading hierarchy, capitalização de datas em português, foco no primeiro erro do formulário).
+- [x] `ng build` e navegação manual (via preview) validados nas 6 rotas, sem erros de console.
 
 ## Fase 3 — Modelagem de dados e API real
 Objetivo: schema definitivo e endpoints reais substituindo os mocks.

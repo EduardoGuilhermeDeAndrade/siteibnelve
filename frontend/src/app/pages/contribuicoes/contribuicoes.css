@@ -1,0 +1,31 @@
+.contribuicoes__pix {
+  max-width: 28rem;
+}
+
+.contribuicoes__chave {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-primary-900);
+  margin-bottom: var(--space-2);
+}
+
+.contribuicoes__favorecido {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-6);
+}
+
+.contribuicoes__confirmacao {
+  margin: var(--space-3) 0 0;
+  color: var(--color-success);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.contribuicoes__qr {
+  margin-top: var(--space-6);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-style: italic;
+}

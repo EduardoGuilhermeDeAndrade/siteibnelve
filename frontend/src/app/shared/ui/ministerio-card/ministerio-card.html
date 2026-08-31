@@ -1,0 +1,19 @@
+<article class="card ministerio-card">
+  @if (ministerio.imagem) {
+    <img
+      class="ministerio-card__imagem"
+      [src]="ministerio.imagem"
+      [alt]="ministerio.imagemAlt ?? ''"
+      width="400"
+      height="260"
+      loading="lazy"
+    >
+  } @else {
+    <div class="ministerio-card__imagem ministerio-card__imagem--placeholder" aria-hidden="true"></div>
+  }
+  <div class="ministerio-card__corpo">
+    <h3 class="ministerio-card__nome">{{ ministerio.nome }}</h3>
+    <p class="ministerio-card__lideres">{{ ministerio.lideres }}</p>
+    <p class="ministerio-card__descricao">Descrição em breve.</p>
+  </div>
+</article>

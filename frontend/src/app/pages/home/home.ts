@@ -1,12 +1,21 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
+
+import { LOCAIS_MOCK } from '../../shared/data/locais.mock';
+import { MINISTERIOS_MOCK } from '../../shared/data/ministerios.mock';
+import { EventCard } from '../../shared/ui/event-card/event-card';
+import { MinisterioCard } from '../../shared/ui/ministerio-card/ministerio-card';
+import { SectionHeading } from '../../shared/ui/section-heading/section-heading';
+import { proximosEventosPublicos } from '../../shared/data/eventos.mock';
 
 @Component({
   selector: 'app-home',
-  template: `
-    <section class="page-placeholder">
-      <h1>Início</h1>
-      <p>Hero, próximos eventos e destaques entram aqui na Fase 2 (mock data) e Fase 4 (dados reais da Agenda).</p>
-    </section>
-  `
+  imports: [RouterLink, EventCard, MinisterioCard, SectionHeading],
+  templateUrl: './home.html',
+  styleUrl: './home.css'
 })
-export class Home {}
+export class Home {
+  protected readonly proximosEventos = proximosEventosPublicos(3);
+  protected readonly ministerios = MINISTERIOS_MOCK;
+  protected readonly locais = LOCAIS_MOCK;
+}
