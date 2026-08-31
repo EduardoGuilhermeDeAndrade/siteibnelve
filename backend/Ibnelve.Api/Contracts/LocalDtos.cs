@@ -19,11 +19,11 @@ public record LocalDto(
 );
 
 public record LocalUpsertRequest(
-    [property: Required, MaxLength(200)] string Nome,
-    [property: Required, MaxLength(100)] string Tipo,
-    [property: Required, MaxLength(300)] string Endereco,
-    [property: Required, MaxLength(120)] string Bairro,
-    [property: Required, MaxLength(120)] string Cidade,
+    [Required, MaxLength(200)] string Nome,
+    [Required, MaxLength(100)] string Tipo,
+    [Required, MaxLength(300)] string Endereco,
+    [Required, MaxLength(120)] string Bairro,
+    [Required, MaxLength(120)] string Cidade,
     string? Estado,
     string? Cep,
     string? GoogleMapsUrl,

@@ -20,15 +20,15 @@ public record EventoDto(
 );
 
 public record EventoUpsertRequest(
-    [property: Required, MaxLength(200)] string Titulo,
+    [Required, MaxLength(200)] string Titulo,
     string? Descricao,
-    [property: Required] string Categoria,
-    [property: Required] string Visibilidade,
-    [property: Required] string Status,
-    [property: Required] DateTimeOffset DataHoraInicio,
+    [Required] string Categoria,
+    [Required] string Visibilidade,
+    [Required] string Status,
+    [Required] DateTimeOffset DataHoraInicio,
     DateTimeOffset? DataHoraFim,
     Guid? LocalId,
     string? LocalTexto,
     bool RecorrenciaSemanal,
-    [property: Range(0, 6)] int? DiaSemana
+    [Range(0, 6)] int? DiaSemana
 );
