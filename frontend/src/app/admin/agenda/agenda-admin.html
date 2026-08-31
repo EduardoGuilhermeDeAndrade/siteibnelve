@@ -1,0 +1,72 @@
+<div class="agenda-admin">
+  <div class="agenda-admin__cabecalho">
+    <h1>Agenda</h1>
+    <a class="button button--primary" routerLink="/admin/agenda/novo">+ Novo evento</a>
+  </div>
+
+  @if (erro()) {
+    <p class="agenda-admin__erro" role="alert">{{ erro() }}</p>
+  }
+
+  @if (carregando()) {
+    <p>Carregando…</p>
+  } @else if (eventos().length === 0) {
+    <p>Nenhum evento cadastrado ainda.</p>
+  } @else {
+    <div class="agenda-admin__tabela-wrap">
+      <table class="agenda-admin__tabela">
+        <thead>
+          <tr>
+            <th scope="col">Título</th>
+            <th scope="col">Categoria</th>
+            <th scope="col">Visibilidade</th>
+            <th scope="col">Status</th>
+            <th scope="col">Data/hora</th>
+            <th scope="col">Local</th>
+            <th scope="col"><span class="sr-only">Ações</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (evento of eventos(); track evento.id) {
+            <tr>
+              <td>
+                {{ evento.titulo }}
+                @if (evento.recorrenciaSemanal) {
+                  <span class="agenda-admin__badge">semanal</span>
+                }
+              </td>
+              <td>{{ categoriaLabels[evento.categoria] }}</td>
+              <td>{{ visibilidadeLabels[evento.visibilidade] }}</td>
+              <td>{{ statusLabels[evento.status] }}</td>
+              <td>{{ evento.dataHoraInicio | date: "dd/MM/yyyy HH:mm" }}</td>
+              <td>{{ evento.localNome ?? evento.localTexto ?? '—' }}</td>
+              <td class="agenda-admin__acoes">
+                @if (confirmandoId() === evento.id) {
+                  <span>Excluir?</span>
+                  <button
+                    class="button button--outline"
+                    type="button"
+                    [disabled]="excluindoId() === evento.id"
+                    (click)="excluir(evento.id)"
+                  >
+                    Sim
+                  </button>
+                  <button class="button button--outline" type="button" (click)="cancelarConfirmacao()">
+                    Não
+                  </button>
+                } @else {
+                  <a class="button button--outline" [routerLink]="['/admin/agenda', evento.id, 'editar']">
+                    Editar
+                  </a>
+                  <button class="button button--outline" type="button" (click)="pedirConfirmacao(evento.id)">
+                    Excluir
+                  </button>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

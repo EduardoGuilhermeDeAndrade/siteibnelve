@@ -1,0 +1,111 @@
+<div class="evento-form">
+  <h1>{{ modoEdicao ? 'Editar evento' : 'Novo evento' }}</h1>
+
+  @if (carregando()) {
+    <p>Carregando…</p>
+  } @else {
+    <form [formGroup]="form" novalidate (ngSubmit)="salvar()">
+      <div class="evento-form__campo">
+        <label for="titulo">Título</label>
+        <input id="titulo" type="text" formControlName="titulo">
+        @if (form.controls.titulo.invalid && form.controls.titulo.touched) {
+          <p class="evento-form__erro-campo">Informe o título do evento.</p>
+        }
+      </div>
+
+      <div class="evento-form__campo">
+        <label for="descricao">Descrição</label>
+        <textarea id="descricao" formControlName="descricao" rows="3"></textarea>
+      </div>
+
+      <div class="evento-form__linha">
+        <div class="evento-form__campo">
+          <label for="categoria">Categoria</label>
+          <select id="categoria" formControlName="categoria">
+            @for (opcao of categorias; track opcao) {
+              <option [value]="opcao">{{ categoriaLabels[opcao] }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="evento-form__campo">
+          <label for="visibilidade">Visibilidade</label>
+          <select id="visibilidade" formControlName="visibilidade">
+            @for (opcao of visibilidades; track opcao) {
+              <option [value]="opcao">{{ visibilidadeLabels[opcao] }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="evento-form__campo">
+          <label for="status">Status</label>
+          <select id="status" formControlName="status">
+            @for (opcao of statusList; track opcao) {
+              <option [value]="opcao">{{ statusLabels[opcao] }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="evento-form__linha">
+        <div class="evento-form__campo">
+          <label for="data">Data</label>
+          <input id="data" type="date" formControlName="data">
+          @if (form.controls.data.invalid && form.controls.data.touched) {
+            <p class="evento-form__erro-campo">Informe a data.</p>
+          }
+        </div>
+
+        <div class="evento-form__campo">
+          <label for="hora">Hora</label>
+          <input id="hora" type="time" formControlName="hora">
+          @if (form.controls.hora.invalid && form.controls.hora.touched) {
+            <p class="evento-form__erro-campo">Informe o horário.</p>
+          }
+        </div>
+      </div>
+
+      <div class="evento-form__campo">
+        <label for="localId">Local cadastrado</label>
+        <select id="localId" formControlName="localId">
+          <option value="">— nenhum —</option>
+          @for (local of locais(); track local.id) {
+            <option [value]="local.id">{{ local.nome }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="evento-form__campo">
+        <label for="localTexto">Ou local em texto livre</label>
+        <input id="localTexto" type="text" formControlName="localTexto" placeholder="Ex.: Salão da Igreja Batista Vizinha">
+      </div>
+
+      <div class="evento-form__checkbox">
+        <input id="recorrenciaSemanal" type="checkbox" formControlName="recorrenciaSemanal">
+        <label for="recorrenciaSemanal">Repete toda semana</label>
+      </div>
+
+      @if (form.controls.recorrenciaSemanal.value) {
+        <div class="evento-form__campo">
+          <label for="diaSemana">Dia da semana</label>
+          <select id="diaSemana" formControlName="diaSemana">
+            @for (dia of diaSemanaLabels; track $index) {
+              <option [value]="$index">{{ dia }}</option>
+            }
+          </select>
+        </div>
+      }
+
+      @if (erro()) {
+        <p class="evento-form__erro" role="alert">{{ erro() }}</p>
+      }
+
+      <div class="evento-form__acoes">
+        <button class="button button--primary" type="submit" [disabled]="salvando()">
+          {{ salvando() ? 'Salvando…' : 'Salvar' }}
+        </button>
+        <a class="button button--outline" routerLink="/admin/agenda">Cancelar</a>
+      </div>
+    </form>
+  }
+</div>
