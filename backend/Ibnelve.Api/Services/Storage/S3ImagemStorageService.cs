@@ -29,6 +29,22 @@ public class S3ImagemStorageService : IImagemStorageService
         {
             await _client.PutBucketAsync(new PutBucketRequest { BucketName = _bucket }, ct);
         }
+
+        // Bucket é criado privado por padrão; essas imagens são todas destinadas a exibição
+        // pública no site (Hero, ministérios etc.), então precisam de leitura anônima.
+        await _client.PutBucketPolicyAsync(_bucket, $$"""
+            {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Principal": "*",
+                  "Action": ["s3:GetObject"],
+                  "Resource": ["arn:aws:s3:::{{_bucket}}/*"]
+                }
+              ]
+            }
+            """, ct);
     }
 
     public async Task<string> SalvarAsync(string chave, Stream conteudo, string contentType, string extensao, CancellationToken ct = default)
@@ -40,8 +56,7 @@ public class S3ImagemStorageService : IImagemStorageService
             BucketName = _bucket,
             Key = objectKey,
             InputStream = conteudo,
-            ContentType = contentType,
-            DisablePayloadSigning = true
+            ContentType = contentType
         }, ct);
 
         return $"{_publicBaseUrl}/{objectKey}";
