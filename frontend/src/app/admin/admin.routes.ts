@@ -47,6 +47,11 @@ export const ADMIN_ROUTES: Routes = [
         path: 'locais/:id/editar',
         loadComponent: () => import('./locais/local-form/local-form').then((m) => m.LocalForm),
         title: 'Portal Admin — Editar local'
+      },
+      {
+        path: 'conteudo',
+        loadComponent: () => import('./conteudo/conteudo-admin').then((m) => m.ConteudoAdmin),
+        title: 'Portal Admin — Conteúdo do Site'
       }
     ]
   }

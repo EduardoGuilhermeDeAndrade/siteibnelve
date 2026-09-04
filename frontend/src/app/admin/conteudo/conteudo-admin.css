@@ -1,0 +1,88 @@
+.conteudo-admin__aviso {
+  background: var(--color-bg-muted);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  max-width: 40rem;
+  margin-bottom: var(--space-6);
+}
+
+.conteudo-admin__erro {
+  color: var(--color-danger);
+  margin-bottom: var(--space-4);
+}
+
+.conteudo-admin__grade {
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  margin-bottom: var(--space-8);
+}
+
+.conteudo-admin__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.conteudo-admin__preview {
+  width: 100%;
+  height: 10rem;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+
+.conteudo-admin__chave {
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.conteudo-admin__data {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  margin-bottom: 0;
+}
+
+.conteudo-admin__label-arquivo {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.conteudo-admin__sucesso {
+  color: var(--color-success);
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+
+.conteudo-admin__nova {
+  max-width: 24rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.conteudo-admin__nova h2 {
+  margin-bottom: 0;
+}
+
+.conteudo-admin__campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.conteudo-admin__campo label {
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+}
+
+.conteudo-admin__campo input[type='text'] {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font: inherit;
+}
