@@ -1,0 +1,65 @@
+<div class="locais-admin">
+  <div class="locais-admin__cabecalho">
+    <h1>Locais</h1>
+    <a class="button button--primary" routerLink="/admin/locais/novo">+ Novo local</a>
+  </div>
+
+  @if (erro()) {
+    <p class="locais-admin__erro" role="alert">{{ erro() }}</p>
+  }
+
+  @if (carregando()) {
+    <p>Carregando…</p>
+  } @else if (locais().length === 0) {
+    <p>Nenhum local cadastrado ainda.</p>
+  } @else {
+    <div class="locais-admin__tabela-wrap">
+      <table class="locais-admin__tabela">
+        <thead>
+          <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Endereço</th>
+            <th scope="col">Cidade</th>
+            <th scope="col">Ativo</th>
+            <th scope="col"><span class="sr-only">Ações</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (local of locais(); track local.id) {
+            <tr>
+              <td>{{ local.nome }}</td>
+              <td>{{ local.tipo }}</td>
+              <td>{{ local.endereco }} — {{ local.bairro }}</td>
+              <td>{{ local.cidade }}{{ local.estado ? '/' + local.estado : '' }}</td>
+              <td>{{ local.ativo ? 'Sim' : 'Não' }}</td>
+              <td class="locais-admin__acoes">
+                @if (confirmandoId() === local.id) {
+                  <span>Excluir?</span>
+                  <button
+                    class="button button--outline"
+                    type="button"
+                    [disabled]="excluindoId() === local.id"
+                    (click)="excluir(local.id)"
+                  >
+                    Sim
+                  </button>
+                  <button class="button button--outline" type="button" (click)="cancelarConfirmacao()">
+                    Não
+                  </button>
+                } @else {
+                  <a class="button button--outline" [routerLink]="['/admin/locais', local.id, 'editar']">
+                    Editar
+                  </a>
+                  <button class="button button--outline" type="button" (click)="pedirConfirmacao(local.id)">
+                    Excluir
+                  </button>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

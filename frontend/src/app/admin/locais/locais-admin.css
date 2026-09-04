@@ -1,0 +1,44 @@
+.locais-admin__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.locais-admin__cabecalho h1 {
+  margin-bottom: 0;
+}
+
+.locais-admin__erro {
+  color: var(--color-danger);
+  margin-bottom: var(--space-4);
+}
+
+.locais-admin__tabela-wrap {
+  overflow-x: auto;
+}
+
+.locais-admin__tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+
+.locais-admin__tabela th,
+.locais-admin__tabela td {
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.locais-admin__acoes {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.locais-admin__acoes .button {
+  padding: var(--space-1) var(--space-3);
+}

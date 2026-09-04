@@ -32,6 +32,21 @@ export const ADMIN_ROUTES: Routes = [
         path: 'agenda/:id/editar',
         loadComponent: () => import('./agenda/evento-form/evento-form').then((m) => m.EventoForm),
         title: 'Portal Admin — Editar evento'
+      },
+      {
+        path: 'locais',
+        loadComponent: () => import('./locais/locais-admin').then((m) => m.LocaisAdmin),
+        title: 'Portal Admin — Locais'
+      },
+      {
+        path: 'locais/novo',
+        loadComponent: () => import('./locais/local-form/local-form').then((m) => m.LocalForm),
+        title: 'Portal Admin — Novo local'
+      },
+      {
+        path: 'locais/:id/editar',
+        loadComponent: () => import('./locais/local-form/local-form').then((m) => m.LocalForm),
+        title: 'Portal Admin — Editar local'
       }
     ]
   }

@@ -1,0 +1,103 @@
+<div class="local-form">
+  <h1>{{ modoEdicao ? 'Editar local' : 'Novo local' }}</h1>
+
+  @if (carregando()) {
+    <p>Carregando…</p>
+  } @else {
+    <form [formGroup]="form" novalidate (ngSubmit)="salvar()">
+      <div class="local-form__linha">
+        <div class="local-form__campo">
+          <label for="nome">Nome</label>
+          <input id="nome" type="text" formControlName="nome">
+          @if (form.controls.nome.invalid && form.controls.nome.touched) {
+            <p class="local-form__erro-campo">Informe o nome do local.</p>
+          }
+        </div>
+
+        <div class="local-form__campo">
+          <label for="tipo">Tipo</label>
+          <input id="tipo" type="text" formControlName="tipo" placeholder="Ex.: Templo principal">
+          @if (form.controls.tipo.invalid && form.controls.tipo.touched) {
+            <p class="local-form__erro-campo">Informe o tipo.</p>
+          }
+        </div>
+      </div>
+
+      <div class="local-form__campo">
+        <label for="endereco">Endereço</label>
+        <input id="endereco" type="text" formControlName="endereco">
+        @if (form.controls.endereco.invalid && form.controls.endereco.touched) {
+          <p class="local-form__erro-campo">Informe o endereço.</p>
+        }
+      </div>
+
+      <div class="local-form__linha">
+        <div class="local-form__campo">
+          <label for="bairro">Bairro</label>
+          <input id="bairro" type="text" formControlName="bairro">
+          @if (form.controls.bairro.invalid && form.controls.bairro.touched) {
+            <p class="local-form__erro-campo">Informe o bairro.</p>
+          }
+        </div>
+
+        <div class="local-form__campo">
+          <label for="cidade">Cidade</label>
+          <input id="cidade" type="text" formControlName="cidade">
+          @if (form.controls.cidade.invalid && form.controls.cidade.touched) {
+            <p class="local-form__erro-campo">Informe a cidade.</p>
+          }
+        </div>
+
+        <div class="local-form__campo">
+          <label for="estado">Estado</label>
+          <input id="estado" type="text" formControlName="estado" maxlength="2" placeholder="MG">
+        </div>
+      </div>
+
+      <div class="local-form__linha">
+        <div class="local-form__campo">
+          <label for="cep">CEP</label>
+          <input id="cep" type="text" formControlName="cep" autocomplete="postal-code">
+        </div>
+
+        <div class="local-form__campo">
+          <label for="googleMapsUrl">Link do Google Maps</label>
+          <input id="googleMapsUrl" type="url" formControlName="googleMapsUrl">
+        </div>
+      </div>
+
+      <div class="local-form__linha">
+        <div class="local-form__campo">
+          <label for="latitude">Latitude</label>
+          <input id="latitude" type="number" step="any" formControlName="latitude">
+        </div>
+
+        <div class="local-form__campo">
+          <label for="longitude">Longitude</label>
+          <input id="longitude" type="number" step="any" formControlName="longitude">
+        </div>
+
+        <div class="local-form__campo">
+          <label for="ordem">Ordem de exibição</label>
+          <input id="ordem" type="number" formControlName="ordem">
+        </div>
+      </div>
+
+      <div class="local-form__checkbox">
+        <input id="ativo" type="checkbox" formControlName="ativo">
+        <label for="ativo">Ativo (aparece no site)</label>
+      </div>
+
+      @if (erro()) {
+        <p class="local-form__erro" role="alert">{{ erro() }}</p>
+      }
+
+      <div class="local-form__acoes">
+        <button class="button button--primary" type="submit" [disabled]="salvando()">
+          {{ salvando() ? 'Salvando…' : 'Salvar' }}
+        </button>
+        <a class="button button--outline" routerLink="/admin/locais">Cancelar</a>
+      </div>
+    </form>
+  }
+</div>
