@@ -84,17 +84,19 @@ Objetivo: pastores/secretária conseguem logar e gerenciar conteúdo básico.
 - [ ] Telas **Usuários** e **Configurações** — não implementadas ainda; hoje só existe o ADMIN semeado, sem tela para criar/gerenciar outros usuários pelo Portal.
 - [x] Autorização checada na API (`[Authorize(Roles = "ADMIN")]` em todo `/api/admin/**`), nunca só no guard do Angular — testado explicitamente (sem token → 401).
 
-## Fase 6 — Agenda recorrente + exceções (parte mais complexa)
+## Fase 6 — Agenda recorrente + exceções (parte mais complexa) ✅ concluída em 2026-09-04
 Objetivo: motor de recorrência completo, conforme especificado no `CLAUDE.md`.
 
-- Implementar tipos de recorrência: sem repetição, semanal, a cada N semanas, mensal por dia, mensal por posição, anual.
-- Cálculo de ocorrências por **janela de consulta** (nunca gerar fisicamente anos de eventos).
-- CRUD de `SerieEvento` e `ExcecaoEvento`; exceção sempre prevalece sobre a regra.
-- Edição com 3 escopos: "somente esta ocorrência" / "esta e as próximas" (encerra série antiga, cria nova) / "toda a série".
-- Prévia das próximas datas antes de confirmar recálculo de série.
-- Portal: tela de Agenda completa com esses fluxos.
-- Site público: páginas por categoria mostram automaticamente a próxima ocorrência válida (Home = 3 próximos eventos públicos); eventos passados somem sozinhos.
-- Validar com dados reais de exemplo do `CLAUDE.md` (Ceia 1º domingo 08:30 no Templo Liberdade; Culto de Louvor domingos 18:00 exceto 1º domingo; Jovens a cada 2 semanas aos sábados).
+- [x] `SerieEvento` (substitui a `Evento` simplificada) + `ExcecaoEvento`; `OcorrenciaEvento` não é tabela — é um `record` (`Domain/Ocorrencia.cs`) sempre calculado em memória, nunca persistido.
+- [x] 6 tipos de recorrência implementados e testados contra o calendário real: sem repetição, semanal, a cada N semanas, mensal por dia (pula meses sem aquele dia), mensal por posição (1º-4º/último + dia da semana), anual.
+- [x] Cálculo de ocorrências por **janela de consulta** (`Domain/OcorrenciaCalculator.cs`) — nunca gera fisicamente anos de eventos.
+- [x] CRUD de `SerieEvento` + `ExcecaoEvento` (`Controllers/Admin/SeriesEventoController.cs`); exceção sempre prevalece sobre a regra da série.
+- [x] Edição com 3 escopos: "somente esta ocorrência" (`PUT/DELETE .../ocorrencias/{data}`) / "esta e as próximas" (`POST .../dividir`, encerra a série antiga e cria uma nova a partir da data) / "toda a série" (PUT normal).
+- [x] Prévia das próximas ocorrências antes de qualquer confirmação (`GET .../ocorrencias`), tanto no fluxo de divisão quanto na lista expansível da Agenda.
+- [x] Portal: tela de Agenda com "Ver próximas ocorrências" expansível, mini-formulário inline para editar/cancelar/reverter uma ocorrência, e fluxo dedicado para "esta e as próximas".
+- [x] Site público (Home/Agenda) somando ocorrências de todas as séries `PUBLICO`+`PUBLICADO`+`Ativo` numa janela; contrato `EventoPublicoDto` não mudou, nenhuma página pública precisou de alteração de código.
+- [x] Validado com dados reais de exemplo do `CLAUDE.md` (Ceia 1º domingo, Culto semanal, Jovens a cada 2 semanas aos sábados) e com a migração dos dados já cadastrados (Culto de Louvor e Adoração) preservada sem perda.
+- [x] Horários (`HoraInicio`/`HoraFim`/exceções) tratados como horário local de Brasília com offset fixo -03:00 (Brasil não observa horário de verão desde 2019) — decisão registrada no `CLAUDE.md`.
 
 ## Fase 7 — Segurança, acessibilidade, SEO, testes e performance
 - HTTPS em dev/homolog, revisão de CORS, rate limiting nos endpoints sensíveis (login, formulários públicos), logs sem dados sensíveis.
@@ -127,6 +129,6 @@ Essas pendências não bloqueiam o código de infraestrutura (Fases 0–1), mas 
 ## Ordem recomendada de execução
 Fase 0 → Fase 1 → Fase 2 → Fase 3 → Fase 4 → Fase 5 → Fase 6 → Fase 7. Deploy (Fase 8) só quando o usuário pedir.
 
-**Status em 2026-09-04**: Fases 0–5 têm núcleo funcional rodando localmente (site público + Portal Admin conversando com a API real). Pendências que restaram dentro dessas fases: telas de Usuários/Configurações (Fase 5), entidade `Contribuicao` (Fase 3), e a trilha paralela de conteúdo abaixo continua bloqueando publicação definitiva. Próximo passo natural: Fase 6 (motor de recorrência completo) ou fechar as pendências de Usuários/Configurações — a decidir com o usuário.
+**Status em 2026-09-04**: Fases 0–6 têm núcleo funcional rodando localmente (site público + Portal Admin conversando com a API real, agenda com motor de recorrência completo). Pendências que restaram dentro dessas fases: telas de Usuários/Configurações (Fase 5), entidade `Contribuicao` (Fase 3), e a trilha paralela de conteúdo abaixo continua bloqueando publicação definitiva. Próximo passo natural: Fase 7 (segurança/acessibilidade/SEO/testes/performance) ou fechar as pendências de Usuários/Configurações/Contribuição — a decidir com o usuário.
 
 Cada fase segue a regra do `CLAUDE.md`: analisar o existente, resumir o que muda, preservar padrões definidos, evitar dependências desnecessárias, rodar build/testes e corrigir erros relevantes antes de avançar.

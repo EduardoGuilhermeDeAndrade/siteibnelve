@@ -8,7 +8,8 @@ public class IbnelveDbContext(DbContextOptions<IbnelveDbContext> options)
     : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>(options)
 {
     public DbSet<Local> Locais => Set<Local>();
-    public DbSet<Evento> Eventos => Set<Evento>();
+    public DbSet<SerieEvento> SeriesEvento => Set<SerieEvento>();
+    public DbSet<ExcecaoEvento> ExcecoesEvento => Set<ExcecaoEvento>();
     public DbSet<Ministerio> Ministerios => Set<Ministerio>();
     public DbSet<ImagemSite> ImagensSite => Set<ImagemSite>();
     public DbSet<ConteudoTexto> ConteudosTexto => Set<ConteudoTexto>();
@@ -24,14 +25,27 @@ public class IbnelveDbContext(DbContextOptions<IbnelveDbContext> options)
             entity.Property(l => l.Endereco).HasMaxLength(300).IsRequired();
         });
 
-        builder.Entity<Evento>(entity =>
+        builder.Entity<SerieEvento>(entity =>
         {
             entity.Property(e => e.Titulo).HasMaxLength(200).IsRequired();
             entity.HasOne(e => e.Local)
                   .WithMany()
                   .HasForeignKey(e => e.LocalId)
                   .OnDelete(DeleteBehavior.SetNull);
-            entity.HasIndex(e => new { e.Visibilidade, e.Status, e.DataHoraInicio });
+            entity.HasIndex(e => new { e.Visibilidade, e.Status, e.Ativo });
+        });
+
+        builder.Entity<ExcecaoEvento>(entity =>
+        {
+            entity.HasOne(e => e.SerieEvento)
+                  .WithMany(s => s.Excecoes)
+                  .HasForeignKey(e => e.SerieEventoId)
+                  .OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(e => e.LocalSubstituto)
+                  .WithMany()
+                  .HasForeignKey(e => e.LocalSubstitutoId)
+                  .OnDelete(DeleteBehavior.SetNull);
+            entity.HasIndex(e => new { e.SerieEventoId, e.DataOriginal }).IsUnique();
         });
 
         builder.Entity<Ministerio>(entity =>

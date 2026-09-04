@@ -60,3 +60,29 @@ export const DIA_SEMANA_LABELS = [
   'Sexta-feira',
   'Sábado'
 ];
+
+export type TipoRecorrencia =
+  | 'NENHUMA'
+  | 'SEMANAL'
+  | 'A_CADA_N_SEMANAS'
+  | 'MENSAL_POR_DIA'
+  | 'MENSAL_POR_POSICAO'
+  | 'ANUAL';
+
+export const TIPO_RECORRENCIA_LABELS: Record<TipoRecorrencia, string> = {
+  NENHUMA: 'Não repete (evento avulso)',
+  SEMANAL: 'Toda semana',
+  A_CADA_N_SEMANAS: 'A cada N semanas',
+  MENSAL_POR_DIA: 'Mensal, em um dia fixo do mês',
+  MENSAL_POR_POSICAO: 'Mensal, por posição (ex.: primeiro domingo)',
+  ANUAL: 'Anual'
+};
+
+/** 1-4 = primeiro..quarto, -1 = último. */
+export const POSICAO_NO_MES_LABELS: Record<number, string> = {
+  1: 'Primeiro',
+  2: 'Segundo',
+  3: 'Terceiro',
+  4: 'Quarto',
+  [-1]: 'Último'
+};

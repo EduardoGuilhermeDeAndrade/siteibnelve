@@ -26,12 +26,17 @@ export const ADMIN_ROUTES: Routes = [
       {
         path: 'agenda/novo',
         loadComponent: () => import('./agenda/evento-form/evento-form').then((m) => m.EventoForm),
-        title: 'Portal Admin — Novo evento'
+        title: 'Portal Admin — Nova série'
       },
       {
         path: 'agenda/:id/editar',
         loadComponent: () => import('./agenda/evento-form/evento-form').then((m) => m.EventoForm),
-        title: 'Portal Admin — Editar evento'
+        title: 'Portal Admin — Editar série'
+      },
+      {
+        path: 'agenda/:id/dividir/:data',
+        loadComponent: () => import('./agenda/evento-form/evento-form').then((m) => m.EventoForm),
+        title: 'Portal Admin — Editar esta e as próximas'
       },
       {
         path: 'locais',

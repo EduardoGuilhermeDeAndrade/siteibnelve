@@ -76,4 +76,26 @@ public static class EnumMappings
         "CANCELADO" => StatusEvento.Cancelado,
         _ => throw new ArgumentException($"Status inválido: {valor}")
     };
+
+    public static string ToApiString(this TipoRecorrencia tipo) => tipo switch
+    {
+        TipoRecorrencia.Nenhuma => "NENHUMA",
+        TipoRecorrencia.Semanal => "SEMANAL",
+        TipoRecorrencia.ACadaNSemanas => "A_CADA_N_SEMANAS",
+        TipoRecorrencia.MensalPorDia => "MENSAL_POR_DIA",
+        TipoRecorrencia.MensalPorPosicao => "MENSAL_POR_POSICAO",
+        TipoRecorrencia.Anual => "ANUAL",
+        _ => throw new ArgumentOutOfRangeException(nameof(tipo))
+    };
+
+    public static TipoRecorrencia ParseTipoRecorrencia(string valor) => valor switch
+    {
+        "NENHUMA" => TipoRecorrencia.Nenhuma,
+        "SEMANAL" => TipoRecorrencia.Semanal,
+        "A_CADA_N_SEMANAS" => TipoRecorrencia.ACadaNSemanas,
+        "MENSAL_POR_DIA" => TipoRecorrencia.MensalPorDia,
+        "MENSAL_POR_POSICAO" => TipoRecorrencia.MensalPorPosicao,
+        "ANUAL" => TipoRecorrencia.Anual,
+        _ => throw new ArgumentException($"Tipo de recorrência inválido: {valor}")
+    };
 }

@@ -31,3 +31,13 @@ public enum StatusEvento
     Publicado,
     Cancelado
 }
+
+public enum TipoRecorrencia
+{
+    Nenhuma,
+    Semanal,
+    ACadaNSemanas,
+    MensalPorDia,
+    MensalPorPosicao,
+    Anual
+}

@@ -1,5 +1,20 @@
 <div class="evento-form">
-  <h1>{{ modoEdicao ? 'Editar evento' : 'Novo evento' }}</h1>
+  <h1>
+    @if (modoDivisao) {
+      Editar esta e as próximas ocorrências
+    } @else if (modoEdicao) {
+      Editar série
+    } @else {
+      Nova série
+    }
+  </h1>
+
+  @if (modoDivisao) {
+    <p class="evento-form__aviso">
+      Isto encerra a série atual na véspera de {{ apartirDe() }} e cria uma nova série a partir dessa data
+      com os dados abaixo. As ocorrências anteriores não são alteradas.
+    </p>
+  }
 
   @if (carregando()) {
     <p>Carregando…</p>
@@ -47,21 +62,82 @@
         </div>
       </div>
 
+      <div class="evento-form__campo">
+        <label for="tipoRecorrencia">Recorrência</label>
+        <select id="tipoRecorrencia" formControlName="tipoRecorrencia">
+          @for (opcao of tiposRecorrencia; track opcao) {
+            <option [value]="opcao">{{ tipoRecorrenciaLabels[opcao] }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="evento-form__linha">
+        @if (precisaDiaSemana) {
+          <div class="evento-form__campo">
+            <label for="diaSemana">Dia da semana</label>
+            <select id="diaSemana" formControlName="diaSemana">
+              @for (dia of diaSemanaLabels; track $index) {
+                <option [value]="$index">{{ dia }}</option>
+              }
+            </select>
+          </div>
+        }
+
+        @if (precisaIntervalo) {
+          <div class="evento-form__campo">
+            <label for="intervalo">A cada quantas semanas</label>
+            <input id="intervalo" type="number" min="1" formControlName="intervalo">
+          </div>
+        }
+
+        @if (precisaDiaMes) {
+          <div class="evento-form__campo">
+            <label for="diaMes">Dia do mês</label>
+            <input id="diaMes" type="number" min="1" max="31" formControlName="diaMes">
+          </div>
+        }
+
+        @if (precisaPosicaoNoMes) {
+          <div class="evento-form__campo">
+            <label for="posicaoNoMes">Posição no mês</label>
+            <select id="posicaoNoMes" formControlName="posicaoNoMes">
+              @for (posicao of posicoesNoMes; track posicao) {
+                <option [value]="posicao">{{ posicaoNoMesLabels[posicao] }}</option>
+              }
+            </select>
+          </div>
+        }
+      </div>
+
       <div class="evento-form__linha">
         <div class="evento-form__campo">
-          <label for="data">Data</label>
-          <input id="data" type="date" formControlName="data">
-          @if (form.controls.data.invalid && form.controls.data.touched) {
+          <label for="dataInicio">{{ ehAvulso ? 'Data do evento' : 'A partir de' }}</label>
+          <input id="dataInicio" type="date" formControlName="dataInicio" [readonly]="modoDivisao">
+          @if (form.controls.dataInicio.invalid && form.controls.dataInicio.touched) {
             <p class="evento-form__erro-campo">Informe a data.</p>
           }
         </div>
 
+        @if (!ehAvulso) {
+          <div class="evento-form__campo">
+            <label for="dataFim">Até (opcional)</label>
+            <input id="dataFim" type="date" formControlName="dataFim">
+          </div>
+        }
+      </div>
+
+      <div class="evento-form__linha">
         <div class="evento-form__campo">
-          <label for="hora">Hora</label>
-          <input id="hora" type="time" formControlName="hora">
-          @if (form.controls.hora.invalid && form.controls.hora.touched) {
+          <label for="horaInicio">Hora início</label>
+          <input id="horaInicio" type="time" formControlName="horaInicio">
+          @if (form.controls.horaInicio.invalid && form.controls.horaInicio.touched) {
             <p class="evento-form__erro-campo">Informe o horário.</p>
           }
+        </div>
+
+        <div class="evento-form__campo">
+          <label for="horaFim">Hora fim (opcional)</label>
+          <input id="horaFim" type="time" formControlName="horaFim">
         </div>
       </div>
 
@@ -80,21 +156,22 @@
         <input id="localTexto" type="text" formControlName="localTexto" placeholder="Ex.: Salão da Igreja Batista Vizinha">
       </div>
 
-      <div class="evento-form__checkbox">
-        <input id="recorrenciaSemanal" type="checkbox" formControlName="recorrenciaSemanal">
-        <label for="recorrenciaSemanal">Repete toda semana</label>
+      <div class="evento-form__campo">
+        <label for="imagemUrl">URL da imagem (opcional)</label>
+        <input id="imagemUrl" type="text" formControlName="imagemUrl">
       </div>
 
-      @if (form.controls.recorrenciaSemanal.value) {
-        <div class="evento-form__campo">
-          <label for="diaSemana">Dia da semana</label>
-          <select id="diaSemana" formControlName="diaSemana">
-            @for (dia of diaSemanaLabels; track $index) {
-              <option [value]="$index">{{ dia }}</option>
-            }
-          </select>
+      <div class="evento-form__linha">
+        <div class="evento-form__checkbox">
+          <input id="destaque" type="checkbox" formControlName="destaque">
+          <label for="destaque">Destaque</label>
         </div>
-      }
+
+        <div class="evento-form__checkbox">
+          <input id="ativo" type="checkbox" formControlName="ativo">
+          <label for="ativo">Ativa</label>
+        </div>
+      </div>
 
       @if (erro()) {
         <p class="evento-form__erro" role="alert">{{ erro() }}</p>

@@ -181,6 +181,9 @@ Id, Titulo, Descricao, CategoriaId, Visibilidade, Status, TipoRecorrencia, Inter
 ### ExcecaoEvento
 Id, SerieEventoId, DataHoraOriginal, NovaDataHoraInicio, NovaDataHoraFim, TituloSubstituto, DescricaoSubstituta, LocalSubstituto/LocalId, Cancelado, Motivo, CriadoPorUsuarioId, DataCriacao, AtualizadoPorUsuarioId, DataAtualizacao.
 
+### Fuso horário (implementado na Fase 6)
+`HoraInicio`/`HoraFim` de `SerieEvento` e `NovaHoraInicio`/`NovaHoraFim` de `ExcecaoEvento` são sempre horário local de Brasília (o horário que o admin digita e que aparece na Agenda) — nunca UTC. O backend converte para `DateTimeOffset` aplicando um offset fixo -03:00 (`Domain/OcorrenciaCalculator.OffsetBrasilia`). O Brasil não observa horário de verão desde 2019, então um offset fixo é suficiente; não usar `TimeZoneInfo`/banco de fusos horários para isso enquanto a igreja operar num único fuso.
+
 # UI/UX
 - Mobile-first.
 - Layout limpo, contemporâneo, institucional e acolhedor.

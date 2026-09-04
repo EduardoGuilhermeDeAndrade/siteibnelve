@@ -1,7 +1,7 @@
 <div class="agenda-admin">
   <div class="agenda-admin__cabecalho">
     <h1>Agenda</h1>
-    <a class="button button--primary" routerLink="/admin/agenda/novo">+ Novo evento</a>
+    <a class="button button--primary" routerLink="/admin/agenda/novo">+ Nova série</a>
   </div>
 
   @if (erro()) {
@@ -10,8 +10,8 @@
 
   @if (carregando()) {
     <p>Carregando…</p>
-  } @else if (eventos().length === 0) {
-    <p>Nenhum evento cadastrado ainda.</p>
+  } @else if (series().length === 0) {
+    <p>Nenhuma série cadastrada ainda.</p>
   } @else {
     <div class="agenda-admin__tabela-wrap">
       <table class="agenda-admin__tabela">
@@ -21,33 +21,28 @@
             <th scope="col">Categoria</th>
             <th scope="col">Visibilidade</th>
             <th scope="col">Status</th>
-            <th scope="col">Data/hora</th>
+            <th scope="col">Recorrência</th>
             <th scope="col">Local</th>
             <th scope="col"><span class="sr-only">Ações</span></th>
           </tr>
         </thead>
         <tbody>
-          @for (evento of eventos(); track evento.id) {
+          @for (serie of series(); track serie.id) {
             <tr>
-              <td>
-                {{ evento.titulo }}
-                @if (evento.recorrenciaSemanal) {
-                  <span class="agenda-admin__badge">semanal</span>
-                }
-              </td>
-              <td>{{ categoriaLabels[evento.categoria] }}</td>
-              <td>{{ visibilidadeLabels[evento.visibilidade] }}</td>
-              <td>{{ statusLabels[evento.status] }}</td>
-              <td>{{ evento.dataHoraInicio | date: "dd/MM/yyyy HH:mm" }}</td>
-              <td>{{ evento.localNome ?? evento.localTexto ?? '—' }}</td>
+              <td>{{ serie.titulo }}</td>
+              <td>{{ categoriaLabels[serie.categoria] }}</td>
+              <td>{{ visibilidadeLabels[serie.visibilidade] }}</td>
+              <td>{{ statusLabels[serie.status] }}</td>
+              <td>{{ tipoRecorrenciaLabels[serie.tipoRecorrencia] }}</td>
+              <td>{{ serie.localNome ?? serie.localTexto ?? '—' }}</td>
               <td class="agenda-admin__acoes">
-                @if (confirmandoId() === evento.id) {
+                @if (confirmandoId() === serie.id) {
                   <span>Excluir?</span>
                   <button
                     class="button button--outline"
                     type="button"
-                    [disabled]="excluindoId() === evento.id"
-                    (click)="excluir(evento.id)"
+                    [disabled]="excluindoId() === serie.id"
+                    (click)="excluir(serie.id)"
                   >
                     Sim
                   </button>
@@ -55,15 +50,151 @@
                     Não
                   </button>
                 } @else {
-                  <a class="button button--outline" [routerLink]="['/admin/agenda', evento.id, 'editar']">
-                    Editar
+                  <button class="button button--outline" type="button" (click)="alternarExpansao(serie.id)">
+                    {{ expandidaId() === serie.id ? 'Ocultar ocorrências' : 'Ver próximas ocorrências' }}
+                  </button>
+                  <a class="button button--outline" [routerLink]="['/admin/agenda', serie.id, 'editar']">
+                    Editar série
                   </a>
-                  <button class="button button--outline" type="button" (click)="pedirConfirmacao(evento.id)">
+                  <button class="button button--outline" type="button" (click)="pedirConfirmacao(serie.id)">
                     Excluir
                   </button>
                 }
               </td>
             </tr>
+
+            @if (expandidaId() === serie.id) {
+              <tr class="agenda-admin__linha-ocorrencias">
+                <td colspan="7">
+                  @if (erroOcorrencias()) {
+                    <p class="agenda-admin__erro" role="alert">{{ erroOcorrencias() }}</p>
+                  }
+
+                  @if (carregandoOcorrencias()) {
+                    <p>Carregando ocorrências…</p>
+                  } @else if (ocorrencias().length === 0) {
+                    <p>Nenhuma ocorrência futura calculada para esta série.</p>
+                  } @else {
+                    <ul class="ocorrencias-lista">
+                      @for (ocorrencia of ocorrencias(); track ocorrencia.dataOriginal) {
+                        <li class="ocorrencias-lista__item" [class.ocorrencias-lista__item--cancelada]="ocorrencia.cancelada">
+                          <div class="ocorrencias-lista__info">
+                            <span class="ocorrencias-lista__data">
+                              {{ ocorrencia.dataHoraInicio | date: "EEEE, dd/MM/yyyy HH:mm" }}
+                            </span>
+                            <span class="ocorrencias-lista__titulo">{{ ocorrencia.titulo }}</span>
+                            @if (ocorrencia.localNome ?? ocorrencia.localTexto; as local) {
+                              <span class="ocorrencias-lista__local">{{ local }}</span>
+                            }
+                            @if (ocorrencia.cancelada) {
+                              <span class="agenda-admin__badge agenda-admin__badge--cancelada">cancelada</span>
+                            } @else if (ocorrencia.temExcecao) {
+                              <span class="agenda-admin__badge">alterada</span>
+                            }
+                            @if (ocorrencia.motivo) {
+                              <span class="ocorrencias-lista__motivo">({{ ocorrencia.motivo }})</span>
+                            }
+                          </div>
+
+                          @if (editandoExcecaoData() === ocorrencia.dataOriginal) {
+                            <form
+                              class="excecao-form"
+                              [formGroup]="excecaoForm"
+                              novalidate
+                              (ngSubmit)="salvarExcecaoInline(serie.id, ocorrencia.dataOriginal)"
+                            >
+                              <div class="excecao-form__checkbox">
+                                <input id="cancelado" type="checkbox" formControlName="cancelado">
+                                <label for="cancelado">Cancelar esta ocorrência</label>
+                              </div>
+
+                              <div class="excecao-form__linha">
+                                <div class="excecao-form__campo">
+                                  <label for="novaData">Nova data</label>
+                                  <input id="novaData" type="date" formControlName="novaData">
+                                </div>
+                                <div class="excecao-form__campo">
+                                  <label for="novaHoraInicio">Nova hora início</label>
+                                  <input id="novaHoraInicio" type="time" formControlName="novaHoraInicio">
+                                </div>
+                                <div class="excecao-form__campo">
+                                  <label for="novaHoraFim">Nova hora fim</label>
+                                  <input id="novaHoraFim" type="time" formControlName="novaHoraFim">
+                                </div>
+                              </div>
+
+                              <div class="excecao-form__campo">
+                                <label for="tituloSubstituto">Título substituto (opcional)</label>
+                                <input id="tituloSubstituto" type="text" formControlName="tituloSubstituto">
+                              </div>
+
+                              <div class="excecao-form__campo">
+                                <label for="descricaoSubstituta">Descrição substituta (opcional)</label>
+                                <input id="descricaoSubstituta" type="text" formControlName="descricaoSubstituta">
+                              </div>
+
+                              <div class="excecao-form__campo">
+                                <label for="localTextoSubstituto">Local substituto (opcional)</label>
+                                <input id="localTextoSubstituto" type="text" formControlName="localTextoSubstituto">
+                              </div>
+
+                              <div class="excecao-form__campo">
+                                <label for="motivo">Motivo (opcional)</label>
+                                <input id="motivo" type="text" formControlName="motivo">
+                              </div>
+
+                              @if (erroExcecao()) {
+                                <p class="agenda-admin__erro" role="alert">{{ erroExcecao() }}</p>
+                              }
+
+                              <div class="excecao-form__acoes">
+                                <button class="button button--primary" type="submit" [disabled]="salvandoExcecao()">
+                                  {{ salvandoExcecao() ? 'Salvando…' : 'Salvar esta ocorrência' }}
+                                </button>
+                                <button class="button button--outline" type="button" (click)="cancelarEdicaoExcecao()">
+                                  Cancelar
+                                </button>
+                              </div>
+                            </form>
+                          } @else {
+                            <div class="ocorrencias-lista__acoes">
+                              <button class="button button--outline" type="button" (click)="abrirEdicaoExcecao(ocorrencia)">
+                                Editar esta
+                              </button>
+                              @if (!ocorrencia.cancelada) {
+                                <button
+                                  class="button button--outline"
+                                  type="button"
+                                  (click)="cancelarOcorrenciaRapido(serie.id, ocorrencia)"
+                                >
+                                  Cancelar esta
+                                </button>
+                              }
+                              @if (ocorrencia.temExcecao) {
+                                <button
+                                  class="button button--outline"
+                                  type="button"
+                                  (click)="reverterExcecao(serie.id, ocorrencia.dataOriginal)"
+                                >
+                                  Reverter exceção
+                                </button>
+                              }
+                              <button
+                                class="button button--outline"
+                                type="button"
+                                (click)="editarEstaEProximas(serie.id, ocorrencia.dataOriginal)"
+                              >
+                                Editar esta e as próximas
+                              </button>
+                            </div>
+                          }
+                        </li>
+                      }
+                    </ul>
+                  }
+                </td>
+              </tr>
+            }
           }
         </tbody>
       </table>

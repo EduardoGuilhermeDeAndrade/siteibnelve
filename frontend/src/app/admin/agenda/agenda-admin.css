@@ -52,3 +52,116 @@
 .agenda-admin__acoes .button {
   padding: var(--space-1) var(--space-3);
 }
+
+.agenda-admin__badge {
+  margin-left: var(--space-2);
+  font-size: 0.7em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: 0.1em 0.6em;
+}
+
+.agenda-admin__badge--cancelada {
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
+.agenda-admin__linha-ocorrencias td {
+  white-space: normal;
+  background-color: var(--color-surface-muted, var(--color-bg));
+}
+
+.ocorrencias-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.ocorrencias-lista__item {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+}
+
+.ocorrencias-lista__item--cancelada {
+  opacity: 0.6;
+}
+
+.ocorrencias-lista__info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.ocorrencias-lista__data {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.ocorrencias-lista__local,
+.ocorrencias-lista__motivo {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.ocorrencias-lista__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.ocorrencias-lista__acoes .button {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-sm);
+}
+
+.excecao-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: 40rem;
+}
+
+.excecao-form__linha {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: var(--space-3);
+}
+
+.excecao-form__campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.excecao-form__campo label {
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+}
+
+.excecao-form__campo input {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.excecao-form__checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.excecao-form__acoes {
+  display: flex;
+  gap: var(--space-3);
+}
