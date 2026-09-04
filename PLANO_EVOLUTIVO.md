@@ -56,29 +56,33 @@ Objetivo: todas as páginas públicas navegáveis, com dados mockados no Angular
 - [x] Revisão aplicada com a skill `web-design-guidelines` (Web Interface Guidelines) sobre todos os arquivos novos; achados corrigidos (heading hierarchy, capitalização de datas em português, foco no primeiro erro do formulário).
 - [x] `ng build` e navegação manual (via preview) validados nas 6 rotas, sem erros de console.
 
-## Fase 3 — Modelagem de dados e API real
+## Fase 3 — Modelagem de dados e API real ✅ núcleo concluído em 2026-09-04 (junto com a Fase 5)
 Objetivo: schema definitivo e endpoints reais substituindo os mocks.
 
-- Modelar entidades: `Local`, `Ministerio`, `SerieEvento`, `OcorrenciaEvento` (calculada), `ExcecaoEvento`, `Usuario`, `ConteudoSite`, `Contribuicao` (config), conforme os modelos conceituais do `CLAUDE.md`.
-- Migrations (EF Core) para PostgreSQL.
-- Endpoints CRUD básicos para Locais, Ministérios e Conteúdo institucional.
-- Regras de visibilidade (PUBLICO/INTERNO/PESSOAL) e status (RASCUNHO/PUBLICADO/CANCELADO) aplicadas **na API**, nunca só no Angular.
+- [x] Entidades implementadas via EF Core/PostgreSQL: `Local`, `Evento` (versão simplificada — avulso ou semanal fixo, não o `SerieEvento`/`OcorrenciaEvento`/`ExcecaoEvento` completo, isso continua Fase 6), `Ministerio`, `ImagemSite`, `ConteudoTexto` (textos institucionais), `RefreshToken`, mais as tabelas do ASP.NET Core Identity (`ApplicationUser`/`ApplicationRole`).
+- [ ] `Contribuicao` (config) — não modelada ainda; a página de Contribuições continua com a chave PIX fixa no frontend.
+- [x] Migrations aplicadas (`PortalAdminNucleo`, `ConteudoTexto`, `Ministerios`).
+- [x] Endpoints CRUD completos (`/api/admin/**`, autenticados) para Eventos, Locais, Ministérios, Conteúdo de Texto e Imagens.
+- [x] Regras de visibilidade (PUBLICO/INTERNO/PESSOAL) e status (RASCUNHO/PUBLICADO/CANCELADO) aplicadas na API: os endpoints públicos (`/api/eventos`, `/api/locais`, `/api/ministerios`) só devolvem o que é `PUBLICO`+`PUBLICADO` (eventos) ou `Ativo` (locais/ministérios) — filtro no servidor, não no Angular.
 
-## Fase 4 — Integração site público ↔ API
+## Fase 4 — Integração site público ↔ API ✅ concluída em 2026-09-04
 Objetivo: site público consumindo dados reais.
 
-- Home, Quem Somos, Ministérios e Contato passam a ler da API (textos editáveis, ministérios cadastrados).
-- Agenda pública ainda simplificada (sem recorrência completa): lista eventos únicos PUBLICO+PUBLICADO por data.
-- Tratamento de loading/erro e cache leve no frontend.
+- [x] Home, Quem Somos, Ministérios, Agenda e Contato passam a ler da API real (nenhuma página pública usa mock data — os 4 arquivos `*.mock.ts` + `recorrencia.util.ts` foram apagados).
+- [x] Agenda pública: eventos avulsos e semanais fixos com a próxima ocorrência calculada no servidor (`RecorrenciaCalculator`, C#) — cobre os casos que a entidade `Evento` suporta hoje; o motor completo (mensal por posição, exceções, divisão de série) continua Fase 6.
+- [x] Tratamento de loading/erro no frontend (sinais `carregando`/`erro` por página, mensagens amigáveis). "Cache leve" = sem biblioteca nova, cada navegação busca de novo.
+- [x] Endpoints públicos anônimos novos (`Controllers/`, sem `[Authorize]`): `/api/eventos`, `/api/locais`, `/api/ministerios`, `/api/conteudo-texto`, `/api/imagens-site` — distintos dos `/api/admin/**` autenticados.
+- [x] Testado ao vivo: evento criado no Portal aparece na Agenda pública e na Home sem alterar código.
 
-## Fase 5 — Portal Administrativo (núcleo)
+## Fase 5 — Portal Administrativo (núcleo) ✅ núcleo concluído em 2026-09-04
 Objetivo: pastores/secretária conseguem logar e gerenciar conteúdo básico.
 
-- Autenticação (login seguro, hash de senha, sem cadastro público de admin).
-- Perfil ADMIN amplo no MVP, mas modelo de dados já preparado para PASTOR/SECRETARIA/LIDER_MINISTERIO/EDITOR_CONTEUDO no futuro.
-- Dashboard simples.
-- Telas: Conteúdo do Site, Ministérios, Locais/Templos, Fotos (upload validado/limitado), Usuários (gestão restrita), Configurações.
-- Autorização por rota na API (não confiar no guard do Angular sozinho).
+- [x] Autenticação: ASP.NET Core Identity + JWT (access token de 20 min em memória no Angular, nunca em localStorage) + refresh token rotativo em cookie httpOnly. Rate limiting no login. Sem cadastro público — só o primeiro ADMIN semeado via `user-secrets`.
+- [x] Perfil ADMIN amplo no MVP; modelo de roles do Identity já preparado para adicionar PASTOR/SECRETARIA/LIDER_MINISTERIO/EDITOR_CONTEUDO depois (basta seedar o role, sem mudar código).
+- [x] Dashboard simples (`/admin`).
+- [x] Telas implementadas: **Agenda** (CRUD completo de eventos), **Locais/Templos** (CRUD), **Ministérios** (CRUD), **Conteúdo do Site** (textos institucionais editáveis + upload de imagens por chave, S3-compatível via MinIO em dev).
+- [ ] Telas **Usuários** e **Configurações** — não implementadas ainda; hoje só existe o ADMIN semeado, sem tela para criar/gerenciar outros usuários pelo Portal.
+- [x] Autorização checada na API (`[Authorize(Roles = "ADMIN")]` em todo `/api/admin/**`), nunca só no guard do Angular — testado explicitamente (sem token → 401).
 
 ## Fase 6 — Agenda recorrente + exceções (parte mais complexa)
 Objetivo: motor de recorrência completo, conforme especificado no `CLAUDE.md`.
@@ -121,6 +125,8 @@ Essas pendências não bloqueiam o código de infraestrutura (Fases 0–1), mas 
 ---
 
 ## Ordem recomendada de execução
-Fase 0 → Fase 1 → Fase 2 (com trilha paralela em curso) → Fase 3 → Fase 4 → Fase 5 → Fase 6 → Fase 7. Deploy (Fase 8) só quando o usuário pedir.
+Fase 0 → Fase 1 → Fase 2 → Fase 3 → Fase 4 → Fase 5 → Fase 6 → Fase 7. Deploy (Fase 8) só quando o usuário pedir.
+
+**Status em 2026-09-04**: Fases 0–5 têm núcleo funcional rodando localmente (site público + Portal Admin conversando com a API real). Pendências que restaram dentro dessas fases: telas de Usuários/Configurações (Fase 5), entidade `Contribuicao` (Fase 3), e a trilha paralela de conteúdo abaixo continua bloqueando publicação definitiva. Próximo passo natural: Fase 6 (motor de recorrência completo) ou fechar as pendências de Usuários/Configurações — a decidir com o usuário.
 
 Cada fase segue a regra do `CLAUDE.md`: analisar o existente, resumir o que muda, preservar padrões definidos, evitar dependências desnecessárias, rodar build/testes e corrigir erros relevantes antes de avançar.
