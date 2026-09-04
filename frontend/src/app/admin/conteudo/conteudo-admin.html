@@ -2,85 +2,139 @@
   <h1>Conteúdo do Site</h1>
 
   <p class="conteudo-admin__aviso">
-    Este cadastro alimenta a API, mas o site público ainda usa arquivos fixos para as fotos
-    (isso muda quando o site público passar a consumir a API, na Fase 4). Por enquanto, use esta
-    tela para deixar as imagens prontas no servidor.
+    Este cadastro alimenta a API, mas o site público ainda usa textos e arquivos fixos (isso muda
+    quando o site público passar a consumir a API, na Fase 4). Por enquanto, use esta tela para
+    manter o conteúdo pronto no servidor, sujeito à aprovação da liderança antes de publicar.
   </p>
 
-  @if (erro()) {
-    <p class="conteudo-admin__erro" role="alert">{{ erro() }}</p>
-  }
-  @if (erroValidacao()) {
-    <p class="conteudo-admin__erro" role="alert">{{ erroValidacao() }}</p>
-  }
+  <section class="conteudo-admin__secao">
+    <h2>Textos institucionais</h2>
 
-  @if (carregando()) {
-    <p>Carregando…</p>
-  } @else {
-    @if (imagens().length > 0) {
-      <div class="conteudo-admin__grade">
-        @for (imagem of imagens(); track imagem.chave) {
-          <article class="card conteudo-admin__card">
-            <img [src]="imagem.url" [alt]="'Imagem atual da chave ' + imagem.chave" class="conteudo-admin__preview">
-            <p class="conteudo-admin__chave">{{ imagem.chave }}</p>
+    @if (erroTextos()) {
+      <p class="conteudo-admin__erro" role="alert">{{ erroTextos() }}</p>
+    }
+
+    @if (carregandoTextos()) {
+      <p>Carregando…</p>
+    } @else if (textos().length === 0) {
+      <p>Nenhum texto cadastrado ainda.</p>
+    } @else {
+      <div class="conteudo-admin__textos">
+        @for (item of textos(); track item.chave) {
+          <article class="card conteudo-admin__texto">
+            <h3>{{ item.titulo }}</h3>
             <p class="conteudo-admin__data">
-              Atualizada em {{ imagem.dataAtualizacao | date: 'dd/MM/yyyy HH:mm' }}
+              Atualizado em {{ item.dataAtualizacao | date: 'dd/MM/yyyy HH:mm' }}
             </p>
 
-            <label class="conteudo-admin__label-arquivo" [for]="'arquivo-' + imagem.chave">
-              {{ enviandoChave() === imagem.chave ? 'Enviando…' : 'Substituir imagem' }}
-            </label>
-            <input
-              [id]="'arquivo-' + imagem.chave"
-              type="file"
-              accept="image/jpeg,image/png,image/webp"
-              [disabled]="enviandoChave() === imagem.chave"
-              (change)="onSelecionarArquivoExistente(imagem.chave, $event)"
-            >
+            <label class="sr-only" [for]="'texto-' + item.chave">{{ item.titulo }}</label>
+            <textarea
+              [id]="'texto-' + item.chave"
+              [(ngModel)]="item.rascunho"
+              rows="5"
+              [disabled]="item.salvando"
+            ></textarea>
 
-            @if (sucessoChave() === imagem.chave) {
-              <p class="conteudo-admin__sucesso" role="status">Imagem atualizada!</p>
+            @if (item.erro) {
+              <p class="conteudo-admin__erro" role="alert">{{ item.erro }}</p>
+            }
+
+            <button
+              class="button button--primary"
+              type="button"
+              [disabled]="item.salvando || item.rascunho === item.conteudo"
+              (click)="salvarTexto(item)"
+            >
+              {{ item.salvando ? 'Salvando…' : 'Salvar' }}
+            </button>
+
+            @if (item.sucesso) {
+              <p class="conteudo-admin__sucesso" role="status">Texto atualizado!</p>
             }
           </article>
         }
       </div>
+    }
+  </section>
+
+  <section class="conteudo-admin__secao">
+    <h2>Imagens do site</h2>
+
+    @if (erro()) {
+      <p class="conteudo-admin__erro" role="alert">{{ erro() }}</p>
+    }
+    @if (erroValidacao()) {
+      <p class="conteudo-admin__erro" role="alert">{{ erroValidacao() }}</p>
+    }
+
+    @if (carregando()) {
+      <p>Carregando…</p>
     } @else {
-      <p>Nenhuma imagem cadastrada ainda.</p>
+      @if (imagens().length > 0) {
+        <div class="conteudo-admin__grade">
+          @for (imagem of imagens(); track imagem.chave) {
+            <article class="card conteudo-admin__card">
+              <img [src]="imagem.url" [alt]="'Imagem atual da chave ' + imagem.chave" class="conteudo-admin__preview">
+              <p class="conteudo-admin__chave">{{ imagem.chave }}</p>
+              <p class="conteudo-admin__data">
+                Atualizada em {{ imagem.dataAtualizacao | date: 'dd/MM/yyyy HH:mm' }}
+              </p>
+
+              <label class="conteudo-admin__label-arquivo" [for]="'arquivo-' + imagem.chave">
+                {{ enviandoChave() === imagem.chave ? 'Enviando…' : 'Substituir imagem' }}
+              </label>
+              <input
+                [id]="'arquivo-' + imagem.chave"
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                [disabled]="enviandoChave() === imagem.chave"
+                (change)="onSelecionarArquivoExistente(imagem.chave, $event)"
+              >
+
+              @if (sucessoChave() === imagem.chave) {
+                <p class="conteudo-admin__sucesso" role="status">Imagem atualizada!</p>
+              }
+            </article>
+          }
+        </div>
+      } @else {
+        <p>Nenhuma imagem cadastrada ainda.</p>
+      }
     }
-  }
 
-  <section class="conteudo-admin__nova card">
-    <h2>Adicionar nova imagem</h2>
+    <section class="conteudo-admin__nova card">
+      <h3>Adicionar nova imagem</h3>
 
-    <div class="conteudo-admin__campo">
-      <label for="nova-chave">Chave</label>
-      <input
-        id="nova-chave"
-        type="text"
-        list="chaves-sugeridas"
-        [(ngModel)]="novaChave"
-        placeholder="Ex.: home-hero"
-      >
-      <datalist id="chaves-sugeridas">
-        @for (chave of chavesSugeridas; track chave) {
-          <option [value]="chave"></option>
-        }
-      </datalist>
-    </div>
+      <div class="conteudo-admin__campo">
+        <label for="nova-chave">Chave</label>
+        <input
+          id="nova-chave"
+          type="text"
+          list="chaves-sugeridas"
+          [(ngModel)]="novaChave"
+          placeholder="Ex.: home-hero"
+        >
+        <datalist id="chaves-sugeridas">
+          @for (chave of chavesSugeridas; track chave) {
+            <option [value]="chave"></option>
+          }
+        </datalist>
+      </div>
 
-    <div class="conteudo-admin__campo">
-      <label for="arquivo-novo">Arquivo (JPEG, PNG ou WebP, até 5&nbsp;MB)</label>
-      <input
-        id="arquivo-novo"
-        type="file"
-        accept="image/jpeg,image/png,image/webp"
-        [disabled]="enviandoChave() === novaChave.trim() && novaChave.trim() !== ''"
-        (change)="onSelecionarArquivoNovo($event)"
-      >
-    </div>
+      <div class="conteudo-admin__campo">
+        <label for="arquivo-novo">Arquivo (JPEG, PNG ou WebP, até 5&nbsp;MB)</label>
+        <input
+          id="arquivo-novo"
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          [disabled]="enviandoChave() === novaChave.trim() && novaChave.trim() !== ''"
+          (change)="onSelecionarArquivoNovo($event)"
+        >
+      </div>
 
-    @if (sucessoChave() && sucessoChave() === novaChave.trim()) {
-      <p class="conteudo-admin__sucesso" role="status">Imagem enviada!</p>
-    }
+      @if (sucessoChave() && sucessoChave() === novaChave.trim()) {
+        <p class="conteudo-admin__sucesso" role="status">Imagem enviada!</p>
+      }
+    </section>
   </section>
 </div>

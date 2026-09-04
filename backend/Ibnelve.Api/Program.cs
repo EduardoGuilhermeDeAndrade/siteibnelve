@@ -137,6 +137,7 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<IbnelveDbContext>();
     await db.Database.MigrateAsync();
     await AdminSeeder.SeedAsync(scope.ServiceProvider);
+    await ConteudoTextoSeeder.SeedAsync(scope.ServiceProvider);
 
     var storage = scope.ServiceProvider.GetRequiredService<IImagemStorageService>();
     await storage.GarantirBucketAsync();

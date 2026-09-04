@@ -9,6 +9,8 @@ import {
   TIPOS_IMAGEM_ACEITOS
 } from './imagem-admin.models';
 import { ImagensService } from './imagens.service';
+import { TextoEditavelState } from './conteudo-texto.models';
+import { ConteudoTextoService } from './conteudo-texto.service';
 
 @Component({
   selector: 'app-conteudo-admin',
@@ -18,6 +20,7 @@ import { ImagensService } from './imagens.service';
 })
 export class ConteudoAdmin {
   private readonly imagensService = inject(ImagensService);
+  private readonly conteudoTextoService = inject(ConteudoTextoService);
 
   protected readonly chavesSugeridas = CHAVES_SUGERIDAS;
 
@@ -28,10 +31,15 @@ export class ConteudoAdmin {
   protected readonly sucessoChave = signal<string | null>(null);
   protected readonly erroValidacao = signal<string | null>(null);
 
+  protected readonly textos = signal<TextoEditavelState[]>([]);
+  protected readonly carregandoTextos = signal(true);
+  protected readonly erroTextos = signal<string | null>(null);
+
   protected novaChave = '';
 
   constructor() {
     this.carregar();
+    this.carregarTextos();
   }
 
   private carregar(): void {
@@ -46,6 +54,45 @@ export class ConteudoAdmin {
       error: () => {
         this.erro.set('Não foi possível carregar as imagens.');
         this.carregando.set(false);
+      }
+    });
+  }
+
+  private carregarTextos(): void {
+    this.carregandoTextos.set(true);
+    this.erroTextos.set(null);
+
+    this.conteudoTextoService.listar().subscribe({
+      next: (textos) => {
+        this.textos.set(
+          textos.map((texto) => ({ ...texto, rascunho: texto.conteudo, salvando: false, sucesso: false, erro: null }))
+        );
+        this.carregandoTextos.set(false);
+      },
+      error: () => {
+        this.erroTextos.set('Não foi possível carregar os textos institucionais.');
+        this.carregandoTextos.set(false);
+      }
+    });
+  }
+
+  protected salvarTexto(item: TextoEditavelState): void {
+    item.salvando = true;
+    item.erro = null;
+
+    this.conteudoTextoService.salvar(item.chave, { titulo: item.titulo, conteudo: item.rascunho }).subscribe({
+      next: (atualizado) => {
+        item.conteudo = atualizado.conteudo;
+        item.dataAtualizacao = atualizado.dataAtualizacao;
+        item.salvando = false;
+        item.sucesso = true;
+        setTimeout(() => {
+          item.sucesso = false;
+        }, 4000);
+      },
+      error: () => {
+        item.salvando = false;
+        item.erro = 'Não foi possível salvar este texto.';
       }
     });
   }

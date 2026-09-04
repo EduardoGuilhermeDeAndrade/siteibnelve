@@ -10,6 +10,7 @@ public class IbnelveDbContext(DbContextOptions<IbnelveDbContext> options)
     public DbSet<Local> Locais => Set<Local>();
     public DbSet<Evento> Eventos => Set<Evento>();
     public DbSet<ImagemSite> ImagensSite => Set<ImagemSite>();
+    public DbSet<ConteudoTexto> ConteudosTexto => Set<ConteudoTexto>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -36,6 +37,13 @@ public class IbnelveDbContext(DbContextOptions<IbnelveDbContext> options)
         {
             entity.Property(i => i.Chave).HasMaxLength(100).IsRequired();
             entity.HasIndex(i => i.Chave).IsUnique();
+        });
+
+        builder.Entity<ConteudoTexto>(entity =>
+        {
+            entity.Property(c => c.Chave).HasMaxLength(100).IsRequired();
+            entity.Property(c => c.Titulo).HasMaxLength(200).IsRequired();
+            entity.HasIndex(c => c.Chave).IsUnique();
         });
 
         builder.Entity<RefreshToken>(entity =>
