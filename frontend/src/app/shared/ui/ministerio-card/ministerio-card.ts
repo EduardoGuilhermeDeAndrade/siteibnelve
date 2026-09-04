@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { Ministerio } from '../../data/ministerios.mock';
+import { Ministerio } from '../../data/ministerios.service';
 
 @Component({
   selector: 'app-ministerio-card',

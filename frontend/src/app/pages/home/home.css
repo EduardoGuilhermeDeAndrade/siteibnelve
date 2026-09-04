@@ -52,10 +52,8 @@
   margin-top: var(--space-8);
 }
 
-.home__local-uso {
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
-  margin-bottom: 0;
+.home__erro {
+  color: var(--color-danger);
 }
 
 .cta-band {

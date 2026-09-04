@@ -1,9 +1,9 @@
 <article class="card ministerio-card">
-  @if (ministerio.imagem) {
+  @if (ministerio.imagemUrl) {
     <img
       class="ministerio-card__imagem"
-      [src]="ministerio.imagem"
-      [alt]="ministerio.imagemAlt ?? ''"
+      [src]="ministerio.imagemUrl"
+      [alt]="'Foto do ministério ' + ministerio.nome"
       width="400"
       height="260"
       loading="lazy"
@@ -14,6 +14,6 @@
   <div class="ministerio-card__corpo">
     <h3 class="ministerio-card__nome">{{ ministerio.nome }}</h3>
     <p class="ministerio-card__lideres">{{ ministerio.lideres }}</p>
-    <p class="ministerio-card__descricao">Descrição em breve.</p>
+    <p class="ministerio-card__descricao">{{ ministerio.descricao ?? 'Descrição em breve.' }}</p>
   </div>
 </article>

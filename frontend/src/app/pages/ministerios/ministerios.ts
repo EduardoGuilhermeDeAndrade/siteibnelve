@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 
-import { MINISTERIOS_MOCK } from '../../shared/data/ministerios.mock';
+import { Ministerio, MinisteriosService } from '../../shared/data/ministerios.service';
 import { MinisterioCard } from '../../shared/ui/ministerio-card/ministerio-card';
 import { SectionHeading } from '../../shared/ui/section-heading/section-heading';
 
@@ -10,5 +10,22 @@ import { SectionHeading } from '../../shared/ui/section-heading/section-heading'
   templateUrl: './ministerios.html'
 })
 export class Ministerios {
-  protected readonly ministerios = MINISTERIOS_MOCK;
+  private readonly ministeriosService = inject(MinisteriosService);
+
+  protected readonly ministerios = signal<Ministerio[]>([]);
+  protected readonly carregando = signal(true);
+  protected readonly erro = signal(false);
+
+  constructor() {
+    this.ministeriosService.listar().subscribe({
+      next: (ministerios) => {
+        this.ministerios.set(ministerios);
+        this.carregando.set(false);
+      },
+      error: () => {
+        this.erro.set(true);
+        this.carregando.set(false);
+      }
+    });
+  }
 }

@@ -1,0 +1,64 @@
+.ministerio-form {
+  max-width: 40rem;
+}
+
+.ministerio-form form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.ministerio-form__linha {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: var(--space-4);
+  align-items: end;
+}
+
+.ministerio-form__campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.ministerio-form__campo label {
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+}
+
+.ministerio-form__campo input,
+.ministerio-form__campo textarea {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.ministerio-form__checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-bottom: var(--space-2);
+}
+
+.ministerio-form__erro-campo {
+  color: var(--color-danger);
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+
+.ministerio-form__erro {
+  background: var(--color-bg);
+  border: 1px solid var(--color-danger);
+  color: var(--color-danger);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  margin: 0;
+}
+
+.ministerio-form__acoes {
+  display: flex;
+  gap: var(--space-4);
+}

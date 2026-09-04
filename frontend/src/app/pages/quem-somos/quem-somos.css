@@ -1,3 +1,7 @@
+.quem-somos__erro {
+  color: var(--color-danger);
+}
+
 .quem-somos__intro {
   display: grid;
   gap: var(--space-8);

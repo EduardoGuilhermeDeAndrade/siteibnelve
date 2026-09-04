@@ -1,7 +1,7 @@
 <section class="hero">
   <img
     class="hero__imagem"
-    src="/img/comunidade-hero.png"
+    [src]="heroUrl()"
     alt="Membros da IBNELVE reunidos, sorrindo e acenando, celebrando juntos em um culto"
     width="1920"
     height="1080"
@@ -21,6 +21,10 @@
   </div>
 </section>
 
+@if (erro()) {
+  <p class="section home__erro" role="alert">Não foi possível carregar todo o conteúdo agora. Tente recarregar a página.</p>
+}
+
 <section class="section">
   <app-section-heading
     eyebrow="Agenda"
@@ -28,11 +32,17 @@
     subtitle="Os próximos eventos públicos, atualizados automaticamente."
   ></app-section-heading>
 
-  <div class="card-grid">
-    @for (evento of proximosEventos; track evento.id) {
-      <app-event-card [evento]="evento"></app-event-card>
-    }
-  </div>
+  @if (carregando()) {
+    <p>Carregando…</p>
+  } @else if (proximosEventos().length > 0) {
+    <div class="card-grid">
+      @for (evento of proximosEventos(); track evento.id) {
+        <app-event-card [evento]="evento"></app-event-card>
+      }
+    </div>
+  } @else {
+    <p>Nenhum evento público nos próximos dias.</p>
+  }
 </section>
 
 <section class="section section--muted">
@@ -43,11 +53,13 @@
       subtitle="Espaços de serviço e comunhão para todas as idades."
     ></app-section-heading>
 
-    <div class="card-grid">
-      @for (ministerio of ministerios; track ministerio.id) {
-        <app-ministerio-card [ministerio]="ministerio"></app-ministerio-card>
-      }
-    </div>
+    @if (!carregando()) {
+      <div class="card-grid">
+        @for (ministerio of ministerios(); track ministerio.id) {
+          <app-ministerio-card [ministerio]="ministerio"></app-ministerio-card>
+        }
+      </div>
+    }
 
     <a class="button button--outline home__link-ministerios" routerLink="/ministerios">
       Ver todos os ministérios
@@ -58,18 +70,17 @@
 <section class="section">
   <app-section-heading eyebrow="Onde estamos" title="Nossos templos"></app-section-heading>
 
-  <div class="card-grid">
-    @for (local of locais; track local.id) {
-      <article class="card">
-        <p class="eyebrow">{{ local.tipo }}</p>
-        <h3>{{ local.nome }}</h3>
-        <p>{{ local.endereco }} — {{ local.bairro }}<br>{{ local.cidade }}</p>
-        @if (local.uso) {
-          <p class="home__local-uso">{{ local.uso }}</p>
-        }
-      </article>
-    }
-  </div>
+  @if (!carregando()) {
+    <div class="card-grid">
+      @for (local of locais(); track local.id) {
+        <article class="card">
+          <p class="eyebrow">{{ local.tipo }}</p>
+          <h3>{{ local.nome }}</h3>
+          <p>{{ local.endereco }} — {{ local.bairro }}<br>{{ local.cidade }}</p>
+        </article>
+      }
+    </div>
+  }
 </section>
 
 <section class="section section--muted">

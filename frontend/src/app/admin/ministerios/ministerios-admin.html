@@ -1,0 +1,61 @@
+<div class="ministerios-admin">
+  <div class="ministerios-admin__cabecalho">
+    <h1>Ministérios</h1>
+    <a class="button button--primary" routerLink="/admin/ministerios/novo">+ Novo ministério</a>
+  </div>
+
+  @if (erro()) {
+    <p class="ministerios-admin__erro" role="alert">{{ erro() }}</p>
+  }
+
+  @if (carregando()) {
+    <p>Carregando…</p>
+  } @else if (ministerios().length === 0) {
+    <p>Nenhum ministério cadastrado ainda.</p>
+  } @else {
+    <div class="ministerios-admin__tabela-wrap">
+      <table class="ministerios-admin__tabela">
+        <thead>
+          <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Líderes</th>
+            <th scope="col">Ativo</th>
+            <th scope="col"><span class="sr-only">Ações</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (ministerio of ministerios(); track ministerio.id) {
+            <tr>
+              <td>{{ ministerio.nome }}</td>
+              <td>{{ ministerio.lideres }}</td>
+              <td>{{ ministerio.ativo ? 'Sim' : 'Não' }}</td>
+              <td class="ministerios-admin__acoes">
+                @if (confirmandoId() === ministerio.id) {
+                  <span>Excluir?</span>
+                  <button
+                    class="button button--outline"
+                    type="button"
+                    [disabled]="excluindoId() === ministerio.id"
+                    (click)="excluir(ministerio.id)"
+                  >
+                    Sim
+                  </button>
+                  <button class="button button--outline" type="button" (click)="cancelarConfirmacao()">
+                    Não
+                  </button>
+                } @else {
+                  <a class="button button--outline" [routerLink]="['/admin/ministerios', ministerio.id, 'editar']">
+                    Editar
+                  </a>
+                  <button class="button button--outline" type="button" (click)="pedirConfirmacao(ministerio.id)">
+                    Excluir
+                  </button>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

@@ -1,18 +1,21 @@
 <section class="section">
   <app-section-heading [level]="1" eyebrow="Conecte-se" title="Venha nos visitar"></app-section-heading>
 
-  <div class="card-grid">
-    @for (local of locais; track local.id) {
-      <article class="card">
-        <p class="eyebrow">{{ local.tipo }}</p>
-        <h2>{{ local.nome }}</h2>
-        <p>{{ local.endereco }} — {{ local.bairro }}<br>{{ local.cidade }}</p>
-        @if (local.uso) {
-          <p class="contato__uso">{{ local.uso }}</p>
-        }
-      </article>
-    }
-  </div>
+  @if (erroLocais()) {
+    <p role="alert">Não foi possível carregar os templos agora. Tente recarregar a página.</p>
+  } @else if (carregandoLocais()) {
+    <p>Carregando…</p>
+  } @else {
+    <div class="card-grid">
+      @for (local of locais(); track local.id) {
+        <article class="card">
+          <p class="eyebrow">{{ local.tipo }}</p>
+          <h2>{{ local.nome }}</h2>
+          <p>{{ local.endereco }} — {{ local.bairro }}<br>{{ local.cidade }}</p>
+        </article>
+      }
+    </div>
+  }
 
   <p class="contato__pendencia">
     E-mail e redes sociais oficiais estão em validação e serão publicados assim que confirmados.

@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
-import { EventoAgenda } from '../../data/eventos.mock';
+import { EventoAgenda } from '../../data/eventos.service';
 
 @Component({
   selector: 'app-event-card',

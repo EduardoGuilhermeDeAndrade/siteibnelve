@@ -9,6 +9,7 @@ public class IbnelveDbContext(DbContextOptions<IbnelveDbContext> options)
 {
     public DbSet<Local> Locais => Set<Local>();
     public DbSet<Evento> Eventos => Set<Evento>();
+    public DbSet<Ministerio> Ministerios => Set<Ministerio>();
     public DbSet<ImagemSite> ImagensSite => Set<ImagemSite>();
     public DbSet<ConteudoTexto> ConteudosTexto => Set<ConteudoTexto>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
@@ -31,6 +32,12 @@ public class IbnelveDbContext(DbContextOptions<IbnelveDbContext> options)
                   .HasForeignKey(e => e.LocalId)
                   .OnDelete(DeleteBehavior.SetNull);
             entity.HasIndex(e => new { e.Visibilidade, e.Status, e.DataHoraInicio });
+        });
+
+        builder.Entity<Ministerio>(entity =>
+        {
+            entity.Property(m => m.Nome).HasMaxLength(200).IsRequired();
+            entity.Property(m => m.Lideres).HasMaxLength(200).IsRequired();
         });
 
         builder.Entity<ImagemSite>(entity =>

@@ -4,10 +4,7 @@
   <p class="event-card__data">
     {{ evento.data | date: "EEEE, d 'de' MMMM 'às' HH:mm" }}
   </p>
-  <p class="event-card__local">
-    {{ evento.local }}
-    @if (evento.localObservacao) {
-      <span class="event-card__observacao">({{ evento.localObservacao }})</span>
-    }
-  </p>
+  @if (evento.local) {
+    <p class="event-card__local">{{ evento.local }}</p>
+  }
 </article>

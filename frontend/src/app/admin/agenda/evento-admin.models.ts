@@ -1,10 +1,15 @@
 import {
+  CATEGORIA_LABELS,
   CategoriaEvento,
+  DIA_SEMANA_LABELS,
+  STATUS_LABELS,
   StatusEvento,
+  VISIBILIDADE_LABELS,
   VisibilidadeEvento
-} from '../../shared/data/eventos.mock';
+} from '../../shared/data/evento.types';
 
 export type { CategoriaEvento, StatusEvento, VisibilidadeEvento };
+export { CATEGORIA_LABELS, DIA_SEMANA_LABELS, STATUS_LABELS, VISIBILIDADE_LABELS };
 
 export interface EventoAdmin {
   id: string;
@@ -36,42 +41,3 @@ export interface EventoUpsert {
   recorrenciaSemanal: boolean;
   diaSemana: number | null;
 }
-
-export const CATEGORIA_LABELS: Record<CategoriaEvento, string> = {
-  CULTO: 'Culto',
-  CEIA: 'Ceia',
-  ESCOLA_BIBLICA: 'Escola Bíblica',
-  JOVENS: 'Mocidade',
-  MULHERES: 'Mulheres',
-  HOMENS: 'Homens',
-  OBREIROS: 'Obreiros',
-  LIDERANCA: 'Liderança',
-  BATISMO: 'Batismo',
-  CASAMENTO: 'Casamento',
-  REUNIAO: 'Reunião',
-  EVENTO_ESPECIAL: 'Evento especial',
-  ADMINISTRATIVO: 'Administrativo',
-  PESSOAL: 'Pessoal'
-};
-
-export const VISIBILIDADE_LABELS: Record<VisibilidadeEvento, string> = {
-  PUBLICO: 'Público',
-  INTERNO: 'Interno',
-  PESSOAL: 'Pessoal'
-};
-
-export const STATUS_LABELS: Record<StatusEvento, string> = {
-  RASCUNHO: 'Rascunho',
-  PUBLICADO: 'Publicado',
-  CANCELADO: 'Cancelado'
-};
-
-export const DIA_SEMANA_LABELS = [
-  'Domingo',
-  'Segunda-feira',
-  'Terça-feira',
-  'Quarta-feira',
-  'Quinta-feira',
-  'Sexta-feira',
-  'Sábado'
-];

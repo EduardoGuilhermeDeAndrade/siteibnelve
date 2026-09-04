@@ -1,6 +1,7 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 
-import { CategoriaEvento, EVENTOS_MOCK } from '../../shared/data/eventos.mock';
+import { CategoriaEvento } from '../../shared/data/evento.types';
+import { EventoAgenda, EventosService } from '../../shared/data/eventos.service';
 import { EventCard } from '../../shared/ui/event-card/event-card';
 import { SectionHeading } from '../../shared/ui/section-heading/section-heading';
 
@@ -9,6 +10,8 @@ interface FiltroCategoria {
   rotulo: string;
 }
 
+const FILTRO_TODAS: FiltroCategoria = { valor: 'TODAS', rotulo: 'Todas as categorias' };
+
 @Component({
   selector: 'app-agenda',
   imports: [EventCard, SectionHeading],
@@ -16,25 +19,39 @@ interface FiltroCategoria {
   styleUrl: './agenda.css'
 })
 export class Agenda {
-  private readonly eventosPublicos = EVENTOS_MOCK.filter(
-    (evento) => evento.visibilidade === 'PUBLICO' && evento.status === 'PUBLICADO'
-  );
+  private readonly eventosService = inject(EventosService);
 
-  protected readonly filtros: FiltroCategoria[] = [
-    { valor: 'TODAS', rotulo: 'Todas as categorias' },
-    ...Array.from(new Map(this.eventosPublicos.map((e) => [e.categoria, e.categoriaLabel])), (
-      [valor, rotulo]
-    ) => ({ valor: valor as CategoriaEvento, rotulo }))
-  ];
-
+  protected readonly eventosPublicos = signal<EventoAgenda[]>([]);
+  protected readonly filtros = signal<FiltroCategoria[]>([FILTRO_TODAS]);
   protected readonly categoriaSelecionada = signal<CategoriaEvento | 'TODAS'>('TODAS');
+  protected readonly carregando = signal(true);
+  protected readonly erro = signal(false);
 
   protected readonly eventosFiltrados = computed(() => {
     const categoria = this.categoriaSelecionada();
-    return categoria === 'TODAS'
-      ? this.eventosPublicos
-      : this.eventosPublicos.filter((evento) => evento.categoria === categoria);
+    const eventos = this.eventosPublicos();
+    return categoria === 'TODAS' ? eventos : eventos.filter((evento) => evento.categoria === categoria);
   });
+
+  constructor() {
+    this.eventosService.listar().subscribe({
+      next: (eventos) => {
+        this.eventosPublicos.set(eventos);
+
+        const categoriasUnicas = new Map(eventos.map((evento) => [evento.categoria, evento.categoriaLabel]));
+        this.filtros.set([
+          FILTRO_TODAS,
+          ...Array.from(categoriasUnicas, ([valor, rotulo]) => ({ valor, rotulo }))
+        ]);
+
+        this.carregando.set(false);
+      },
+      error: () => {
+        this.erro.set(true);
+        this.carregando.set(false);
+      }
+    });
+  }
 
   protected selecionarCategoria(valor: string): void {
     this.categoriaSelecionada.set(valor as CategoriaEvento | 'TODAS');

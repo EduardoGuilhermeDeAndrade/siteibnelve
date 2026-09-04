@@ -6,26 +6,32 @@
     subtitle="Próximas ocorrências da nossa programação regular. Eventos passados saem da lista automaticamente."
   ></app-section-heading>
 
-  <div class="agenda__filtro">
-    <label for="filtro-categoria">Filtrar por categoria</label>
-    <select
-      id="filtro-categoria"
-      name="categoria"
-      (change)="selecionarCategoria($any($event.target).value)"
-    >
-      @for (filtro of filtros; track filtro.valor) {
-        <option [value]="filtro.valor">{{ filtro.rotulo }}</option>
-      }
-    </select>
-  </div>
-
-  @if (eventosFiltrados().length > 0) {
-    <div class="card-grid">
-      @for (evento of eventosFiltrados(); track evento.id) {
-        <app-event-card [evento]="evento"></app-event-card>
-      }
-    </div>
+  @if (erro()) {
+    <p role="alert">Não foi possível carregar a agenda agora. Tente recarregar a página.</p>
+  } @else if (carregando()) {
+    <p>Carregando…</p>
   } @else {
-    <p>Nenhum evento encontrado para esta categoria.</p>
+    <div class="agenda__filtro">
+      <label for="filtro-categoria">Filtrar por categoria</label>
+      <select
+        id="filtro-categoria"
+        name="categoria"
+        (change)="selecionarCategoria($any($event.target).value)"
+      >
+        @for (filtro of filtros(); track filtro.valor) {
+          <option [value]="filtro.valor">{{ filtro.rotulo }}</option>
+        }
+      </select>
+    </div>
+
+    @if (eventosFiltrados().length > 0) {
+      <div class="card-grid">
+        @for (evento of eventosFiltrados(); track evento.id) {
+          <app-event-card [evento]="evento"></app-event-card>
+        }
+      </div>
+    } @else {
+      <p>Nenhum evento encontrado para esta categoria.</p>
+    }
   }
 </section>

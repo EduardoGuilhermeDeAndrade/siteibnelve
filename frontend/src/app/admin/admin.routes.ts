@@ -52,6 +52,23 @@ export const ADMIN_ROUTES: Routes = [
         path: 'conteudo',
         loadComponent: () => import('./conteudo/conteudo-admin').then((m) => m.ConteudoAdmin),
         title: 'Portal Admin — Conteúdo do Site'
+      },
+      {
+        path: 'ministerios',
+        loadComponent: () => import('./ministerios/ministerios-admin').then((m) => m.MinisteriosAdmin),
+        title: 'Portal Admin — Ministérios'
+      },
+      {
+        path: 'ministerios/novo',
+        loadComponent: () =>
+          import('./ministerios/ministerio-form/ministerio-form').then((m) => m.MinisterioForm),
+        title: 'Portal Admin — Novo ministério'
+      },
+      {
+        path: 'ministerios/:id/editar',
+        loadComponent: () =>
+          import('./ministerios/ministerio-form/ministerio-form').then((m) => m.MinisterioForm),
+        title: 'Portal Admin — Editar ministério'
       }
     ]
   }

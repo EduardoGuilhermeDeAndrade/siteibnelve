@@ -1,0 +1,65 @@
+<div class="ministerio-form">
+  <h1>{{ modoEdicao ? 'Editar ministério' : 'Novo ministério' }}</h1>
+
+  @if (carregando()) {
+    <p>Carregando…</p>
+  } @else {
+    <form [formGroup]="form" novalidate (ngSubmit)="salvar()">
+      <div class="ministerio-form__linha">
+        <div class="ministerio-form__campo">
+          <label for="nome">Nome</label>
+          <input id="nome" type="text" formControlName="nome">
+          @if (form.controls.nome.invalid && form.controls.nome.touched) {
+            <p class="ministerio-form__erro-campo">Informe o nome do ministério.</p>
+          }
+        </div>
+
+        <div class="ministerio-form__campo">
+          <label for="lideres">Líder(es)</label>
+          <input id="lideres" type="text" formControlName="lideres">
+          @if (form.controls.lideres.invalid && form.controls.lideres.touched) {
+            <p class="ministerio-form__erro-campo">Informe quem lidera.</p>
+          }
+        </div>
+      </div>
+
+      <div class="ministerio-form__campo">
+        <label for="descricao">Descrição (opcional)</label>
+        <textarea id="descricao" formControlName="descricao" rows="3"></textarea>
+      </div>
+
+      <div class="ministerio-form__campo">
+        <label for="imagemUrl">URL da imagem (opcional)</label>
+        <input
+          id="imagemUrl"
+          type="text"
+          formControlName="imagemUrl"
+          placeholder="Ex.: /img/ministerio-infantil.jpg ou a URL de uma imagem já enviada em Conteúdo do Site"
+        >
+      </div>
+
+      <div class="ministerio-form__linha">
+        <div class="ministerio-form__campo">
+          <label for="ordem">Ordem de exibição</label>
+          <input id="ordem" type="number" formControlName="ordem">
+        </div>
+
+        <div class="ministerio-form__checkbox">
+          <input id="ativo" type="checkbox" formControlName="ativo">
+          <label for="ativo">Ativo (aparece no site)</label>
+        </div>
+      </div>
+
+      @if (erro()) {
+        <p class="ministerio-form__erro" role="alert">{{ erro() }}</p>
+      }
+
+      <div class="ministerio-form__acoes">
+        <button class="button button--primary" type="submit" [disabled]="salvando()">
+          {{ salvando() ? 'Salvando…' : 'Salvar' }}
+        </button>
+        <a class="button button--outline" routerLink="/admin/ministerios">Cancelar</a>
+      </div>
+    </form>
+  }
+</div>

@@ -6,9 +6,15 @@
     subtitle="Espaços de serviço, discipulado e comunhão para todas as fases da vida. As descrições completas de cada ministério ainda serão publicadas."
   ></app-section-heading>
 
-  <div class="card-grid">
-    @for (ministerio of ministerios; track ministerio.id) {
-      <app-ministerio-card [ministerio]="ministerio"></app-ministerio-card>
-    }
-  </div>
+  @if (erro()) {
+    <p role="alert">Não foi possível carregar os ministérios agora. Tente recarregar a página.</p>
+  } @else if (carregando()) {
+    <p>Carregando…</p>
+  } @else {
+    <div class="card-grid">
+      @for (ministerio of ministerios(); track ministerio.id) {
+        <app-ministerio-card [ministerio]="ministerio"></app-ministerio-card>
+      }
+    </div>
+  }
 </section>
