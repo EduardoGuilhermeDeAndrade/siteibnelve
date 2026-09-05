@@ -44,6 +44,7 @@ public class AuthController(
     }
 
     [HttpPost("refresh")]
+    [EnableRateLimiting("refresh")]
     public async Task<ActionResult<LoginResponse>> Refresh()
     {
         if (!Request.Cookies.TryGetValue(CookieRefresh, out var tokenBruto) || string.IsNullOrEmpty(tokenBruto))

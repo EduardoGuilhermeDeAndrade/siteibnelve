@@ -1,4 +1,5 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { Meta } from '@angular/platform-browser';
 
 import { SectionHeading } from '../../shared/ui/section-heading/section-heading';
 
@@ -11,6 +12,13 @@ import { SectionHeading } from '../../shared/ui/section-heading/section-heading'
 export class Contribuicoes {
   protected readonly chavePix = '11.080.185/0001-08';
   protected readonly copiado = signal(false);
+
+  constructor() {
+    inject(Meta).updateTag({
+      name: 'description',
+      content: 'Contribua com a obra da IBNELVE via PIX e conheça outras formas de apoiar a igreja.'
+    });
+  }
 
   protected async copiarChave(): Promise<void> {
     try {

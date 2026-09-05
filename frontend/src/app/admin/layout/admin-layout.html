@@ -1,4 +1,6 @@
 <div class="admin-shell">
+  <a class="skip-link" href="#admin-main-content">Pular para o conteúdo</a>
+
   <header class="admin-shell__topbar">
     <span class="admin-shell__brand">IBNELVE · Admin</span>
     <div class="admin-shell__usuario">
@@ -8,7 +10,7 @@
   </header>
 
   <div class="admin-shell__corpo">
-    <nav class="admin-shell__nav">
+    <nav class="admin-shell__nav" aria-label="Menu do Portal Admin">
       <a routerLink="/admin" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">
         Início
       </a>
@@ -18,7 +20,7 @@
       <a routerLink="/admin/ministerios" routerLinkActive="is-active">Ministérios</a>
     </nav>
 
-    <main class="admin-shell__conteudo">
+    <main id="admin-main-content" class="admin-shell__conteudo" tabindex="-1">
       <router-outlet></router-outlet>
     </main>
   </div>

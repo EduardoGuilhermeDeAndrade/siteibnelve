@@ -98,12 +98,21 @@ Objetivo: motor de recorrência completo, conforme especificado no `CLAUDE.md`.
 - [x] Validado com dados reais de exemplo do `CLAUDE.md` (Ceia 1º domingo, Culto semanal, Jovens a cada 2 semanas aos sábados) e com a migração dos dados já cadastrados (Culto de Louvor e Adoração) preservada sem perda.
 - [x] Horários (`HoraInicio`/`HoraFim`/exceções) tratados como horário local de Brasília com offset fixo -03:00 (Brasil não observa horário de verão desde 2019) — decisão registrada no `CLAUDE.md`.
 
-## Fase 7 — Segurança, acessibilidade, SEO, testes e performance
-- HTTPS em dev/homolog, revisão de CORS, rate limiting nos endpoints sensíveis (login, formulários públicos), logs sem dados sensíveis.
-- Auditoria de acessibilidade (teclado, contraste, `prefers-reduced-motion`, labels/alt).
-- SEO: meta tags, Open Graph, sitemap.xml, robots.txt, Schema.org (Organization/Event).
-- Otimização de imagens (WebP/AVIF, lazy loading), code splitting, Core Web Vitals.
-- Testes: unitários (Angular + .NET), pelo menos testes de integração para o motor de recorrência (é a parte de maior risco de bugs).
+## Fase 7 — Segurança, acessibilidade, SEO, testes e performance ✅ recorte concluído em 2026-09-04
+Levantamento inicial (3 agentes de exploração) mostrou que segurança já estava bem encaminhada e acessibilidade/performance já tinham núcleo das Fases 2/6; o recorte desta fase fechou as lacunas reais encontradas, documentando o que fica para depois (ver "Fora de escopo desta passada").
+
+- [x] Segurança: `UseExceptionHandler`+`ProblemDetails` e `UseHsts` fora de `Development` (`Program.cs`); rate limiting adicionado no `refresh` (login já tinha); validação de magic-bytes (assinatura binária) no upload de imagem, além do `Content-Type` já checado (`ImagensController.cs`) — testado rejeitando um `.txt` disfarçado de PNG e aceitando um PNG real.
+- [x] Acessibilidade: Portal Admin não tinha recebido a revisão que o site público já teve na Fase 2 — adicionado skip-link e `aria-label` na nav (`admin-layout.html`, mesmo padrão do `app.html` público); os 3 formulários que só faziam `markAllAsTouched()` (Locais, Ministérios, Agenda) passaram a focar o primeiro campo inválido no submit, igual ao Login já fazia. Revisão completa com a skill `web-design-guidelines` sobre todo o Portal Admin.
+- [x] SEO: Open Graph, Twitter Card e Schema.org (`Church`) em `index.html`; `Meta` do Angular setando uma descrição própria por página pública (antes só existia uma description genérica e estática); `robots.txt`/`sitemap.xml` estáticos (6 rotas fixas) — com domínio placeholder `example.org` até a Fase 8 definir o domínio real.
+- [x] Performance: `fetchpriority="high"` no Hero já estava implementado; code splitting já cobria todas as rotas lazy (confirmado, nada a mudar).
+- [x] Testes: novo projeto `backend/Ibnelve.Api.Tests` (xUnit), 14 testes cobrindo os 6 tipos de recorrência do `OcorrenciaCalculator` contra datas reais de calendário, aplicação de exceções (troca de horário/cancelamento), `ProximaOcorrencia` e uma regressão para o offset de -03:00 — era zero antes, e é a peça que o `CLAUDE.md` aponta como maior risco de bugs.
+
+### Fora de escopo desta passada (documentado, não esquecido)
+- SSR/prerendering (mudaria a hospedagem — decisão melhor junto da Fase 8).
+- Conversão de imagens para WebP/AVIF (sem `cwebp`/`sharp` disponível no ambiente sem adicionar dependência nova).
+- Suíte ampla de testes de frontend (hoje é majoritariamente serviços HTTP finos/formulários, pouca lógica pura a testar).
+- Rate limiting global em todos os endpoints (só login/refresh são alvos realistas de abuso hoje).
+- Aviso de alterações não salvas ao navegar para fora de um formulário (`beforeunload`/guard) — identificado na revisão de UI, mas é uma funcionalidade nova, não um ajuste pontual de acessibilidade.
 
 ## Fase 8 — Deploy (fora de escopo agora)
 Fica só planejado, não executado: hospedagem do Angular, da API .NET e do PostgreSQL, secrets fora do repositório, pipeline de build. Retomar quando o usuário decidir publicar.
@@ -129,6 +138,6 @@ Essas pendências não bloqueiam o código de infraestrutura (Fases 0–1), mas 
 ## Ordem recomendada de execução
 Fase 0 → Fase 1 → Fase 2 → Fase 3 → Fase 4 → Fase 5 → Fase 6 → Fase 7. Deploy (Fase 8) só quando o usuário pedir.
 
-**Status em 2026-09-04**: Fases 0–6 têm núcleo funcional rodando localmente (site público + Portal Admin conversando com a API real, agenda com motor de recorrência completo). Pendências que restaram dentro dessas fases: telas de Usuários/Configurações (Fase 5), entidade `Contribuicao` (Fase 3), e a trilha paralela de conteúdo abaixo continua bloqueando publicação definitiva. Próximo passo natural: Fase 7 (segurança/acessibilidade/SEO/testes/performance) ou fechar as pendências de Usuários/Configurações/Contribuição — a decidir com o usuário.
+**Status em 2026-09-04**: Fases 0–7 têm núcleo funcional rodando localmente (site público + Portal Admin conversando com a API real, agenda com motor de recorrência completo, primeiro recorte de segurança/acessibilidade/SEO/testes/performance). Pendências que restaram dentro dessas fases: telas de Usuários/Configurações (Fase 5), entidade `Contribuicao` (Fase 3), os itens listados em "Fora de escopo desta passada" (Fase 7), e a trilha paralela de conteúdo abaixo continua bloqueando publicação definitiva. Próximo passo natural: Fase 8 (Deploy, quando o usuário decidir publicar) ou fechar as pendências de Usuários/Configurações/Contribuição — a decidir com o usuário.
 
 Cada fase segue a regra do `CLAUDE.md`: analisar o existente, resumir o que muda, preservar padrões definidos, evitar dependências desnecessárias, rodar build/testes e corrigir erros relevantes antes de avançar.

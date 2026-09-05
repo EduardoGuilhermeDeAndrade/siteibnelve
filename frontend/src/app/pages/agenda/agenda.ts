@@ -1,4 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
+import { Meta } from '@angular/platform-browser';
 
 import { CategoriaEvento } from '../../shared/data/evento.types';
 import { EventoAgenda, EventosService } from '../../shared/data/eventos.service';
@@ -34,6 +35,11 @@ export class Agenda {
   });
 
   constructor() {
+    inject(Meta).updateTag({
+      name: 'description',
+      content: 'Agenda de cultos, Escola Bíblica, Ceia e eventos da IBNELVE em Ribeirão das Neves/MG.'
+    });
+
     this.eventosService.listar().subscribe({
       next: (eventos) => {
         this.eventosPublicos.set(eventos);

@@ -86,11 +86,19 @@ builder.Services
 
 builder.Services.AddAuthorization();
 
+builder.Services.AddProblemDetails();
+
 builder.Services.AddRateLimiter(options =>
 {
     options.AddFixedWindowLimiter("login", limiter =>
     {
         limiter.PermitLimit = 5;
+        limiter.Window = TimeSpan.FromMinutes(1);
+        limiter.QueueLimit = 0;
+    });
+    options.AddFixedWindowLimiter("refresh", limiter =>
+    {
+        limiter.PermitLimit = 20;
         limiter.Window = TimeSpan.FromMinutes(1);
         limiter.QueueLimit = 0;
     });
@@ -119,6 +127,13 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.UseSwagger();
     app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "Ibnelve.Api v1"));
+}
+else
+{
+    // Fora de dev, erros não tratados viram ProblemDetails genérico (sem stack trace) em vez do
+    // comportamento padrão do Kestrel; HSTS só faz sentido com HTTPS real (não em dev local).
+    app.UseExceptionHandler();
+    app.UseHsts();
 }
 
 app.UseHttpsRedirection();

@@ -1,4 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
+import { Meta } from '@angular/platform-browser';
 
 import { Ministerio, MinisteriosService } from '../../shared/data/ministerios.service';
 import { MinisterioCard } from '../../shared/ui/ministerio-card/ministerio-card';
@@ -17,6 +18,12 @@ export class Ministerios {
   protected readonly erro = signal(false);
 
   constructor() {
+    inject(Meta).updateTag({
+      name: 'description',
+      content:
+        'Ministérios da IBNELVE: Infantil, Mocidade, Mulheres, Louvor e Diáconos — espaços de serviço e comunhão para todas as idades.'
+    });
+
     this.ministeriosService.listar().subscribe({
       next: (ministerios) => {
         this.ministerios.set(ministerios);

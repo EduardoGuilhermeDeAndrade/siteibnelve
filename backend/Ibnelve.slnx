@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="Ibnelve.Api/Ibnelve.Api.csproj" />
+  <Project Path="Ibnelve.Api.Tests/Ibnelve.Api.Tests.csproj" />
 </Solution>

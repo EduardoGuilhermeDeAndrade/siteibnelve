@@ -1,5 +1,6 @@
 import { Component, ElementRef, inject, signal, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Meta } from '@angular/platform-browser';
 
 import { LocalIgreja, LocaisService } from '../../shared/data/locais.service';
 import { SectionHeading } from '../../shared/ui/section-heading/section-heading';
@@ -27,6 +28,11 @@ export class Contato {
   protected readonly erroMensagem = signal(false);
 
   constructor() {
+    inject(Meta).updateTag({
+      name: 'description',
+      content: 'Fale com a IBNELVE: endereços dos templos Vereda e Liberdade, e envie um pedido de oração.'
+    });
+
     this.locaisService.listar().subscribe({
       next: (locais) => {
         this.locais.set(locais);

@@ -1,4 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
+import { Meta } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { forkJoin } from 'rxjs';
 
@@ -32,6 +33,12 @@ export class Home {
   protected readonly erro = signal(false);
 
   constructor() {
+    inject(Meta).updateTag({
+      name: 'description',
+      content:
+        'Igreja Batista Nacional da Esperança do Liberdade e Vereda — comunidade cristã em Ribeirão das Neves/MG. Cultos, ministérios e agenda.'
+    });
+
     this.imagensSiteService.buscarUrl('home-hero').subscribe({
       next: (url) => {
         if (url) {

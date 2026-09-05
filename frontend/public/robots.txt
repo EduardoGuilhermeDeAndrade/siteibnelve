@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Sitemap: substituir pelo domínio de produção quando o site for publicado (Fase 8 — Deploy).
+Sitemap: https://example.org/sitemap.xml

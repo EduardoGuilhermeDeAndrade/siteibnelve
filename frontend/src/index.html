@@ -6,7 +6,37 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Igreja Batista Nacional da Esperança do Liberdade e Vereda — Ribeirão das Neves/MG.">
+
+  <!--
+    og:url, og:image e o <link rel="canonical"> exigem um domínio de produção, que ainda não
+    existe (Fase 8 — Deploy — não planejada). Adicionar esses três quando o site for publicado.
+  -->
+  <meta property="og:site_name" content="IBNELVE">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="IBNELVE — Igreja Batista Nacional da Esperança do Liberdade e Vereda">
+  <meta property="og:description" content="Igreja Batista Nacional da Esperança do Liberdade e Vereda — Ribeirão das Neves/MG.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="IBNELVE — Igreja Batista Nacional da Esperança do Liberdade e Vereda">
+  <meta name="twitter:description" content="Igreja Batista Nacional da Esperança do Liberdade e Vereda — Ribeirão das Neves/MG.">
+
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Church",
+      "name": "Igreja Batista Nacional da Esperança do Liberdade e Vereda",
+      "alternateName": "IBNELVE",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Rua Rosina Tavares, 271 - Vereda",
+        "addressLocality": "Ribeirão das Neves",
+        "addressRegion": "MG",
+        "addressCountry": "BR"
+      }
+    }
+  </script>
 </head>
 <body>
   <app-root></app-root>

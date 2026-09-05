@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, ElementRef, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
@@ -16,6 +16,7 @@ export class MinisterioForm {
   private readonly ministeriosService = inject(MinisteriosService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly elementRef: ElementRef<HTMLElement> = inject(ElementRef);
 
   protected readonly ministerioId = signal<string | null>(null);
   protected readonly carregando = signal(false);
@@ -66,6 +67,7 @@ export class MinisterioForm {
   protected salvar(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      this.elementRef.nativeElement.querySelector<HTMLElement>('.ng-invalid')?.focus();
       return;
     }
 

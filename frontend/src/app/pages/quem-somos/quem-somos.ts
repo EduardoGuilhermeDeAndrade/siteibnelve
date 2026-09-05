@@ -1,4 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
+import { Meta } from '@angular/platform-browser';
 
 import { ConteudoTextoService } from '../../shared/data/conteudo-texto.service';
 import { SectionHeading } from '../../shared/ui/section-heading/section-heading';
@@ -26,6 +27,12 @@ export class QuemSomos {
   }
 
   constructor() {
+    inject(Meta).updateTag({
+      name: 'description',
+      content:
+        'Conheça a história, a missão e os valores da IBNELVE — Igreja Batista Nacional da Esperança do Liberdade e Vereda, em Ribeirão das Neves/MG.'
+    });
+
     this.conteudoTextoService.listarComoMapa().subscribe({
       next: (textos) => {
         this.textos.set(textos);
