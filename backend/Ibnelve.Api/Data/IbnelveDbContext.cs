@@ -13,6 +13,7 @@ public class IbnelveDbContext(DbContextOptions<IbnelveDbContext> options)
     public DbSet<Ministerio> Ministerios => Set<Ministerio>();
     public DbSet<ImagemSite> ImagensSite => Set<ImagemSite>();
     public DbSet<ConteudoTexto> ConteudosTexto => Set<ConteudoTexto>();
+    public DbSet<ConfiguracaoContribuicao> ConfiguracoesContribuicao => Set<ConfiguracaoContribuicao>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -71,6 +72,12 @@ public class IbnelveDbContext(DbContextOptions<IbnelveDbContext> options)
         {
             entity.Property(r => r.HashDoToken).HasMaxLength(200).IsRequired();
             entity.HasIndex(r => r.UsuarioId);
+        });
+
+        builder.Entity<ConfiguracaoContribuicao>(entity =>
+        {
+            entity.Property(c => c.ChavePix).HasMaxLength(200).IsRequired();
+            entity.Property(c => c.Favorecido).HasMaxLength(200).IsRequired();
         });
     }
 }

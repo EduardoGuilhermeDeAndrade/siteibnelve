@@ -1,0 +1,73 @@
+.contribuicao-admin {
+  max-width: 40rem;
+}
+
+.contribuicao-admin__aviso {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  margin-bottom: var(--space-4);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.contribuicao-admin form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.contribuicao-admin__linha {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: var(--space-4);
+}
+
+.contribuicao-admin__campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.contribuicao-admin__campo label {
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+}
+
+.contribuicao-admin__campo input,
+.contribuicao-admin__campo select {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.contribuicao-admin__erro-campo {
+  color: var(--color-danger);
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+
+.contribuicao-admin__erro {
+  background: var(--color-bg);
+  border: 1px solid var(--color-danger);
+  color: var(--color-danger);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  margin: 0;
+}
+
+.contribuicao-admin__sucesso {
+  color: var(--color-success);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  margin: 0;
+}
+
+.contribuicao-admin__acoes {
+  display: flex;
+  gap: var(--space-4);
+}

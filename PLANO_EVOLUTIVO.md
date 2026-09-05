@@ -60,8 +60,8 @@ Objetivo: todas as páginas públicas navegáveis, com dados mockados no Angular
 Objetivo: schema definitivo e endpoints reais substituindo os mocks.
 
 - [x] Entidades implementadas via EF Core/PostgreSQL: `Local`, `Evento` (versão simplificada — avulso ou semanal fixo, não o `SerieEvento`/`OcorrenciaEvento`/`ExcecaoEvento` completo, isso continua Fase 6), `Ministerio`, `ImagemSite`, `ConteudoTexto` (textos institucionais), `RefreshToken`, mais as tabelas do ASP.NET Core Identity (`ApplicationUser`/`ApplicationRole`).
-- [ ] `Contribuicao` (config) — não modelada ainda; a página de Contribuições continua com a chave PIX fixa no frontend.
-- [x] Migrations aplicadas (`PortalAdminNucleo`, `ConteudoTexto`, `Ministerios`).
+- [x] `ConfiguracaoContribuicao` (config, singleton — 1 linha só) modelada e integrada em 2026-09-05: chave PIX, tipo de chave e favorecido saem do banco (antes eram fixos no frontend); QR Code PIX reaproveita a infraestrutura de imagens por chave já existente (`contribuicao-qrcode`), sem código de upload novo. Tela própria "Contribuições" no Portal Admin (GET/PUT, sem criar/listar/excluir).
+- [x] Migrations aplicadas (`PortalAdminNucleo`, `ConteudoTexto`, `Ministerios`, `SerieEventoRecorrencia`, `ConfiguracaoContribuicao`).
 - [x] Endpoints CRUD completos (`/api/admin/**`, autenticados) para Eventos, Locais, Ministérios, Conteúdo de Texto e Imagens.
 - [x] Regras de visibilidade (PUBLICO/INTERNO/PESSOAL) e status (RASCUNHO/PUBLICADO/CANCELADO) aplicadas na API: os endpoints públicos (`/api/eventos`, `/api/locais`, `/api/ministerios`) só devolvem o que é `PUBLICO`+`PUBLICADO` (eventos) ou `Ativo` (locais/ministérios) — filtro no servidor, não no Angular.
 
@@ -138,6 +138,6 @@ Essas pendências não bloqueiam o código de infraestrutura (Fases 0–1), mas 
 ## Ordem recomendada de execução
 Fase 0 → Fase 1 → Fase 2 → Fase 3 → Fase 4 → Fase 5 → Fase 6 → Fase 7. Deploy (Fase 8) só quando o usuário pedir.
 
-**Status em 2026-09-04**: Fases 0–7 têm núcleo funcional rodando localmente (site público + Portal Admin conversando com a API real, agenda com motor de recorrência completo, primeiro recorte de segurança/acessibilidade/SEO/testes/performance). Pendências que restaram dentro dessas fases: telas de Usuários/Configurações (Fase 5), entidade `Contribuicao` (Fase 3), os itens listados em "Fora de escopo desta passada" (Fase 7), e a trilha paralela de conteúdo abaixo continua bloqueando publicação definitiva. Próximo passo natural: Fase 8 (Deploy, quando o usuário decidir publicar) ou fechar as pendências de Usuários/Configurações/Contribuição — a decidir com o usuário.
+**Status em 2026-09-05**: Fases 0–7 têm núcleo funcional rodando localmente (site público + Portal Admin conversando com a API real, agenda com motor de recorrência completo, primeiro recorte de segurança/acessibilidade/SEO/testes/performance, configuração de Contribuições no banco). Pendências que restaram dentro dessas fases: telas de Usuários/Configurações (Fase 5) e os itens listados em "Fora de escopo desta passada" (Fase 7); a trilha paralela de conteúdo abaixo continua bloqueando publicação definitiva. Próximo passo natural: Fase 8 (Deploy, quando o usuário decidir publicar) ou fechar a pendência de Usuários/Configurações — a decidir com o usuário.
 
 Cada fase segue a regra do `CLAUDE.md`: analisar o existente, resumir o que muda, preservar padrões definidos, evitar dependências desnecessárias, rodar build/testes e corrigir erros relevantes antes de avançar.

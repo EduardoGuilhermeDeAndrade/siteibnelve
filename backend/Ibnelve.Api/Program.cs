@@ -154,6 +154,7 @@ using (var scope = app.Services.CreateScope())
     await AdminSeeder.SeedAsync(scope.ServiceProvider);
     await ConteudoTextoSeeder.SeedAsync(scope.ServiceProvider);
     await MinisterioSeeder.SeedAsync(scope.ServiceProvider);
+    await ConfiguracaoContribuicaoSeeder.SeedAsync(scope.ServiceProvider);
 
     var storage = scope.ServiceProvider.GetRequiredService<IImagemStorageService>();
     await storage.GarantirBucketAsync();

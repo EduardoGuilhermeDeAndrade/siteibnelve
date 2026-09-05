@@ -98,4 +98,24 @@ public static class EnumMappings
         "ANUAL" => TipoRecorrencia.Anual,
         _ => throw new ArgumentException($"Tipo de recorrência inválido: {valor}")
     };
+
+    public static string ToApiString(this TipoChavePix tipo) => tipo switch
+    {
+        TipoChavePix.Cpf => "CPF",
+        TipoChavePix.Cnpj => "CNPJ",
+        TipoChavePix.Email => "EMAIL",
+        TipoChavePix.Telefone => "TELEFONE",
+        TipoChavePix.Aleatoria => "ALEATORIA",
+        _ => throw new ArgumentOutOfRangeException(nameof(tipo))
+    };
+
+    public static TipoChavePix ParseTipoChavePix(string valor) => valor switch
+    {
+        "CPF" => TipoChavePix.Cpf,
+        "CNPJ" => TipoChavePix.Cnpj,
+        "EMAIL" => TipoChavePix.Email,
+        "TELEFONE" => TipoChavePix.Telefone,
+        "ALEATORIA" => TipoChavePix.Aleatoria,
+        _ => throw new ArgumentException($"Tipo de chave PIX inválido: {valor}")
+    };
 }

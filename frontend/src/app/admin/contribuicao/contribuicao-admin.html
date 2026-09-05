@@ -1,0 +1,54 @@
+<div class="contribuicao-admin">
+  <h1>Contribuições</h1>
+
+  <p class="contribuicao-admin__aviso">
+    Estes dados aparecem na página pública de Contribuições. Para o QR Code PIX, envie a imagem em
+    <strong>Conteúdo do Site → Imagens</strong> usando a chave <code>contribuicao-qrcode</code>.
+  </p>
+
+  @if (carregando()) {
+    <p>Carregando…</p>
+  } @else {
+    <form [formGroup]="form" novalidate (ngSubmit)="salvar()">
+      <div class="contribuicao-admin__linha">
+        <div class="contribuicao-admin__campo">
+          <label for="tipoChave">Tipo de chave</label>
+          <select id="tipoChave" formControlName="tipoChave">
+            @for (tipo of tiposChave; track tipo) {
+              <option [value]="tipo">{{ tipoChaveLabels[tipo] }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="contribuicao-admin__campo">
+          <label for="chavePix">Chave PIX</label>
+          <input id="chavePix" type="text" formControlName="chavePix">
+          @if (form.controls.chavePix.invalid && form.controls.chavePix.touched) {
+            <p class="contribuicao-admin__erro-campo">Informe a chave PIX.</p>
+          }
+        </div>
+      </div>
+
+      <div class="contribuicao-admin__campo">
+        <label for="favorecido">Favorecido</label>
+        <input id="favorecido" type="text" formControlName="favorecido">
+        @if (form.controls.favorecido.invalid && form.controls.favorecido.touched) {
+          <p class="contribuicao-admin__erro-campo">Informe o nome do favorecido.</p>
+        }
+      </div>
+
+      @if (erro()) {
+        <p class="contribuicao-admin__erro" role="alert">{{ erro() }}</p>
+      }
+      @if (sucesso()) {
+        <p class="contribuicao-admin__sucesso" role="status">Configuração salva!</p>
+      }
+
+      <div class="contribuicao-admin__acoes">
+        <button class="button button--primary" type="submit" [disabled]="salvando()">
+          {{ salvando() ? 'Salvando…' : 'Salvar' }}
+        </button>
+      </div>
+    </form>
+  }
+</div>

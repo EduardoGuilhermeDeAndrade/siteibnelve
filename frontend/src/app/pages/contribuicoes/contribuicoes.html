@@ -6,26 +6,36 @@
     subtitle="Sua contribuição sustenta o trabalho da igreja em nossa comunidade, nos bairros Vereda e Liberdade."
   ></app-section-heading>
 
-  <article class="card contribuicoes__pix">
-    <p class="eyebrow">Chave PIX · CNPJ</p>
-    <p class="contribuicoes__chave">{{ chavePix }}</p>
-    <p class="contribuicoes__favorecido">
-      Favorecido: Igreja Batista Nacional da Esperança do Liberdade e Vereda
-    </p>
+  @if (erro()) {
+    <p role="alert">Não foi possível carregar os dados de contribuição agora. Tente recarregar a página.</p>
+  } @else if (carregando()) {
+    <p>Carregando…</p>
+  } @else {
+    <article class="card contribuicoes__pix">
+      <p class="eyebrow">Chave PIX · {{ tipoChaveLabel }}</p>
+      <p class="contribuicoes__chave">{{ chavePix }}</p>
+      <p class="contribuicoes__favorecido">
+        Favorecido: {{ favorecido }}
+      </p>
 
-    <button class="button button--primary" type="button" (click)="copiarChave()">
-      Copiar chave PIX
-    </button>
+      <button class="button button--primary" type="button" (click)="copiarChave()">
+        Copiar chave PIX
+      </button>
 
-    <p class="sr-only" role="status" aria-live="polite">
+      <p class="sr-only" role="status" aria-live="polite">
+        @if (copiado()) {
+          Chave PIX copiada para a área de transferência.
+        }
+      </p>
       @if (copiado()) {
-        Chave PIX copiada para a área de transferência.
+        <p class="contribuicoes__confirmacao" aria-hidden="true">Chave copiada!</p>
       }
-    </p>
-    @if (copiado()) {
-      <p class="contribuicoes__confirmacao" aria-hidden="true">Chave copiada!</p>
-    }
 
-    <p class="contribuicoes__qr">QR Code PIX em breve.</p>
-  </article>
+      @if (urlQrCode(); as qrCode) {
+        <img class="contribuicoes__qr-imagem" [src]="qrCode" alt="QR Code PIX da IBNELVE" width="240" height="240">
+      } @else {
+        <p class="contribuicoes__qr">QR Code PIX em breve.</p>
+      }
+    </article>
+  }
 </section>

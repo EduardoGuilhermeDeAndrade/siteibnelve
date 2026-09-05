@@ -74,6 +74,12 @@ export const ADMIN_ROUTES: Routes = [
         loadComponent: () =>
           import('./ministerios/ministerio-form/ministerio-form').then((m) => m.MinisterioForm),
         title: 'Portal Admin — Editar ministério'
+      },
+      {
+        path: 'contribuicoes',
+        loadComponent: () =>
+          import('./contribuicao/contribuicao-admin').then((m) => m.ContribuicaoAdmin),
+        title: 'Portal Admin — Contribuições'
       }
     ]
   }

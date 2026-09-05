@@ -41,3 +41,12 @@ public enum TipoRecorrencia
     MensalPorPosicao,
     Anual
 }
+
+public enum TipoChavePix
+{
+    Cpf,
+    Cnpj,
+    Email,
+    Telefone,
+    Aleatoria
+}

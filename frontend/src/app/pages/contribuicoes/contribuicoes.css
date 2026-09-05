@@ -29,3 +29,11 @@
   font-size: var(--font-size-sm);
   font-style: italic;
 }
+
+.contribuicoes__qr-imagem {
+  display: block;
+  margin-top: var(--space-6);
+  width: 15rem;
+  height: 15rem;
+  border-radius: var(--radius-md);
+}
