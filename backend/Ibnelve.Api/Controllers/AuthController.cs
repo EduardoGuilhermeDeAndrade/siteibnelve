@@ -62,8 +62,11 @@ public class AuthController(
         }
 
         var usuario = await userManager.FindByIdAsync(refreshToken.UsuarioId.ToString());
-        if (usuario is null)
+        if (usuario is null || await userManager.IsLockedOutAsync(usuario))
         {
+            refreshToken.RevogadoEm = DateTimeOffset.UtcNow;
+            await db.SaveChangesAsync();
+            Response.Cookies.Delete(CookieRefresh);
             return Unauthorized(new { message = "Sessão expirada, faça login novamente." });
         }
 

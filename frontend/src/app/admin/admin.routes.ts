@@ -80,6 +80,27 @@ export const ADMIN_ROUTES: Routes = [
         loadComponent: () =>
           import('./contribuicao/contribuicao-admin').then((m) => m.ContribuicaoAdmin),
         title: 'Portal Admin — Contribuições'
+      },
+      {
+        path: 'usuarios',
+        loadComponent: () => import('./usuarios/usuarios-admin').then((m) => m.UsuariosAdmin),
+        title: 'Portal Admin — Usuários'
+      },
+      {
+        path: 'usuarios/novo',
+        loadComponent: () => import('./usuarios/usuario-form/usuario-form').then((m) => m.UsuarioForm),
+        title: 'Portal Admin — Novo usuário'
+      },
+      {
+        path: 'usuarios/:id/editar',
+        loadComponent: () => import('./usuarios/usuario-form/usuario-form').then((m) => m.UsuarioForm),
+        title: 'Portal Admin — Editar usuário'
+      },
+      {
+        path: 'configuracoes',
+        loadComponent: () =>
+          import('./configuracoes/configuracoes-admin').then((m) => m.ConfiguracoesAdmin),
+        title: 'Portal Admin — Configurações'
       }
     ]
   }

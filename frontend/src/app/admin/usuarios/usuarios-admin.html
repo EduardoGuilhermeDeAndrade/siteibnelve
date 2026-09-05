@@ -1,0 +1,106 @@
+<div class="usuarios-admin">
+  <div class="usuarios-admin__cabecalho">
+    <h1>Usuários</h1>
+    <a class="button button--primary" routerLink="/admin/usuarios/novo">+ Novo usuário</a>
+  </div>
+
+  @if (erro()) {
+    <p class="usuarios-admin__erro" role="alert">{{ erro() }}</p>
+  }
+
+  @if (carregando()) {
+    <p>Carregando…</p>
+  } @else if (usuarios().length === 0) {
+    <p>Nenhum usuário cadastrado ainda.</p>
+  } @else {
+    <div class="usuarios-admin__tabela-wrap">
+      <table class="usuarios-admin__tabela">
+        <thead>
+          <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Email</th>
+            <th scope="col">Status</th>
+            <th scope="col"><span class="sr-only">Ações</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (usuario of usuarios(); track usuario.id) {
+            <tr>
+              <td>{{ usuario.nomeCompleto }}</td>
+              <td>{{ usuario.email }}</td>
+              <td>{{ usuario.ativo ? 'Ativo' : 'Inativo' }}</td>
+              <td class="usuarios-admin__acoes">
+                @if (confirmandoId() === usuario.id) {
+                  <span>{{ usuario.ativo ? 'Desativar?' : 'Ativar?' }}</span>
+                  <button
+                    class="button button--outline"
+                    type="button"
+                    [disabled]="processandoId() === usuario.id"
+                    (click)="alternarAtivo(usuario)"
+                  >
+                    Sim
+                  </button>
+                  <button class="button button--outline" type="button" (click)="cancelarConfirmacao()">
+                    Não
+                  </button>
+                } @else {
+                  <a class="button button--outline" [routerLink]="['/admin/usuarios', usuario.id, 'editar']">
+                    Editar
+                  </a>
+                  <button class="button button--outline" type="button" (click)="abrirRedefinirSenha(usuario.id)">
+                    Redefinir senha
+                  </button>
+                  <button class="button button--outline" type="button" (click)="pedirConfirmacao(usuario.id)">
+                    {{ usuario.ativo ? 'Desativar' : 'Ativar' }}
+                  </button>
+                }
+              </td>
+            </tr>
+
+            @if (sucessoSenhaId() === usuario.id) {
+              <tr>
+                <td colspan="4">
+                  <p class="usuarios-admin__sucesso" role="status">Senha redefinida!</p>
+                </td>
+              </tr>
+            }
+
+            @if (redefinindoId() === usuario.id) {
+              <tr>
+                <td colspan="4">
+                  <form
+                    class="senha-form"
+                    [formGroup]="senhaForm"
+                    novalidate
+                    (ngSubmit)="redefinirSenha(usuario.id)"
+                  >
+                    <div class="senha-form__campo">
+                      <label [for]="'novaSenha-' + usuario.id">Nova senha (mín. 8 caracteres)</label>
+                      <input [id]="'novaSenha-' + usuario.id" type="password" formControlName="novaSenha">
+                      @if (senhaForm.controls.novaSenha.invalid && senhaForm.controls.novaSenha.touched) {
+                        <p class="usuarios-admin__erro-campo">Informe uma senha com pelo menos 8 caracteres.</p>
+                      }
+                    </div>
+
+                    @if (erroSenha()) {
+                      <p class="usuarios-admin__erro" role="alert">{{ erroSenha() }}</p>
+                    }
+
+                    <div class="senha-form__acoes">
+                      <button class="button button--primary" type="submit" [disabled]="salvandoSenha()">
+                        {{ salvandoSenha() ? 'Salvando…' : 'Salvar nova senha' }}
+                      </button>
+                      <button class="button button--outline" type="button" (click)="cancelarRedefinirSenha()">
+                        Cancelar
+                      </button>
+                    </div>
+                  </form>
+                </td>
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

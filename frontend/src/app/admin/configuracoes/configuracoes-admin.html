@@ -1,0 +1,46 @@
+<div class="configuracoes-admin">
+  <h1>Configurações</h1>
+
+  <section class="configuracoes-admin__secao">
+    <h2>Trocar minha senha</h2>
+
+    <form [formGroup]="form" novalidate (ngSubmit)="salvar()">
+      <div class="configuracoes-admin__campo">
+        <label for="senhaAtual">Senha atual</label>
+        <input id="senhaAtual" type="password" formControlName="senhaAtual" autocomplete="current-password">
+        @if (form.controls.senhaAtual.invalid && form.controls.senhaAtual.touched) {
+          <p class="configuracoes-admin__erro-campo">Informe sua senha atual.</p>
+        }
+      </div>
+
+      <div class="configuracoes-admin__campo">
+        <label for="novaSenha">Nova senha (mín. 8 caracteres)</label>
+        <input id="novaSenha" type="password" formControlName="novaSenha" autocomplete="new-password">
+        @if (form.controls.novaSenha.invalid && form.controls.novaSenha.touched) {
+          <p class="configuracoes-admin__erro-campo">Informe uma senha com pelo menos 8 caracteres.</p>
+        }
+      </div>
+
+      <div class="configuracoes-admin__campo">
+        <label for="confirmarSenha">Confirmar nova senha</label>
+        <input id="confirmarSenha" type="password" formControlName="confirmarSenha" autocomplete="new-password">
+        @if (form.errors?.['senhasDiferentes'] && form.controls.confirmarSenha.touched) {
+          <p class="configuracoes-admin__erro-campo">As senhas não coincidem.</p>
+        }
+      </div>
+
+      @if (erro()) {
+        <p class="configuracoes-admin__erro" role="alert">{{ erro() }}</p>
+      }
+      @if (sucesso()) {
+        <p class="configuracoes-admin__sucesso" role="status">Senha alterada com sucesso!</p>
+      }
+
+      <div class="configuracoes-admin__acoes">
+        <button class="button button--primary" type="submit" [disabled]="salvando()">
+          {{ salvando() ? 'Salvando…' : 'Salvar' }}
+        </button>
+      </div>
+    </form>
+  </section>
+</div>
