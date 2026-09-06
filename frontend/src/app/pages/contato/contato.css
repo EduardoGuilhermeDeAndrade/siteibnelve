@@ -1,5 +1,10 @@
-.contato__pendencia {
+.contato__email {
   margin-top: var(--space-8);
+  font-size: var(--font-size-sm);
+}
+
+.contato__pendencia {
+  margin-top: var(--space-2);
   color: var(--color-text-muted);
   font-size: var(--font-size-sm);
 }

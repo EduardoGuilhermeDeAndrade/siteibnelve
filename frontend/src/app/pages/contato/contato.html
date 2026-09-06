@@ -12,13 +12,19 @@
           <p class="eyebrow">{{ local.tipo }}</p>
           <h2>{{ local.nome }}</h2>
           <p>{{ local.endereco }} — {{ local.bairro }}<br>{{ local.cidade }}</p>
+          @if (local.googleMapsUrl) {
+            <a href="{{ local.googleMapsUrl }}" target="_blank" rel="noopener noreferrer">Ver no Google Maps</a>
+          }
         </article>
       }
     </div>
   }
 
+  <p class="contato__email">
+    E-mail: <a href="mailto:ibnelve271@gmail.com.br">ibnelve271@gmail.com.br</a>
+  </p>
   <p class="contato__pendencia">
-    E-mail e redes sociais oficiais estão em validação e serão publicados assim que confirmados.
+    Redes sociais oficiais estão em validação e serão publicadas assim que confirmadas.
   </p>
 </section>
 

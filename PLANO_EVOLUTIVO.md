@@ -49,7 +49,7 @@ Objetivo: todas as páginas públicas navegáveis, com dados mockados no Angular
 - [x] Componentes compartilhados em `frontend/src/app/shared/ui/`: `section-heading` (com `level` 1/2 para nunca faltar `<h1>` na página), `event-card`, `ministerio-card`.
 - [x] Home com Hero estático (sem carrossel automático), 3 próximos eventos públicos, ministérios em destaque, os dois templos e CTA de Contribuições.
 - [x] Agenda com filtro por categoria (client-side) sobre os eventos mock.
-- [x] Contato com os dois templos e formulário de Pedido de Oração (validação client-side, erro focado no campo, só front-end — sem envio real, isso é Fase 5).
+- [x] Contato com os dois templos e formulário de Pedido de Oração (validação client-side, erro focado no campo, só front-end — sem envio real, isso é Fase 5). E-mail institucional preenchido em 2026-09-06 (`ibnelve271@gmail.com.br`, confirmado pelo usuário) — antes era um placeholder "em validação".
 - [x] Contribuições com chave PIX fixa e botão "Copiar chave PIX" funcional (Clipboard API + confirmação acessível via `aria-live`).
 - [x] Locale `pt-BR` registrado no Angular (`app.config.ts`) para datas por extenso corretas na Agenda.
 - [x] Acessibilidade: skip link para o conteúdo, hierarquia de headings corrigida (cada página tem exatamente um `<h1>`), labels associados a todos os campos de formulário, `alt` descritivo e `width`/`height` em todas as fotos, `loading="lazy"` fora do Hero.
@@ -122,14 +122,14 @@ Fica só planejado, não executado: hospedagem do Angular, da API .NET e do Post
 ## Trilha paralela — Conteúdo e assets (independe do código)
 Pode avançar em qualquer fase, idealmente antes das Fases 2 e 5:
 1. Validar nome/tagline da logo (divergência encontrada) e obter versão em alta resolução/SVG.
-2. Confirmar e-mail institucional (`ibnelve@gmail.com.br` vs `ibnelve@gmail.com`).
-3. Dia/ano exatos de fundação; história completa.
+2. ✅ E-mail institucional confirmado em 2026-09-06: `ibnelve271@gmail.com.br`.
+3. ✅ Data de fundação confirmada em 2026-09-06: 15 de novembro de 1996. História completa ainda pendente.
 4. Revisão de Missão/Visão/Valores/"No que cremos" com a liderança.
-5. Descrições curtas de cada ministério + fotos organizadas por ministério/templo.
-6. Confirmar redes sociais atuais.
-7. CEPs e links definitivos do Google Maps dos dois templos.
-8. Definir funcionamento do Pedido de Oração (nome obrigatório? anônimo? destino).
-9. Título/subtítulo/CTA do Hero.
+5. ✅ Descrições curtas dos 5 ministérios publicadas em 2026-09-06 (rascunho aprovado; fotos por ministério ainda pendentes).
+6. ✅ Redes sociais confirmadas em 2026-09-06: Instagram e Facebook @ibnelve (YouTube/TikTok ainda pendentes).
+7. ✅ Links de Google Maps publicados em 2026-09-06 (busca gerada a partir do endereço confirmado — trocar por oficial se houver; CEPs continuam pendentes).
+8. ✅ Funcionamento do Pedido de Oração definido em 2026-09-06 (nome/contato opcionais, "falar com pastor" exige contato, destino = Portal Admin) — falta implementar a persistência real (hoje o formulário só valida no navegador, não salva nada).
+9. ✅ Hero da Home aprovado em 2026-09-06 (texto já implementado desde a Fase 2, sem mudança).
 
 Essas pendências não bloqueiam o código de infraestrutura (Fases 0–1), mas bloqueiam publicar conteúdo definitivo nas Fases 2, 4 e 5.
 

@@ -7,8 +7,7 @@
 - [x] Sigla: **IBNELVE**
 - [x] Denominação: **Batista Nacional**
 - [x] História informada: **29 anos**
-- [x] Mês de fundação: **novembro**
-- [ ] Dia e ano exatos da fundação — ❌
+- [x] Data de fundação: **15 de novembro de 1996**
 - [ ] Logo original em alta resolução/SVG — ❌
 - [ ] ⚠️ **Divergência encontrada (Fase 0):** a logo em `Img Antigas/logo/Nova Logo Ibnelve.jpeg` traz o texto "IGREJA BATISTA NOVO ELVE", diferente do nome oficial "Esperança do Liberdade e Vereda". Confirmar com a liderança se é rascunho desatualizado ou se o nome mudou.
 - [ ] Paleta definitiva — ⚠️ definir com base no logo, fotos e nova identidade
@@ -20,7 +19,7 @@
 - [x] Bairro Vereda
 - [x] Ribeirão das Neves/MG
 - [ ] CEP — ❌
-- [ ] Google Maps definitivo — ⚠️ validar
+- [x] Google Maps: link de busca gerado a partir do endereço confirmado (publicado no site em 2026-09-06) — trocar por um link/Place ID oficial se a igreja tiver um
 
 ### Liberdade — Segundo templo
 - [x] Rua Quinze, 41
@@ -28,16 +27,15 @@
 - [x] Ribeirão das Neves/MG
 - [x] Uso informado: Ceia aos domingos pela manhã, EBD e eventos especiais
 - [ ] CEP — ❌
-- [ ] Google Maps definitivo — ❌
+- [x] Google Maps: link de busca gerado a partir do endereço confirmado (publicado no site em 2026-09-06) — trocar por um link/Place ID oficial se a igreja tiver um
 
 ## 3. Contato
 - [x] Não divulgar telefone pessoal como contato geral
-- [ ] E-mail: **ibnelve@gmail.com.br** — ⚠️ validar
-- [x] Site antigo usava `ibnelve@gmail.com` — referência para conferência
+- [x] E-mail institucional confirmado: **ibnelve271@gmail.com.br**
 
 ## 4. Redes sociais
-- [ ] Instagram — ⚠️ site antigo indicava `@ibnelve`; confirmar URL
-- [ ] Facebook — ⚠️ site antigo indicava `ibnelve`; confirmar URL
+- [x] Instagram confirmado: **@ibnelve**
+- [x] Facebook confirmado: **@ibnelve**
 - [ ] YouTube — ❌ verificar
 - [ ] TikTok — ❌ verificar
 
@@ -55,11 +53,7 @@
 - [x] Louvor — Marcus
 - [x] Diáconos — Ronildo
 - [x] EBD — programação/categoria da Agenda
-- [ ] Descrição curta do Infantil — ❌
-- [ ] Descrição curta da Mocidade — ❌
-- [ ] Descrição curta de Mulheres — ❌
-- [ ] Descrição curta de Louvor — ❌
-- [ ] Descrição/função dos Diáconos — ❌
+- [x] Descrições curtas publicadas em 2026-09-06 (Infantil, Mocidade, Mulheres, Louvor, Diáconos) — rascunho aprovado pelo usuário; os líderes de cada ministério podem ajustar os detalhes depois
 - [ ] Fotos por ministério — ⚠️ selecionar
 - [ ] Horários — ⚠️ cadastrar pela Agenda
 
@@ -134,7 +128,7 @@
 - [x] Favorecido: **Igreja Batista Nacional da Esperança do Liberdade e Vereda**
 - [x] Botão “Copiar chave PIX”
 - [ ] QR Code PIX — ❌ posteriormente
-- [ ] Texto definitivo sobre contribuições — ⚠️ revisar
+- [x] Texto sobre contribuições revisado e aprovado pelo usuário em 2026-09-06 (mantido como estava)
 
 ## 11. Fotos
 - [x] Foto comunidade/letreiro — Hero
@@ -153,11 +147,12 @@
 
 ## 12. Pedido de oração
 - [x] Recurso previsto
-- [ ] Nome obrigatório/opcional — ❌ definir
-- [ ] Permitir anonimato — ❌ definir
-- [ ] E-mail/contato opcional — ❌ definir
-- [ ] “Desejo falar com um pastor” — ❌ definir
-- [ ] Destino: portal/e-mail/ambos — ❌ definir
+- [x] Nome opcional, com opção explícita "Prefiro não me identificar" (aprovado em 2026-09-06)
+- [x] Anonimato permitido
+- [x] Contato (e-mail/telefone) opcional
+- [x] "Desejo falar com um pastor" — se marcado, passa a exigir pelo menos um contato
+- [x] Destino: Portal Admin (pastores/secretária consultam por lá; sem e-mail automático, pois não há infraestrutura de envio)
+- [ ] Implementação real (persistência no banco + tela no Portal para ver os pedidos) — política definida, falta codificar
 
 ## 13. Portal Administrativo
 - [x] Pastores terão acesso inicialmente
@@ -181,22 +176,22 @@
 - [x] Vereda e Liberdade
 - [x] Batista Nacional
 - [ ] Meta title — ❌
-- [ ] Meta description — ❌
-- [ ] Maps dos dois templos — ❌/⚠️
-- [ ] Schema.org — implementação
+- [x] Meta description — implementado na Fase 7 (uma por página)
+- [x] Maps dos dois templos — links de busca publicados em 2026-09-06 (trocar por oficial se houver)
+- [x] Schema.org — implementado na Fase 7 (`Church`/`PostalAddress` em `index.html`)
 - [ ] Verificar presença Google Business Profile — futuro
 
 ## 15. Pendências prioritárias
-1. [ ] Confirmar o e-mail `ibnelve@gmail.com.br`.
-2. [ ] Informar dia e ano exatos da fundação.
+1. [x] E-mail confirmado: `ibnelve271@gmail.com.br`.
+2. [x] Fundação confirmada: 15 de novembro de 1996.
 3. [ ] Providenciar logo original.
 4. [ ] Fornecer história da igreja.
 5. [ ] Revisar Missão, Visão e Valores.
 6. [ ] Revisar “No que cremos”.
-7. [ ] Confirmar redes sociais.
+7. [x] Redes sociais confirmadas: Instagram e Facebook @ibnelve.
 8. [ ] Cadastrar programação semanal/recorrente.
-9. [ ] Criar descrições curtas dos ministérios.
+9. [x] Descrições curtas dos ministérios publicadas em 2026-09-06.
 10. [ ] Confirmar demais lideranças públicas.
-11. [ ] Obter Google Maps dos dois templos.
-12. [ ] Definir funcionamento do Pedido de Oração.
+11. [x] Google Maps publicado em 2026-09-06 (link de busca; trocar por oficial se houver).
+12. [x] Funcionamento do Pedido de Oração definido em 2026-09-06 (ver Fase 5/backlog — falta implementar a persistência real).
 13. [ ] Definir título, subtítulo e CTA do Hero.

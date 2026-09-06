@@ -37,11 +37,12 @@ Inicialmente, pastores e secretária poderão acessar. No MVP pode existir um pe
 - Sigla: IBNELVE
 - Denominação: Batista Nacional
 - História informada: 29 anos
-- Fundação: novembro; dia e ano exatos pendentes
+- Fundação: 15 de novembro de 1996
 - Pastor Presidente: Pr. Eduardo
 - Fundador: Pr. Antônio
 - Não divulgar telefones pessoais como telefone institucional.
-- E-mail informado: ibnelve@gmail.com.br — validar antes da publicação, pois o site antigo usava ibnelve@gmail.com.
+- E-mail institucional confirmado: ibnelve271@gmail.com.br
+- Redes sociais confirmadas: Instagram e Facebook, ambos @ibnelve (YouTube/TikTok ainda pendentes)
 
 ## Locais
 ### Templo Vereda — Principal
@@ -242,16 +243,13 @@ Antes de implementar uma fase:
 Preferir solução simples que preserve segurança, qualidade e evolução.
 
 # Pendências — não inventar
-- dia e ano exatos da fundação;
 - CEP dos templos;
 - links definitivos do Google Maps;
-- confirmação do e-mail ibnelve@gmail.com.br;
 - história completa;
 - missão/visão/valores oficiais após revisão;
 - declaração de fé definitiva;
 - descrições dos ministérios;
 - programação regular completa;
 - demais lideranças públicas;
-- redes sociais atuais confirmadas;
 - QR Code PIX;
 - logo original em alta resolução/SVG.
