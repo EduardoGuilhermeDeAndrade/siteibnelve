@@ -1,0 +1,65 @@
+<div class="pedidos-oracao-admin">
+  <h1>Pedidos de Oração</h1>
+
+  @if (erro()) {
+    <p class="pedidos-oracao-admin__erro" role="alert">{{ erro() }}</p>
+  }
+
+  @if (carregando()) {
+    <p>Carregando…</p>
+  } @else if (pedidos().length === 0) {
+    <p>Nenhum pedido de oração recebido ainda.</p>
+  } @else {
+    <ul class="pedidos-lista">
+      @for (pedido of pedidos(); track pedido.id) {
+        <li class="pedidos-lista__item" [class.pedidos-lista__item--lido]="pedido.lido">
+          <div class="pedidos-lista__cabecalho">
+            <span class="pedidos-lista__data">{{ pedido.dataCriacao | date: 'dd/MM/yyyy HH:mm' }}</span>
+            <span class="pedidos-lista__nome">{{ pedido.anonimo ? 'Anônimo' : (pedido.nome || '—') }}</span>
+            @if (pedido.desejaFalarComPastor) {
+              <span class="pedidos-lista__badge pedidos-lista__badge--destaque">Deseja falar com um pastor</span>
+            }
+            @if (pedido.lido) {
+              <span class="pedidos-lista__badge">Lido</span>
+            }
+          </div>
+
+          @if (pedido.contato) {
+            <p class="pedidos-lista__contato">Contato: {{ pedido.contato }}</p>
+          }
+
+          <p class="pedidos-lista__mensagem">{{ pedido.mensagem }}</p>
+
+          <div class="pedidos-lista__acoes">
+            @if (confirmandoExclusaoId() === pedido.id) {
+              <span>Excluir?</span>
+              <button
+                class="button button--outline"
+                type="button"
+                [disabled]="processandoId() === pedido.id"
+                (click)="excluir(pedido.id)"
+              >
+                Sim
+              </button>
+              <button class="button button--outline" type="button" (click)="cancelarExclusao()">
+                Não
+              </button>
+            } @else {
+              <button
+                class="button button--outline"
+                type="button"
+                [disabled]="processandoId() === pedido.id"
+                (click)="alternarLido(pedido)"
+              >
+                {{ pedido.lido ? 'Marcar como não lido' : 'Marcar como lido' }}
+              </button>
+              <button class="button button--outline" type="button" (click)="pedirConfirmacaoExclusao(pedido.id)">
+                Excluir
+              </button>
+            }
+          </div>
+        </li>
+      }
+    </ul>
+  }
+</div>

@@ -152,7 +152,7 @@
 - [x] Contato (e-mail/telefone) opcional
 - [x] "Desejo falar com um pastor" — se marcado, passa a exigir pelo menos um contato
 - [x] Destino: Portal Admin (pastores/secretária consultam por lá; sem e-mail automático, pois não há infraestrutura de envio)
-- [ ] Implementação real (persistência no banco + tela no Portal para ver os pedidos) — política definida, falta codificar
+- [x] Implementação real concluída em 2026-09-06: entidade `PedidoOracao`, endpoint público com rate limiting, tela "Pedidos de Oração" no Portal Admin
 
 ## 13. Portal Administrativo
 - [x] Pastores terão acesso inicialmente
@@ -193,5 +193,5 @@
 9. [x] Descrições curtas dos ministérios publicadas em 2026-09-06.
 10. [ ] Confirmar demais lideranças públicas.
 11. [x] Google Maps publicado em 2026-09-06 (link de busca; trocar por oficial se houver).
-12. [x] Funcionamento do Pedido de Oração definido em 2026-09-06 (ver Fase 5/backlog — falta implementar a persistência real).
+12. [x] Pedido de Oração completo em 2026-09-06: política definida e persistência real implementada.
 13. [ ] Definir título, subtítulo e CTA do Hero.

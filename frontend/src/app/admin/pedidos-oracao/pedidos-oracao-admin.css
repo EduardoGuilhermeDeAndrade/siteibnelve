@@ -1,0 +1,79 @@
+.pedidos-oracao-admin__erro {
+  color: var(--color-danger);
+  margin-bottom: var(--space-4);
+}
+
+.pedidos-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 40rem;
+}
+
+.pedidos-lista__item {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.pedidos-lista__item--lido {
+  opacity: 0.7;
+}
+
+.pedidos-lista__cabecalho {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.pedidos-lista__data {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.pedidos-lista__nome {
+  font-weight: 600;
+}
+
+.pedidos-lista__badge {
+  font-size: 0.7em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: 0.1em 0.6em;
+}
+
+.pedidos-lista__badge--destaque {
+  color: var(--color-primary-900);
+  border-color: var(--color-primary-900);
+  font-weight: 600;
+}
+
+.pedidos-lista__contato {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-2);
+}
+
+.pedidos-lista__mensagem {
+  white-space: pre-wrap;
+  margin: 0 0 var(--space-3);
+}
+
+.pedidos-lista__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.pedidos-lista__acoes .button {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-sm);
+}

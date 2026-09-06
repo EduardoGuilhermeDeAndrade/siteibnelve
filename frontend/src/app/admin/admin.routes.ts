@@ -101,6 +101,12 @@ export const ADMIN_ROUTES: Routes = [
         loadComponent: () =>
           import('./configuracoes/configuracoes-admin').then((m) => m.ConfiguracoesAdmin),
         title: 'Portal Admin — Configurações'
+      },
+      {
+        path: 'pedidos-oracao',
+        loadComponent: () =>
+          import('./pedidos-oracao/pedidos-oracao-admin').then((m) => m.PedidosOracaoAdmin),
+        title: 'Portal Admin — Pedidos de Oração'
       }
     ]
   }

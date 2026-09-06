@@ -38,7 +38,7 @@
 
     @if (enviado()) {
       <p class="contato__sucesso" role="status" aria-live="polite">
-        Pedido registrado por aqui. Em breve o envio será integrado ao Portal Administrativo.
+        Pedido de oração recebido. Obrigado por compartilhar conosco.
       </p>
     } @else {
       <form class="contato__form" novalidate (ngSubmit)="enviarPedido()">
@@ -76,7 +76,44 @@
           }
         </div>
 
-        <button class="button button--primary" type="submit">Enviar pedido</button>
+        <div class="contato__campo-checkbox">
+          <input
+            id="desejaFalarComPastor"
+            name="desejaFalarComPastor"
+            type="checkbox"
+            [(ngModel)]="desejaFalarComPastor"
+          >
+          <label for="desejaFalarComPastor">Desejo conversar com um pastor</label>
+        </div>
+
+        <div class="contato__campo">
+          <label for="contato">
+            Contato (e-mail ou telefone{{ desejaFalarComPastor ? '' : ', opcional' }})
+          </label>
+          <input
+            #contatoInput
+            id="contato"
+            name="contato"
+            type="text"
+            autocomplete="off"
+            [(ngModel)]="contato"
+            [attr.aria-invalid]="erroContato() ? 'true' : null"
+            [attr.aria-describedby]="erroContato() ? 'contato-erro' : null"
+          >
+          @if (erroContato()) {
+            <p id="contato-erro" class="contato__erro">
+              Informe um contato para que um pastor possa retornar.
+            </p>
+          }
+        </div>
+
+        @if (erroEnvio()) {
+          <p class="contato__erro" role="alert">{{ erroEnvio() }}</p>
+        }
+
+        <button class="button button--primary" type="submit" [disabled]="enviando()">
+          {{ enviando() ? 'Enviando…' : 'Enviar pedido' }}
+        </button>
       </form>
     }
   </div>
