@@ -118,7 +118,7 @@
 - [x] Evento extraordinário sem reiniciar série
 - [x] Prévia antes de recalcular série
 - [x] Local/templo associado ao evento
-- [ ] Cadastrar programação regular real — ❌
+- [x] Programação regular cadastrada em 2026-09-07: Culto de Louvor (domingos 18h, Templo Vereda — exceto domingo de Ceia), Ceia (1º domingo do mês 8h30, Templo Liberdade), EBD (domingos 8h30–10h, Templo Liberdade — exceto domingo de Ceia), Mocidade (a cada 2 semanas, sábados 19h, local variável). Ver nota sobre manutenção do conflito Culto/Ceia na Fase 6 do `PLANO_EVOLUTIVO.md`.
 - [ ] Cadastrar eventos especiais iniciais — ❌
 
 ## 10. Contribuições
@@ -189,7 +189,7 @@
 5. [ ] Revisar Missão, Visão e Valores.
 6. [ ] Revisar “No que cremos”.
 7. [x] Redes sociais confirmadas: Instagram e Facebook @ibnelve.
-8. [ ] Cadastrar programação semanal/recorrente.
+8. [x] Programação semanal/recorrente cadastrada em 2026-09-07 (Culto, Ceia, EBD, Mocidade).
 9. [x] Descrições curtas dos ministérios publicadas em 2026-09-06.
 10. [ ] Confirmar demais lideranças públicas.
 11. [x] Google Maps publicado em 2026-09-06 (link de busca; trocar por oficial se houver).

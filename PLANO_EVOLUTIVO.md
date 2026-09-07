@@ -97,6 +97,7 @@ Objetivo: motor de recorrência completo, conforme especificado no `CLAUDE.md`.
 - [x] Site público (Home/Agenda) somando ocorrências de todas as séries `PUBLICO`+`PUBLICADO`+`Ativo` numa janela; contrato `EventoPublicoDto` não mudou, nenhuma página pública precisou de alteração de código.
 - [x] Validado com dados reais de exemplo do `CLAUDE.md` (Ceia 1º domingo, Culto semanal, Jovens a cada 2 semanas aos sábados) e com a migração dos dados já cadastrados (Culto de Louvor e Adoração) preservada sem perda.
 - [x] Horários (`HoraInicio`/`HoraFim`/exceções) tratados como horário local de Brasília com offset fixo -03:00 (Brasil não observa horário de verão desde 2019) — decisão registrada no `CLAUDE.md`.
+- [x] Limitação conhecida (registrada em 2026-09-07): os 6 tipos de recorrência não cobrem "toda semana, exceto a Nª ocorrência do mês" (ex.: Culto de Louvor não acontece no domingo da Ceia). Resolvido por ora com exceções de cancelamento pontuais (mesmo mecanismo de "Cancelar esta") nos próximos ~12 meses de domingos de Ceia, tanto no Culto quanto na EBD — **requer manutenção manual periódica** (alguém precisa adicionar novas exceções conforme o horizonte de 12 meses avança). Se isso virar recorrente demais, vale considerar um tipo de recorrência composto no futuro.
 
 ## Fase 7 — Segurança, acessibilidade, SEO, testes e performance ✅ recorte concluído em 2026-09-04
 Levantamento inicial (3 agentes de exploração) mostrou que segurança já estava bem encaminhada e acessibilidade/performance já tinham núcleo das Fases 2/6; o recorte desta fase fechou as lacunas reais encontradas, documentando o que fica para depois (ver "Fora de escopo desta passada").
@@ -130,6 +131,7 @@ Pode avançar em qualquer fase, idealmente antes das Fases 2 e 5:
 7. ✅ CEPs confirmados via Correios/ViaCEP em 2026-09-06: Vereda **33822-515**, Liberdade **33822-785** — a consulta também revelou que o nome da rua do Templo Vereda estava errado ("Rosina Tavares"); o correto é **Rua Angelina Tavares**, corrigido em todo o projeto. Links de Google Maps atualizados com o endereço corrigido (link de busca; trocar por Place ID oficial se houver).
 8. ✅ Pedido de Oração completo em 2026-09-06: política definida e persistência real implementada — nova entidade `PedidoOracao`, endpoint público (`api/pedidos-oracao`, com rate limiting) e tela "Pedidos de Oração" no Portal Admin (marcar lido/não lido, excluir). Testado de ponta a ponta: pedido enviado pelo site público aparece no Portal.
 9. ✅ Hero da Home aprovado em 2026-09-06 (texto já implementado desde a Fase 2, sem mudança).
+10. ✅ Programação semanal real cadastrada em 2026-09-07: Culto de Louvor (domingos 18h, Templo Vereda, exceto domingo de Ceia), Ceia (1º domingo do mês, 8h30, Templo Liberdade), EBD (domingos 8h30–10h, Templo Liberdade, exceto domingo de Ceia), Mocidade (a cada 2 semanas, sábados 19h, local variável). Ver limitação/manutenção do conflito Culto×Ceia na Fase 6.
 
 Essas pendências não bloqueiam o código de infraestrutura (Fases 0–1), mas bloqueiam publicar conteúdo definitivo nas Fases 2, 4 e 5.
 
