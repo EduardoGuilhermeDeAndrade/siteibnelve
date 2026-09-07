@@ -83,7 +83,7 @@
 - Igreja como comunidade de discípulos chamada à comunhão, serviço e missão.
 - Missão de anunciar o Evangelho e fazer discípulos.
 
-- [ ] História completa da igreja — ❌
+- [ ] História completa da igreja — ❌ seção "Nossa História" criada em 2026-09-07 na página Quem Somos (editável em Conteúdo do Site, chave `historia`), hoje com texto de exemplo em português marcando o espaço reservado — falta o relato real
 - [ ] Revisar/aprovar Quem Somos
 - [ ] Revisar/aprovar Missão
 - [ ] Revisar/aprovar Visão
@@ -185,7 +185,7 @@
 1. [x] E-mail confirmado: `ibnelve271@gmail.com.br`.
 2. [x] Fundação confirmada: 15 de novembro de 1996.
 3. [ ] Providenciar logo original.
-4. [ ] Fornecer história da igreja.
+4. [ ] Fornecer história da igreja (seção já existe na página, com placeholder — falta o texto real).
 5. [ ] Revisar Missão, Visão e Valores.
 6. [ ] Revisar “No que cremos”.
 7. [x] Redes sociais confirmadas: Instagram e Facebook @ibnelve.

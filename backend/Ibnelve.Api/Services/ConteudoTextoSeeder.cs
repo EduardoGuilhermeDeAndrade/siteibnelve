@@ -37,6 +37,15 @@ public static class ConteudoTextoSeeder
             new ConteudoTexto
             {
                 Id = Guid.NewGuid(),
+                Chave = "historia",
+                Titulo = "Nossa História",
+                Conteudo = "[Texto de exemplo — espaço reservado para a história completa da igreja. " +
+                    "A ser preenchido pela liderança com o relato real da fundação e da trajetória da IBNELVE.]",
+                DataAtualizacao = agora
+            },
+            new ConteudoTexto
+            {
+                Id = Guid.NewGuid(),
                 Chave = "missao",
                 Titulo = "Missão",
                 Conteudo = "Glorificar a Deus, proclamando o Evangelho de Jesus Cristo, fazendo discípulos, " +
