@@ -127,7 +127,7 @@ Pode avançar em qualquer fase, idealmente antes das Fases 2 e 5:
 4. Revisão de Missão/Visão/Valores/"No que cremos" com a liderança.
 5. ✅ Descrições curtas dos 5 ministérios publicadas em 2026-09-06 (rascunho aprovado; fotos por ministério ainda pendentes).
 6. ✅ Redes sociais confirmadas em 2026-09-06: Instagram e Facebook @ibnelve (YouTube/TikTok ainda pendentes).
-7. ✅ Links de Google Maps publicados em 2026-09-06 (busca gerada a partir do endereço confirmado — trocar por oficial se houver; CEPs continuam pendentes).
+7. ✅ CEPs confirmados via Correios/ViaCEP em 2026-09-06: Vereda **33822-515**, Liberdade **33822-785** — a consulta também revelou que o nome da rua do Templo Vereda estava errado ("Rosina Tavares"); o correto é **Rua Angelina Tavares**, corrigido em todo o projeto. Links de Google Maps atualizados com o endereço corrigido (link de busca; trocar por Place ID oficial se houver).
 8. ✅ Pedido de Oração completo em 2026-09-06: política definida e persistência real implementada — nova entidade `PedidoOracao`, endpoint público (`api/pedidos-oracao`, com rate limiting) e tela "Pedidos de Oração" no Portal Admin (marcar lido/não lido, excluir). Testado de ponta a ponta: pedido enviado pelo site público aparece no Portal.
 9. ✅ Hero da Home aprovado em 2026-09-06 (texto já implementado desde a Fase 2, sem mudança).
 

@@ -15,18 +15,18 @@
 
 ## 2. Templos
 ### Vereda — Principal
-- [x] Rua Rosina Tavares, 271
+- [x] Rua Angelina Tavares, 271 — corrigido em 2026-09-06 (estava registrado como "Rosina Tavares"; nome confirmado via consulta de CEP nos Correios/ViaCEP)
 - [x] Bairro Vereda
 - [x] Ribeirão das Neves/MG
-- [ ] CEP — ❌
-- [x] Google Maps: link de busca gerado a partir do endereço confirmado (publicado no site em 2026-09-06) — trocar por um link/Place ID oficial se a igreja tiver um
+- [x] CEP confirmado via Correios em 2026-09-06: **33822-515**
+- [x] Google Maps: link de busca atualizado com o endereço corrigido (publicado em 2026-09-06) — trocar por um link/Place ID oficial se a igreja tiver um
 
 ### Liberdade — Segundo templo
 - [x] Rua Quinze, 41
 - [x] Bairro Liberdade
 - [x] Ribeirão das Neves/MG
 - [x] Uso informado: Ceia aos domingos pela manhã, EBD e eventos especiais
-- [ ] CEP — ❌
+- [x] CEP confirmado via Correios em 2026-09-06: **33822-785**
 - [x] Google Maps: link de busca gerado a partir do endereço confirmado (publicado no site em 2026-09-06) — trocar por um link/Place ID oficial se a igreja tiver um
 
 ## 3. Contato

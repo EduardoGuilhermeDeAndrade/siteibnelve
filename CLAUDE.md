@@ -46,10 +46,10 @@ Inicialmente, pastores e secretária poderão acessar. No MVP pode existir um pe
 
 ## Locais
 ### Templo Vereda — Principal
-Rua Rosina Tavares, 271 - Vereda - Ribeirão das Neves/MG
+Rua Angelina Tavares, 271 - Vereda - Ribeirão das Neves/MG - CEP 33822-515
 
 ### Templo Liberdade — Segundo templo
-Rua Quinze, 41 - Liberdade - Ribeirão das Neves/MG
+Rua Quinze, 41 - Liberdade - Ribeirão das Neves/MG - CEP 33822-785
 
 Uso atual informado do Templo Liberdade: Ceia aos domingos pela manhã, Escola Bíblica Dominical e eventos especiais.
 
@@ -243,8 +243,7 @@ Antes de implementar uma fase:
 Preferir solução simples que preserve segurança, qualidade e evolução.
 
 # Pendências — não inventar
-- CEP dos templos;
-- links definitivos do Google Maps;
+- links definitivos do Google Maps (Place ID oficial, se a igreja tiver um);
 - história completa;
 - missão/visão/valores oficiais após revisão;
 - declaração de fé definitiva;
