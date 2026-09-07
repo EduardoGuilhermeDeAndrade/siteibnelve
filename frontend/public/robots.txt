@@ -1,5 +1,7 @@
+# Versão de revisão para aprovação interna — trocar para "Allow: /" quando o
+# domínio definitivo for publicado de fato (Fase 8 — Deploy).
 User-agent: *
-Allow: /
+Disallow: /
 
 # Sitemap: substituir pelo domínio de produção quando o site for publicado (Fase 8 — Deploy).
 Sitemap: https://example.org/sitemap.xml

@@ -1,2 +1,4 @@
-/** URL base da API. Fixo em dev local por enquanto — vira configuração de build na Fase 8 (deploy). */
-export const API_BASE_URL = 'http://localhost:5240/api';
+import { environment } from '../../environments/environment';
+
+/** URL base da API — vem de `environments/environment.ts`, trocado por build (`fileReplacements`) na build de produção. */
+export const API_BASE_URL = environment.apiBaseUrl;
