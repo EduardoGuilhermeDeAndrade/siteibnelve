@@ -136,10 +136,11 @@
 - [x] Foto de louvor — Cultos/Louvor
 - [x] Foto congregação — Quem Somos/Família
 - [x] Foto individual — possível Liderança após confirmação
-- [ ] Fotos Infantil
-- [ ] Fotos Mocidade
-- [ ] Fotos Mulheres
-- [ ] Fotos Louvor
+- [x] Fotos Infantil — foto real da comunidade (`/img/ministerio-infantil.jpg`, Fase 2)
+- [ ] Fotos Mocidade — foto de banco de imagens livre (Pexels) colocada em 2026-09-07 como espaço reservado; trocar por foto real do ministério quando disponível
+- [ ] Fotos Mulheres — idem (Pexels, 2026-09-07)
+- [ ] Fotos Louvor — idem (Pexels, 2026-09-07)
+- [ ] Fotos Diáconos — idem (Pexels, 2026-09-07)
 - [ ] Fotos dos templos
 - [ ] Fotos históricas
 - [x] **Fase 0:** acervo de `Img Antigas/` revisado e organizado em subpastas por uso (`logo/`, `culto/`, `comunidade/`, `ministerio-infantil/`, `visitas-acao-social/`, `eventos-especiais/`, `contribuicoes/`, `elementos-graficos/`, `revisar/`)

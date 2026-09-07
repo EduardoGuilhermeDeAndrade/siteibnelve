@@ -2,9 +2,8 @@
   <h1>Conteúdo do Site</h1>
 
   <p class="conteudo-admin__aviso">
-    Este cadastro alimenta a API, mas o site público ainda usa textos e arquivos fixos (isso muda
-    quando o site público passar a consumir a API, na Fase 4). Por enquanto, use esta tela para
-    manter o conteúdo pronto no servidor, sujeito à aprovação da liderança antes de publicar.
+    O site público já consome esses textos e imagens diretamente da API — qualquer alteração salva
+    aqui aparece no site assim que a página for recarregada.
   </p>
 
   <section class="conteudo-admin__secao">
@@ -59,6 +58,13 @@
 
   <section class="conteudo-admin__secao">
     <h2>Imagens do site</h2>
+
+    <p class="conteudo-admin__aviso">
+      Para trocar a foto de um <strong>ministério</strong>: envie a imagem aqui (escolha uma chave,
+      ex.: <code>ministerio-infantil</code>) e copie a URL que aparece abaixo da foto enviada; depois
+      vá em <strong>Ministérios</strong>, edite o ministério desejado e cole essa URL no campo
+      "URL da imagem".
+    </p>
 
     @if (erro()) {
       <p class="conteudo-admin__erro" role="alert">{{ erro() }}</p>
