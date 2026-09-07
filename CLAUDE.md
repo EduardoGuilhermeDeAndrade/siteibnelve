@@ -40,6 +40,7 @@ Inicialmente, pastores e secretária poderão acessar. No MVP pode existir um pe
 - Fundação: 15 de novembro de 1996
 - Pastor Presidente: Pr. Eduardo
 - Fundador: Pr. Antônio
+- Pastor: Pr. Almir Pereira Quaresma Júnior
 - Não divulgar telefones pessoais como telefone institucional.
 - E-mail institucional confirmado: ibnelve271@gmail.com.br
 - Redes sociais confirmadas: Instagram e Facebook, ambos @ibnelve (YouTube/TikTok ainda pendentes)

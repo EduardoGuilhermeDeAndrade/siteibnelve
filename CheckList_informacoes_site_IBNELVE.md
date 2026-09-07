@@ -42,6 +42,7 @@
 ## 5. Liderança
 - [x] Pr. Eduardo — Pastor Presidente
 - [x] Pr. Antônio — Fundador
+- [x] Pr. Almir Pereira Quaresma Júnior — Pastor (confirmado em 2026-09-07)
 - [ ] Função atual do Pr. Antônio, se for exibida — ❌
 - [ ] Demais lideranças públicas — ❌
 - [ ] Fotos oficiais/padronizadas — ⚠️ selecionar e confirmar
