@@ -8,6 +8,7 @@ Criar um site institucional moderno, simples, responsivo e profissional para a I
 - ASP.NET Core Web API + C#
 - PostgreSQL
 - HTML semântico e CSS moderno, mobile-first
+- Imagens do site (upload pelo Portal) ficam como `bytea` no próprio Postgres, servidas por um endpoint da API (`GET /api/imagens-site/{chave}/arquivo`) — decisão de 2026-09-09: são poucas imagens e sempre substituídas por inteiro, então não justificam um serviço de storage externo (S3/R2/B2) à parte.
 - API entre front-end e banco; nunca acesso direto do front ao PostgreSQL.
 
 ## Sitemap público

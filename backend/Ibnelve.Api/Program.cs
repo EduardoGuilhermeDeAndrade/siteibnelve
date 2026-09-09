@@ -1,10 +1,9 @@
 using System.Text;
-using Amazon.S3;
 using Ibnelve.Api.Data;
 using Ibnelve.Api.Services;
 using Ibnelve.Api.Services.Auth;
-using Ibnelve.Api.Services.Storage;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
@@ -112,20 +111,19 @@ builder.Services.AddRateLimiter(options =>
 
 builder.Services.AddScoped<ITokenService, JwtTokenService>();
 
-builder.Services.AddSingleton<IAmazonS3>(_ =>
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
-    var config = builder.Configuration;
-    var s3Config = new AmazonS3Config
-    {
-        ServiceURL = config["Storage:ServiceUrl"],
-        ForcePathStyle = true,
-        AuthenticationRegion = "us-east-1"
-    };
-    return new AmazonS3Client(config["Storage:AccessKey"], config["Storage:SecretKey"], s3Config);
+    // A URL das imagens é montada a partir de Request.Scheme/Host — atrás do proxy do host de
+    // deploy (ex.: Render) isso só vem certo com os cabeçalhos encaminhados habilitados. O
+    // proxy não é um IP conhecido de antemão, então limpamos as listas de confiança padrão.
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost;
+    options.KnownIPNetworks.Clear();
+    options.KnownProxies.Clear();
 });
-builder.Services.AddScoped<IImagemStorageService, S3ImagemStorageService>();
 
 var app = builder.Build();
+
+app.UseForwardedHeaders();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -161,9 +159,6 @@ using (var scope = app.Services.CreateScope())
     await ConteudoTextoSeeder.SeedAsync(scope.ServiceProvider);
     await MinisterioSeeder.SeedAsync(scope.ServiceProvider);
     await ConfiguracaoContribuicaoSeeder.SeedAsync(scope.ServiceProvider);
-
-    var storage = scope.ServiceProvider.GetRequiredService<IImagemStorageService>();
-    await storage.GarantirBucketAsync();
 }
 
 app.Run();

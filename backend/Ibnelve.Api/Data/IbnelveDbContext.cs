@@ -59,6 +59,7 @@ public class IbnelveDbContext(DbContextOptions<IbnelveDbContext> options)
         builder.Entity<ImagemSite>(entity =>
         {
             entity.Property(i => i.Chave).HasMaxLength(100).IsRequired();
+            entity.Property(i => i.ContentType).HasMaxLength(100).IsRequired();
             entity.HasIndex(i => i.Chave).IsUnique();
         });
 

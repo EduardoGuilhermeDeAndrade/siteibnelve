@@ -3,7 +3,6 @@ using Ibnelve.Api.Contracts;
 using Ibnelve.Api.Data;
 using Ibnelve.Api.Data.Entities;
 using Ibnelve.Api.Services;
-using Ibnelve.Api.Services.Storage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,14 +12,9 @@ namespace Ibnelve.Api.Controllers.Admin;
 [ApiController]
 [Route("api/admin/imagens")]
 [Authorize(Roles = AdminSeeder.PapelAdmin)]
-public class ImagensController(IbnelveDbContext db, IImagemStorageService storage) : ControllerBase
+public class ImagensController(IbnelveDbContext db) : ControllerBase
 {
-    private static readonly Dictionary<string, string> TiposPermitidos = new()
-    {
-        ["image/jpeg"] = ".jpg",
-        ["image/png"] = ".png",
-        ["image/webp"] = ".webp"
-    };
+    private static readonly HashSet<string> TiposPermitidos = ["image/jpeg", "image/png", "image/webp"];
 
     private const long TamanhoMaximoBytes = 5 * 1024 * 1024; // 5 MB
 
@@ -45,7 +39,7 @@ public class ImagensController(IbnelveDbContext db, IImagemStorageService storag
             return BadRequest(new { message = "Arquivo maior que o limite de 5 MB." });
         }
 
-        if (!TiposPermitidos.TryGetValue(arquivo.ContentType, out var extensao))
+        if (!TiposPermitidos.Contains(arquivo.ContentType))
         {
             return BadRequest(new { message = "Formato não suportado. Envie JPEG, PNG ou WebP." });
         }
@@ -55,10 +49,8 @@ public class ImagensController(IbnelveDbContext db, IImagemStorageService storag
             return BadRequest(new { message = "O conteúdo do arquivo não corresponde ao formato informado." });
         }
 
-        await storage.GarantirBucketAsync();
-
-        await using var stream = arquivo.OpenReadStream();
-        var url = await storage.SalvarAsync(chave, stream, arquivo.ContentType, extensao);
+        using var stream = new MemoryStream();
+        await arquivo.CopyToAsync(stream);
 
         var imagem = await db.ImagensSite.FirstOrDefaultAsync(i => i.Chave == chave);
         var usuarioId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
@@ -69,7 +61,8 @@ public class ImagensController(IbnelveDbContext db, IImagemStorageService storag
             db.ImagensSite.Add(imagem);
         }
 
-        imagem.Url = url;
+        imagem.Conteudo = stream.ToArray();
+        imagem.ContentType = arquivo.ContentType;
         imagem.AtualizadoPorUsuarioId = usuarioId;
         imagem.DataAtualizacao = DateTimeOffset.UtcNow;
 
@@ -102,5 +95,6 @@ public class ImagensController(IbnelveDbContext db, IImagemStorageService storag
         };
     }
 
-    private static ImagemSiteDto ParaDto(ImagemSite imagem) => new(imagem.Chave, imagem.Url, imagem.DataAtualizacao);
+    private ImagemSiteDto ParaDto(ImagemSite imagem) =>
+        new(imagem.Chave, ImagemUrlHelper.Construir(Request, imagem.Chave, imagem.DataAtualizacao), imagem.DataAtualizacao);
 }
