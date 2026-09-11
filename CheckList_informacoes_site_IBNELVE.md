@@ -8,8 +8,9 @@
 - [x] Denominação: **Batista Nacional**
 - [x] História informada: **29 anos**
 - [x] Data de fundação: **15 de novembro de 1996**
-- [ ] Logo original em alta resolução/SVG — ❌
-- [ ] ⚠️ **Divergência encontrada (Fase 0):** a logo em `Img Antigas/logo/Nova Logo Ibnelve.jpeg` traz o texto "IGREJA BATISTA NOVO ELVE", diferente do nome oficial "Esperança do Liberdade e Vereda". Confirmar com a liderança se é rascunho desatualizado ou se o nome mudou.
+- [x] Logo oficial aprovada e aplicada em 2026-09-10/11 (`Img Antigas/logo/logo-oficial.jpeg`) — usada no header do site e como favicon/ícone do app. Resolve a divergência do nome (Fase 0): a versão oficial traz só "IGREJA BATISTA" no subtítulo, sem o "NOVO ELVE" antigo.
+- [ ] Ainda em PNG/JPEG (fundo branco), não em vetor/SVG — pendente se algum dia precisar de versão vetorial (impressão grande, etc.); pra web/favicon o PNG atende bem.
+- [ ] Rodapé e header do Portal Admin continuam com o texto "IBNELVE" (fundo escuro) — a logo oficial só tem versão fundo branco, aplicá-la ali deixaria um retângulo branco. Precisa de uma variante clara/transparente pra esses dois lugares.
 - [ ] Paleta definitiva — ⚠️ definir com base no logo, fotos e nova identidade
 - [ ] Tipografia — ⚠️ definir no Design System
 
@@ -186,7 +187,7 @@
 ## 15. Pendências prioritárias
 1. [x] E-mail confirmado: `ibnelve271@gmail.com.br`.
 2. [x] Fundação confirmada: 15 de novembro de 1996.
-3. [ ] Providenciar logo original.
+3. [x] Logo original aprovada e aplicada (2026-09-11).
 4. [ ] Fornecer história da igreja (seção já existe na página, com placeholder — falta o texto real).
 5. [ ] Revisar Missão, Visão e Valores.
 6. [ ] Revisar “No que cremos”.

@@ -30,11 +30,13 @@
 }
 
 .site-header__brand {
-  font-weight: 700;
-  font-size: var(--font-size-lg);
-  letter-spacing: 0.04em;
-  color: var(--color-primary-900);
-  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.site-header__brand img {
+  height: 2.75rem;
+  width: auto;
 }
 
 .site-header__toggle {

@@ -252,5 +252,6 @@ Preferir solução simples que preserve segurança, qualidade e evolução.
 - descrições dos ministérios;
 - programação regular completa;
 - demais lideranças públicas;
-- QR Code PIX;
-- logo original em alta resolução/SVG.
+- QR Code PIX.
+
+Logo oficial aprovada em 2026-09-11 (`Img Antigas/logo/logo-oficial.jpeg`) — aplicada no header do site e como favicon/ícone do app. Só em PNG/JPEG (sem versão vetorial) e só a variante para fundo claro (rodapé e header do Portal, de fundo escuro, continuam com o texto "IBNELVE" até existir uma variante clara/transparente).
