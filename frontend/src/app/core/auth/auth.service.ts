@@ -45,8 +45,13 @@ export class AuthService {
         this.http.post(`${API_BASE_URL}/auth/logout`, {}, { withCredentials: true })
       );
     } finally {
-      this.accessTokenSignal.set(null);
-      this.usuarioSignal.set(null);
+      this.encerrarSessaoLocal();
     }
+  }
+
+  /** Limpa a sessão só neste cliente, sem chamar a API — usado quando o token já expirou. */
+  encerrarSessaoLocal(): void {
+    this.accessTokenSignal.set(null);
+    this.usuarioSignal.set(null);
   }
 }

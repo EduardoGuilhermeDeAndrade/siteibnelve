@@ -1,7 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
+import { mensagemDeErro } from '../../../shared/errors/mensagem-erro';
 import { LocalAdmin } from '../../locais/local-admin.models';
 import { LocaisService } from '../../locais/locais.service';
 import {
@@ -197,8 +199,8 @@ export class EventoForm {
 
     requisicao.subscribe({
       next: () => this.router.navigateByUrl('/admin/agenda'),
-      error: (erro: { error?: { message?: string } }) => {
-        this.erro.set(erro?.error?.message ?? 'Não foi possível salvar a série.');
+      error: (erro: HttpErrorResponse) => {
+        this.erro.set(mensagemDeErro(erro, 'Não foi possível salvar a série.'));
         this.salvando.set(false);
       }
     });

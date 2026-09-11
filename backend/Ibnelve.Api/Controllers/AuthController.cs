@@ -115,11 +115,15 @@ public class AuthController(
         db.RefreshTokens.Add(novoRefreshToken);
         await db.SaveChangesAsync();
 
+        // Front-end e API rodam em domínios diferentes fora de dev (ex.: Cloudflare Pages/Render
+        // vs. Render da API) — SameSite=Strict nunca seria enviado nesse cenário. None+Secure é
+        // obrigatório fora de dev; em dev local (http, mesmo "site" via localhost) Lax basta.
+        var isProduction = !env.IsDevelopment();
         Response.Cookies.Append(CookieRefresh, refreshBruto, new CookieOptions
         {
             HttpOnly = true,
-            Secure = !env.IsDevelopment(),
-            SameSite = SameSiteMode.Strict,
+            Secure = isProduction,
+            SameSite = isProduction ? SameSiteMode.None : SameSiteMode.Lax,
             Expires = novoRefreshToken.ExpiraEm,
             Path = "/api/auth"
         });

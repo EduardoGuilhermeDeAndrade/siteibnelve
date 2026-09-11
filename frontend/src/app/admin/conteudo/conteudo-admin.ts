@@ -1,7 +1,9 @@
 import { DatePipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+import { mensagemDeErro } from '../../shared/errors/mensagem-erro';
 import {
   CHAVES_SUGERIDAS,
   ImagemSite,
@@ -90,9 +92,9 @@ export class ConteudoAdmin {
           item.sucesso = false;
         }, 4000);
       },
-      error: () => {
+      error: (erro: HttpErrorResponse) => {
         item.salvando = false;
-        item.erro = 'Não foi possível salvar este texto.';
+        item.erro = mensagemDeErro(erro, 'Não foi possível salvar este texto.');
       }
     });
   }
@@ -154,8 +156,8 @@ export class ConteudoAdmin {
         this.sucessoChave.set(chave);
         setTimeout(() => this.sucessoChave.set(null), 4000);
       },
-      error: (erro: { error?: { message?: string } }) => {
-        this.erro.set(erro?.error?.message ?? 'Não foi possível enviar a imagem.');
+      error: (erro: HttpErrorResponse) => {
+        this.erro.set(mensagemDeErro(erro, 'Não foi possível enviar a imagem.'));
         this.enviandoChave.set(null);
       }
     });

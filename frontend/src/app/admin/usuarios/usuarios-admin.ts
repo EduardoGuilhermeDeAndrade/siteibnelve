@@ -1,7 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
+import { mensagemDeErro } from '../../shared/errors/mensagem-erro';
 import { UsuarioAdmin } from './usuario-admin.models';
 import { UsuariosService } from './usuarios.service';
 
@@ -74,8 +76,8 @@ export class UsuariosAdmin {
         this.processandoId.set(null);
         this.confirmandoId.set(null);
       },
-      error: (erro: { error?: { message?: string } }) => {
-        this.erro.set(erro?.error?.message ?? 'Não foi possível alterar o status do usuário.');
+      error: (erro: HttpErrorResponse) => {
+        this.erro.set(mensagemDeErro(erro, 'Não foi possível alterar o status do usuário.'));
         this.processandoId.set(null);
         this.confirmandoId.set(null);
       }
@@ -108,8 +110,8 @@ export class UsuariosAdmin {
         this.sucessoSenhaId.set(id);
         setTimeout(() => this.sucessoSenhaId.set(null), 4000);
       },
-      error: (erro: { error?: { message?: string } }) => {
-        this.erroSenha.set(erro?.error?.message ?? 'Não foi possível redefinir a senha.');
+      error: (erro: HttpErrorResponse) => {
+        this.erroSenha.set(mensagemDeErro(erro, 'Não foi possível redefinir a senha.'));
         this.salvandoSenha.set(false);
       }
     });

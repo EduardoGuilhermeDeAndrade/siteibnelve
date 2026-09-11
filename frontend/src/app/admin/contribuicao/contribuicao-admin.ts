@@ -1,6 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
+import { mensagemDeErro } from '../../shared/errors/mensagem-erro';
 import { TIPO_CHAVE_PIX_LABELS, TipoChavePix } from './contribuicao-admin.models';
 import { ContribuicaoAdminService } from './contribuicao.service';
 
@@ -63,8 +65,8 @@ export class ContribuicaoAdmin {
         this.sucesso.set(true);
         setTimeout(() => this.sucesso.set(false), 4000);
       },
-      error: (erro: { error?: { message?: string } }) => {
-        this.erro.set(erro?.error?.message ?? 'Não foi possível salvar a configuração.');
+      error: (erro: HttpErrorResponse) => {
+        this.erro.set(mensagemDeErro(erro, 'Não foi possível salvar a configuração.'));
         this.salvando.set(false);
       }
     });

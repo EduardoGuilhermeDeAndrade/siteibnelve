@@ -1,6 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, inject, signal } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 
+import { mensagemDeErro } from '../../shared/errors/mensagem-erro';
 import { ContaService } from './conta.service';
 
 function senhasIguaisValidator(grupo: AbstractControl): ValidationErrors | null {
@@ -52,8 +54,8 @@ export class ConfiguracoesAdmin {
         this.sucesso.set(true);
         this.form.reset();
       },
-      error: (erro: { error?: { message?: string } }) => {
-        this.erro.set(erro?.error?.message ?? 'Não foi possível trocar a senha.');
+      error: (erro: HttpErrorResponse) => {
+        this.erro.set(mensagemDeErro(erro, 'Não foi possível trocar a senha.'));
         this.salvando.set(false);
       }
     });

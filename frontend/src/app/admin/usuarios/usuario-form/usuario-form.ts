@@ -1,7 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
+import { mensagemDeErro } from '../../../shared/errors/mensagem-erro';
 import { UsuarioCriar } from '../usuario-admin.models';
 import { UsuariosService } from '../usuarios.service';
 
@@ -83,8 +85,8 @@ export class UsuarioForm {
 
     requisicao.subscribe({
       next: () => this.router.navigateByUrl('/admin/usuarios'),
-      error: (erro: { error?: { message?: string } }) => {
-        this.erro.set(erro?.error?.message ?? 'Não foi possível salvar o usuário.');
+      error: (erro: HttpErrorResponse) => {
+        this.erro.set(mensagemDeErro(erro, 'Não foi possível salvar o usuário.'));
         this.salvando.set(false);
       }
     });

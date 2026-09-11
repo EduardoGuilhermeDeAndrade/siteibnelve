@@ -1,7 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
+import { mensagemDeErro } from '../../../shared/errors/mensagem-erro';
 import { LocalUpsert } from '../local-admin.models';
 import { LocaisService } from '../locais.service';
 
@@ -110,8 +112,8 @@ export class LocalForm {
 
     requisicao.subscribe({
       next: () => this.router.navigateByUrl('/admin/locais'),
-      error: (erro: { error?: { message?: string } }) => {
-        this.erro.set(erro?.error?.message ?? 'Não foi possível salvar o local.');
+      error: (erro: HttpErrorResponse) => {
+        this.erro.set(mensagemDeErro(erro, 'Não foi possível salvar o local.'));
         this.salvando.set(false);
       }
     });

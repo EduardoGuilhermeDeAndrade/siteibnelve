@@ -1,7 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, inject, signal, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Meta } from '@angular/platform-browser';
 
+import { mensagemDeErro } from '../../shared/errors/mensagem-erro';
 import { LocalIgreja, LocaisService } from '../../shared/data/locais.service';
 import { PedidoOracaoService } from '../../shared/data/pedido-oracao.service';
 import { SectionHeading } from '../../shared/ui/section-heading/section-heading';
@@ -89,8 +91,8 @@ export class Contato {
           this.mensagem = '';
           this.anonimo = false;
         },
-        error: (erro: { error?: { message?: string } }) => {
-          this.erroEnvio.set(erro?.error?.message ?? 'Não foi possível enviar seu pedido agora. Tente novamente.');
+        error: (erro: HttpErrorResponse) => {
+          this.erroEnvio.set(mensagemDeErro(erro, 'Não foi possível enviar seu pedido agora. Tente novamente.'));
           this.enviando.set(false);
         }
       });

@@ -1,7 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
+import { mensagemDeErro } from '../../../shared/errors/mensagem-erro';
 import { MinisterioUpsert } from '../ministerio-admin.models';
 import { MinisteriosService } from '../ministerios.service';
 
@@ -92,8 +94,8 @@ export class MinisterioForm {
 
     requisicao.subscribe({
       next: () => this.router.navigateByUrl('/admin/ministerios'),
-      error: (erro: { error?: { message?: string } }) => {
-        this.erro.set(erro?.error?.message ?? 'Não foi possível salvar o ministério.');
+      error: (erro: HttpErrorResponse) => {
+        this.erro.set(mensagemDeErro(erro, 'Não foi possível salvar o ministério.'));
         this.salvando.set(false);
       }
     });
