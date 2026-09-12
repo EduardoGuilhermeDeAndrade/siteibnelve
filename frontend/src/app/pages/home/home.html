@@ -1,12 +1,5 @@
 <section class="hero">
-  <img
-    class="hero__imagem"
-    [src]="heroUrl()"
-    alt="Membros da IBNELVE reunidos, sorrindo e acenando, celebrando juntos em um culto"
-    width="1920"
-    height="1080"
-    fetchpriority="high"
-  >
+  <app-hero-carousel [slides]="heroSlides()"></app-hero-carousel>
   <div class="hero__conteudo">
     <p class="eyebrow">IBNELVE · Ribeirão das Neves/MG</p>
     <h1>Uma igreja acolhedora, para conhecer a Cristo e crescer na fé</h1>

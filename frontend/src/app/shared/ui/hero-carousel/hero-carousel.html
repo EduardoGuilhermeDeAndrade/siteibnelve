@@ -1,0 +1,40 @@
+<div
+  class="hero-carousel"
+  (mouseenter)="pausar()"
+  (mouseleave)="retomar()"
+>
+  @for (slide of slides; track slide.url; let i = $index) {
+    <img
+      class="hero-carousel__imagem"
+      [class.hero-carousel__imagem--ativa]="i === indiceAtual()"
+      [src]="slide.url"
+      [alt]="slide.alt"
+      width="1920"
+      height="1080"
+      [attr.fetchpriority]="i === 0 ? 'high' : null"
+      [attr.loading]="i === 0 ? null : 'lazy'"
+    >
+  }
+
+  @if (slides.length > 1) {
+    <div class="hero-carousel__controles">
+      <button type="button" class="hero-carousel__seta" aria-label="Foto anterior" (click)="anterior()">‹</button>
+
+      <div class="hero-carousel__pontos" role="tablist" aria-label="Fotos em destaque">
+        @for (slide of slides; track slide.url; let i = $index) {
+          <button
+            type="button"
+            class="hero-carousel__ponto"
+            [class.hero-carousel__ponto--ativo]="i === indiceAtual()"
+            role="tab"
+            [attr.aria-selected]="i === indiceAtual()"
+            [attr.aria-label]="'Ir para foto ' + (i + 1) + ' de ' + slides.length"
+            (click)="irPara(i)"
+          ></button>
+        }
+      </div>
+
+      <button type="button" class="hero-carousel__seta" aria-label="Próxima foto" (click)="proximo()">›</button>
+    </div>
+  }
+</div>

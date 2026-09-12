@@ -133,7 +133,7 @@
 - [x] Texto sobre contribuições revisado e aprovado pelo usuário em 2026-09-06 (mantido como estava)
 
 ## 11. Fotos
-- [x] Foto comunidade/letreiro — Hero
+- [x] Foto comunidade/letreiro — Hero (agora um carrossel de 3 fotos: comunidade/letreiro, mural de fotos e equipe de louvor — reaproveitadas do protótipo antigo, catalogadas em `Img Antigas/comunidade` e `Img Antigas/culto`)
 - [x] Foto de louvor — Cultos/Louvor
 - [x] Foto congregação — Quem Somos/Família
 - [x] Foto individual — possível Liderança após confirmação

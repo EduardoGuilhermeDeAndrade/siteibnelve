@@ -191,7 +191,7 @@ Id, SerieEventoId, DataHoraOriginal, NovaDataHoraInicio, NovaDataHoraFim, Titulo
 - Mobile-first.
 - Layout limpo, contemporâneo, institucional e acolhedor.
 - Fotografias reais da IBNELVE em preferência a bancos de imagem.
-- Hero forte, sem carrossel automático.
+- Hero forte com carrossel automático de 3 fotos (decisão revista em 2026-09-12 — inicialmente era "sem carrossel", mas o usuário sentiu falta do carrossel do protótipo antigo). Troca sozinho a cada 6s, com setas/bolinhas para navegação manual, pausa ao passar o mouse, e não avança sozinho para quem tem `prefers-reduced-motion` ativado (mantém a 1ª foto, controles manuais continuam funcionando). Implementado em `shared/ui/hero-carousel/` sem biblioteca nova. As 3 fotos são editáveis no Portal (Conteúdo do Site) pelas chaves `home-hero`, `home-carrossel-2` e `home-carrossel-3`.
 - Hierarquia tipográfica clara, bastante espaço, poucas cores, CTAs objetivos.
 - CSS Grid, Flexbox, clamp(), min(), max(), minmax(), auto-fit/auto-fill e container queries quando justificadas.
 - Criar Design System com CSS Custom Properties para cores, tipografia, espaçamento, radius, sombras, largura, breakpoints e animações.
