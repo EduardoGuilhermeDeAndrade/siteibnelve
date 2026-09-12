@@ -10,7 +10,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(0deg, rgb(15 42 63 / 0.92) 0%, rgb(15 42 63 / 0.55) 55%, rgb(15 42 63 / 0.25) 100%);
+  background: linear-gradient(0deg, rgb(44 61 43 / 0.92) 0%, rgb(44 61 43 / 0.55) 55%, rgb(44 61 43 / 0.25) 100%);
   z-index: -1;
 }
 
