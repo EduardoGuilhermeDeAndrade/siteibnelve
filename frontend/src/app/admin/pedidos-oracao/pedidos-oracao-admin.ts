@@ -69,6 +69,13 @@ export class PedidosOracaoAdmin {
     this.confirmandoExclusaoId.set(null);
   }
 
+  /** Monta o link do wa.me a partir do telefone informado (assume DDD brasileiro sem +55). */
+  protected linkWhatsapp(telefone: string): string {
+    const digitos = telefone.replace(/\D/g, '');
+    const comCodigoPais = digitos.startsWith('55') ? digitos : `55${digitos}`;
+    return `https://wa.me/${comCodigoPais}`;
+  }
+
   protected excluir(id: string): void {
     this.processandoId.set(id);
 

@@ -25,7 +25,10 @@
           </div>
 
           @if (pedido.contato) {
-            <p class="pedidos-lista__contato">Contato: {{ pedido.contato }}</p>
+            <p class="pedidos-lista__contato">
+              Telefone: {{ pedido.contato }}
+              <a [href]="linkWhatsapp(pedido.contato)" target="_blank" rel="noopener noreferrer">Abrir no WhatsApp</a>
+            </p>
           }
 
           <p class="pedidos-lista__mensagem">{{ pedido.mensagem }}</p>

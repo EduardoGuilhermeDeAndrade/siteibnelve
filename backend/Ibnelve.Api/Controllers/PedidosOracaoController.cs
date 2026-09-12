@@ -19,7 +19,7 @@ public class PedidosOracaoController(IbnelveDbContext db) : ControllerBase
     {
         if (request.DesejaFalarComPastor && string.IsNullOrWhiteSpace(request.Contato))
         {
-            return BadRequest(new { message = "Informe um contato para que um pastor possa retornar." });
+            return BadRequest(new { message = "Informe um telefone com WhatsApp para que um pastor possa te chamar." });
         }
 
         var pedido = new PedidoOracao

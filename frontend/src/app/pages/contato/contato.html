@@ -88,21 +88,22 @@
 
         <div class="contato__campo">
           <label for="contato">
-            Contato (e-mail ou telefone{{ desejaFalarComPastor ? '' : ', opcional' }})
+            Telefone com WhatsApp{{ desejaFalarComPastor ? '' : ' (opcional)' }}
           </label>
           <input
             #contatoInput
             id="contato"
             name="contato"
-            type="text"
-            autocomplete="off"
+            type="tel"
+            autocomplete="tel"
+            placeholder="(31) 90000-0000"
             [(ngModel)]="contato"
             [attr.aria-invalid]="erroContato() ? 'true' : null"
             [attr.aria-describedby]="erroContato() ? 'contato-erro' : null"
           >
           @if (erroContato()) {
             <p id="contato-erro" class="contato__erro">
-              Informe um contato para que um pastor possa retornar.
+              Informe um telefone com WhatsApp para que um pastor possa te chamar.
             </p>
           }
         </div>

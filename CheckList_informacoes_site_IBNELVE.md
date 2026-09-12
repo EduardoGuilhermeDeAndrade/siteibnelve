@@ -152,9 +152,9 @@
 - [x] Recurso previsto
 - [x] Nome opcional, com opção explícita "Prefiro não me identificar" (aprovado em 2026-09-06)
 - [x] Anonimato permitido
-- [x] Contato (e-mail/telefone) opcional
-- [x] "Desejo falar com um pastor" — se marcado, passa a exigir pelo menos um contato
-- [x] Destino: Portal Admin (pastores/secretária consultam por lá; sem e-mail automático, pois não há infraestrutura de envio)
+- [x] Contato opcional — refinado em 2026-09-13: campo passou de "e-mail ou telefone" para especificamente **telefone com WhatsApp** (é assim que o pastor retorna o contato); tela "Pedidos de Oração" do Portal ganhou um link direto "Abrir no WhatsApp"
+- [x] "Desejo falar com um pastor" — se marcado, passa a exigir o telefone
+- [x] Destino: Portal Admin (pastores/secretária consultam por lá e entram em contato manualmente; sem envio automático, pois não há infraestrutura de e-mail)
 - [x] Implementação real concluída em 2026-09-06: entidade `PedidoOracao`, endpoint público com rate limiting, tela "Pedidos de Oração" no Portal Admin
 
 ## 13. Portal Administrativo
