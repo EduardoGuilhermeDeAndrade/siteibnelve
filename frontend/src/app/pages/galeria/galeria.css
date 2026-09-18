@@ -1,0 +1,23 @@
+.galeria__grade {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+}
+
+.galeria__item {
+  margin: 0;
+}
+
+.galeria__item img {
+  width: 100%;
+  height: 14rem;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  display: block;
+}
+
+.galeria__item figcaption {
+  margin-top: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}

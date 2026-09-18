@@ -76,6 +76,11 @@ export const ADMIN_ROUTES: Routes = [
         title: 'Portal Admin — Editar ministério'
       },
       {
+        path: 'galeria',
+        loadComponent: () => import('./galeria/galeria-admin').then((m) => m.GaleriaAdmin),
+        title: 'Portal Admin — Fotos'
+      },
+      {
         path: 'contribuicoes',
         loadComponent: () =>
           import('./contribuicao/contribuicao-admin').then((m) => m.ContribuicaoAdmin),

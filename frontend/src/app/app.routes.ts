@@ -3,6 +3,7 @@ import { Home } from './pages/home/home';
 import { QuemSomos } from './pages/quem-somos/quem-somos';
 import { Ministerios } from './pages/ministerios/ministerios';
 import { Agenda } from './pages/agenda/agenda';
+import { Galeria } from './pages/galeria/galeria';
 import { Contato } from './pages/contato/contato';
 import { Contribuicoes } from './pages/contribuicoes/contribuicoes';
 
@@ -11,6 +12,7 @@ export const routes: Routes = [
   { path: 'quem-somos', component: QuemSomos, title: 'IBNELVE — Quem Somos' },
   { path: 'ministerios', component: Ministerios, title: 'IBNELVE — Ministérios' },
   { path: 'agenda', component: Agenda, title: 'IBNELVE — Agenda' },
+  { path: 'galeria', component: Galeria, title: 'IBNELVE — Galeria' },
   { path: 'contato', component: Contato, title: 'IBNELVE — Conecte-se' },
   { path: 'contribuicoes', component: Contribuicoes, title: 'IBNELVE — Contribuições' },
   { path: 'admin', loadChildren: () => import('./admin/admin.routes').then((m) => m.ADMIN_ROUTES) },

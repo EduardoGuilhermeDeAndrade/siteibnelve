@@ -1,0 +1,131 @@
+<div class="galeria-admin">
+  <h1>Fotos</h1>
+
+  <p class="galeria-admin__aviso">
+    Até {{ limiteFotos }} fotos, exibidas na página pública "Galeria" na ordem definida abaixo.
+    Qualquer alteração salva aqui aparece no site assim que a página for recarregada.
+  </p>
+
+  @if (erro()) {
+    <p class="galeria-admin__erro" role="alert">{{ erro() }}</p>
+  }
+  @if (erroValidacao()) {
+    <p class="galeria-admin__erro" role="alert">{{ erroValidacao() }}</p>
+  }
+
+  @if (carregando()) {
+    <p>Carregando…</p>
+  } @else {
+    @if (fotos().length > 0) {
+      <div class="galeria-admin__grade">
+        @for (foto of fotos(); track foto.id) {
+          <article class="card galeria-admin__card">
+            <img [src]="foto.url" [alt]="foto.legenda || 'Foto da galeria'" class="galeria-admin__preview">
+
+            <div class="galeria-admin__campo">
+              <label [for]="'legenda-' + foto.id">Legenda</label>
+              <input
+                [id]="'legenda-' + foto.id"
+                type="text"
+                [(ngModel)]="foto.legendaRascunho"
+                [disabled]="foto.salvandoMetadados"
+                placeholder="Opcional"
+              >
+            </div>
+
+            <div class="galeria-admin__campo">
+              <label [for]="'ordem-' + foto.id">Ordem</label>
+              <input
+                [id]="'ordem-' + foto.id"
+                type="number"
+                [(ngModel)]="foto.ordemRascunho"
+                [disabled]="foto.salvandoMetadados"
+              >
+            </div>
+
+            @if (foto.erroMetadados) {
+              <p class="galeria-admin__erro" role="alert">{{ foto.erroMetadados }}</p>
+            }
+
+            <button
+              class="button button--primary"
+              type="button"
+              [disabled]="foto.salvandoMetadados"
+              (click)="salvarMetadados(foto)"
+            >
+              {{ foto.salvandoMetadados ? 'Salvando…' : 'Salvar' }}
+            </button>
+
+            @if (foto.sucessoMetadados) {
+              <p class="galeria-admin__sucesso" role="status">Salvo!</p>
+            }
+
+            <label class="galeria-admin__label-arquivo" [for]="'arquivo-' + foto.id">
+              {{ substituindoId() === foto.id ? 'Enviando…' : 'Substituir foto' }}
+            </label>
+            <input
+              [id]="'arquivo-' + foto.id"
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              [disabled]="substituindoId() === foto.id"
+              (change)="onSelecionarArquivoSubstituir(foto.id, $event)"
+            >
+
+            @if (confirmandoId() === foto.id) {
+              <div class="galeria-admin__confirmacao">
+                <span>Excluir esta foto?</span>
+                <button
+                  class="button button--outline"
+                  type="button"
+                  [disabled]="excluindoId() === foto.id"
+                  (click)="excluir(foto.id)"
+                >
+                  Sim
+                </button>
+                <button class="button button--outline" type="button" (click)="cancelarConfirmacao()">
+                  Não
+                </button>
+              </div>
+            } @else {
+              <button class="button button--outline" type="button" (click)="pedirConfirmacao(foto.id)">
+                Excluir
+              </button>
+            }
+          </article>
+        }
+      </div>
+    } @else {
+      <p>Nenhuma foto cadastrada ainda.</p>
+    }
+
+    @if (fotos().length < limiteFotos) {
+      <section class="galeria-admin__nova card">
+        <h3>Adicionar foto</h3>
+
+        <div class="galeria-admin__campo">
+          <label for="nova-legenda">Legenda (opcional)</label>
+          <input id="nova-legenda" type="text" [(ngModel)]="novaLegenda">
+        </div>
+
+        <div class="galeria-admin__campo">
+          <label for="arquivo-novo">Arquivo (JPEG, PNG ou WebP, até 5&nbsp;MB)</label>
+          <input
+            id="arquivo-novo"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            [disabled]="enviandoNova()"
+            (change)="onSelecionarArquivoNovo($event)"
+          >
+        </div>
+
+        @if (sucessoNova()) {
+          <p class="galeria-admin__sucesso" role="status">Foto adicionada!</p>
+        }
+      </section>
+    } @else {
+      <p class="galeria-admin__aviso">
+        Limite de {{ limiteFotos }} fotos atingido. Exclua uma foto para adicionar outra.
+      </p>
+    }
+  }
+</div>

@@ -17,7 +17,7 @@ public class ImagensSiteController(IbnelveDbContext db) : ControllerBase
     {
         var imagens = await db.ImagensSite.OrderBy(i => i.Chave).ToListAsync();
         return imagens
-            .Select(i => new ImagemSiteDto(i.Chave, ImagemUrlHelper.Construir(Request, i.Chave, i.DataAtualizacao), i.DataAtualizacao))
+            .Select(i => new ImagemSiteDto(i.Chave, ImagemUrlHelper.Construir(Request, $"imagens-site/{i.Chave}", i.DataAtualizacao), i.DataAtualizacao))
             .ToList();
     }
 

@@ -1,0 +1,27 @@
+<section class="section">
+  <app-section-heading
+    [level]="1"
+    eyebrow="Comunidade"
+    title="Galeria"
+    subtitle="Momentos da nossa comunidade, cultos e eventos."
+  ></app-section-heading>
+
+  @if (erro()) {
+    <p role="alert">Não foi possível carregar as fotos agora. Tente recarregar a página.</p>
+  } @else if (carregando()) {
+    <p>Carregando…</p>
+  } @else if (fotos().length === 0) {
+    <p>Ainda não há fotos publicadas na galeria.</p>
+  } @else {
+    <div class="galeria__grade">
+      @for (foto of fotos(); track foto.id) {
+        <figure class="galeria__item">
+          <img [src]="foto.url" [alt]="foto.legenda || 'Foto da comunidade IBNELVE'" loading="lazy">
+          @if (foto.legenda) {
+            <figcaption>{{ foto.legenda }}</figcaption>
+          }
+        </figure>
+      }
+    </div>
+  }
+</section>

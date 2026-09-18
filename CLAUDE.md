@@ -9,6 +9,7 @@ Criar um site institucional moderno, simples, responsivo e profissional para a I
 - PostgreSQL
 - HTML semântico e CSS moderno, mobile-first
 - Imagens do site (upload pelo Portal) ficam como `bytea` no próprio Postgres, servidas por um endpoint da API (`GET /api/imagens-site/{chave}/arquivo`) — decisão de 2026-09-09: são poucas imagens e sempre substituídas por inteiro, então não justificam um serviço de storage externo (S3/R2/B2) à parte.
+- Painel de Fotos (galeria) implementado em 2026-09-18: página pública `/galeria` (grade simples, sem lightbox) + Portal → **Fotos** (`/admin/galeria`), até 10 fotos, cada uma com legenda opcional, ordem editável e substituição individual. Entidade própria `FotoGaleria` (várias linhas livres, com teto de 10) em vez de reaproveitar `ImagemSite` (que é uma linha por chave fixa) — mesma técnica de `bytea` no Postgres, servida por `GET /api/galeria/{id}/arquivo`.
 - API entre front-end e banco; nunca acesso direto do front ao PostgreSQL.
 
 ## Sitemap público

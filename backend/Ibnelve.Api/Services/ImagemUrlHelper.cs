@@ -7,6 +7,7 @@ namespace Ibnelve.Api.Services;
 /// </summary>
 public static class ImagemUrlHelper
 {
-    public static string Construir(HttpRequest request, string chave, DateTimeOffset dataAtualizacao) =>
-        $"{request.Scheme}://{request.Host}/api/imagens-site/{chave}/arquivo?v={dataAtualizacao.UtcTicks}";
+    /// <param name="caminhoRecurso">Caminho do recurso dentro de /api, ex.: "imagens-site/home-hero" ou "galeria/{id}".</param>
+    public static string Construir(HttpRequest request, string caminhoRecurso, DateTimeOffset dataAtualizacao) =>
+        $"{request.Scheme}://{request.Host}/api/{caminhoRecurso}/arquivo?v={dataAtualizacao.UtcTicks}";
 }

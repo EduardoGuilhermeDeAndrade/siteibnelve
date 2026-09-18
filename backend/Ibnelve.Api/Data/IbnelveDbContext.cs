@@ -15,6 +15,7 @@ public class IbnelveDbContext(DbContextOptions<IbnelveDbContext> options)
     public DbSet<ConteudoTexto> ConteudosTexto => Set<ConteudoTexto>();
     public DbSet<ConfiguracaoContribuicao> ConfiguracoesContribuicao => Set<ConfiguracaoContribuicao>();
     public DbSet<PedidoOracao> PedidosOracao => Set<PedidoOracao>();
+    public DbSet<FotoGaleria> FotosGaleria => Set<FotoGaleria>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -86,6 +87,13 @@ public class IbnelveDbContext(DbContextOptions<IbnelveDbContext> options)
         {
             entity.Property(p => p.Mensagem).IsRequired();
             entity.HasIndex(p => p.DataCriacao);
+        });
+
+        builder.Entity<FotoGaleria>(entity =>
+        {
+            entity.Property(f => f.ContentType).HasMaxLength(100).IsRequired();
+            entity.Property(f => f.Legenda).HasMaxLength(300);
+            entity.HasIndex(f => f.Ordem);
         });
     }
 }

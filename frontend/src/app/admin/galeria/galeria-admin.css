@@ -1,0 +1,84 @@
+.galeria-admin__aviso {
+  background: var(--color-bg-muted);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  max-width: 40rem;
+  margin-bottom: var(--space-6);
+}
+
+.galeria-admin__erro {
+  color: var(--color-danger);
+  margin-bottom: var(--space-4);
+}
+
+.galeria-admin__grade {
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  margin-bottom: var(--space-8);
+}
+
+.galeria-admin__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.galeria-admin__preview {
+  width: 100%;
+  height: 10rem;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+
+.galeria-admin__campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.galeria-admin__campo label {
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+}
+
+.galeria-admin__campo input[type='text'],
+.galeria-admin__campo input[type='number'] {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.galeria-admin__label-arquivo {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.galeria-admin__sucesso {
+  color: var(--color-success);
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+
+.galeria-admin__confirmacao {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.galeria-admin__nova {
+  max-width: 24rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.galeria-admin__nova h3 {
+  margin-bottom: 0;
+}

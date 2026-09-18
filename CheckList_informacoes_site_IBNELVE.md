@@ -142,8 +142,9 @@
 - [ ] Fotos Mulheres — idem (Pexels, 2026-09-07)
 - [ ] Fotos Louvor — idem (Pexels, 2026-09-07)
 - [ ] Fotos Diáconos — idem (Pexels, 2026-09-07)
-- [ ] Fotos dos templos
-- [ ] Fotos históricas
+- [x] Painel de Fotos no Portal (`Fotos`, até 10, editável): construído em 2026-09-18 — nova página pública `/galeria` (grade simples, sem lightbox) + tela admin `/admin/galeria` (adicionar, substituir, reordenar, legendar, excluir). Painel começa vazio; ainda faltam as fotos reais.
+- [ ] Fotos dos templos — usar o novo Painel de Fotos quando houver fotos reais
+- [ ] Fotos históricas — usar o novo Painel de Fotos quando houver fotos reais
 - [x] **Fase 0:** acervo de `Img Antigas/` revisado e organizado em subpastas por uso (`logo/`, `culto/`, `comunidade/`, `ministerio-infantil/`, `visitas-acao-social/`, `eventos-especiais/`, `contribuicoes/`, `elementos-graficos/`, `revisar/`)
 - [ ] `lideranca-cutouts-pendente-confirmacao/`: 3 pessoas distintas em recortes (fundo removido) encontradas — precisa confirmar nome, cargo e autorização de cada uma antes de usar no site
 - [ ] `revisar/`: 2 fotos de identificação/uso incerto (uma parece pessoal, não institucional) — decidir se entram no site
