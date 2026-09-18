@@ -12,6 +12,13 @@ public static class AdminSeeder
 {
     public const string PapelAdmin = "ADMIN";
 
+    /// <summary>
+    /// Papel restrito: só vê/mexe na tela de Patrimônio do Portal (ver CLAUDE.md, decisão de
+    /// 2026-09-18). Diferente de <see cref="PapelAdmin"/>, nunca é atribuído automaticamente —
+    /// só por um ADMIN, pela tela de Usuários.
+    /// </summary>
+    public const string PapelPatrimonioEditor = "PATRIMONIO_EDITOR";
+
     public static async Task SeedAsync(IServiceProvider services)
     {
         var roleManager = services.GetRequiredService<RoleManager<ApplicationRole>>();
@@ -22,6 +29,11 @@ public static class AdminSeeder
         if (!await roleManager.RoleExistsAsync(PapelAdmin))
         {
             await roleManager.CreateAsync(new ApplicationRole(PapelAdmin));
+        }
+
+        if (!await roleManager.RoleExistsAsync(PapelPatrimonioEditor))
+        {
+            await roleManager.CreateAsync(new ApplicationRole(PapelPatrimonioEditor));
         }
 
         var usuariosAdmin = await userManager.GetUsersInRoleAsync(PapelAdmin);

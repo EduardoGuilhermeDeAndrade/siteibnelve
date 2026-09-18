@@ -1,3 +1,5 @@
+using Ibnelve.Api.Data.Entities;
+
 namespace Ibnelve.Api.Domain;
 
 /// <summary>
@@ -117,5 +119,27 @@ public static class EnumMappings
         "TELEFONE" => TipoChavePix.Telefone,
         "ALEATORIA" => TipoChavePix.Aleatoria,
         _ => throw new ArgumentException($"Tipo de chave PIX inválido: {valor}")
+    };
+
+    public static string ToApiString(this TipoControlePatrimonio tipo) => tipo switch
+    {
+        TipoControlePatrimonio.Unitario => "Unitario",
+        TipoControlePatrimonio.Quantidade => "Quantidade",
+        _ => throw new ArgumentOutOfRangeException(nameof(tipo))
+    };
+
+    public static TipoControlePatrimonio ParseTipoControlePatrimonio(string valor) => valor switch
+    {
+        "Unitario" => TipoControlePatrimonio.Unitario,
+        "Quantidade" => TipoControlePatrimonio.Quantidade,
+        _ => throw new ArgumentException($"Tipo de controle de patrimônio inválido: {valor}")
+    };
+
+    public static string ToApiString(this SituacaoPatrimonio situacao) => situacao switch
+    {
+        SituacaoPatrimonio.Ativo => "Ativo",
+        SituacaoPatrimonio.Inativo => "Inativo",
+        SituacaoPatrimonio.Baixado => "Baixado",
+        _ => throw new ArgumentOutOfRangeException(nameof(situacao))
     };
 }

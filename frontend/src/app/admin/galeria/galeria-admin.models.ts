@@ -9,5 +9,4 @@ export interface FotoGaleriaEditavel extends FotoGaleria {
 }
 
 export const LIMITE_FOTOS = 10;
-export const TIPOS_IMAGEM_ACEITOS = ['image/jpeg', 'image/png', 'image/webp'];
-export const TAMANHO_MAXIMO_BYTES = 5 * 1024 * 1024;
+export { TIPOS_IMAGEM_ACEITOS, TAMANHO_MAXIMO_BYTES } from '../../shared/uploads/validacao-imagem';

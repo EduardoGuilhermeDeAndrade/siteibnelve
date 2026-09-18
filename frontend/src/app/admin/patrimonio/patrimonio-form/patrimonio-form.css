@@ -1,0 +1,84 @@
+.patrimonio-form {
+  max-width: 40rem;
+}
+
+.patrimonio-form form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+.patrimonio-form__campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.patrimonio-form__campo label {
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+}
+
+.patrimonio-form__campo input,
+.patrimonio-form__campo select,
+.patrimonio-form__campo textarea {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.patrimonio-form__aviso {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+
+.patrimonio-form__erro-campo {
+  color: var(--color-danger);
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+
+.patrimonio-form__erro {
+  background: var(--color-bg);
+  border: 1px solid var(--color-danger);
+  color: var(--color-danger);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  margin: 0;
+}
+
+.patrimonio-form__sucesso {
+  color: var(--color-success);
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+
+.patrimonio-form__acoes {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.patrimonio-form__foto {
+  max-width: 24rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.patrimonio-form__preview {
+  width: 100%;
+  max-height: 14rem;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+
+.patrimonio-form__label-arquivo {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+}

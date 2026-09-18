@@ -1,0 +1,235 @@
+<div class="patrimonio-detalhe">
+  @if (erro()) {
+    <p class="patrimonio-detalhe__erro" role="alert">{{ erro() }}</p>
+  }
+
+  @if (carregando()) {
+    <p>Carregando…</p>
+  } @else if (item(); as item) {
+    <div class="patrimonio-detalhe__cabecalho">
+      <h1>{{ item.descricao }}</h1>
+      @if (podeEditar() && item.situacao !== 'Baixado') {
+        <a class="button button--outline" [routerLink]="['/admin/patrimonio', item.id, 'editar']">Editar dados</a>
+      }
+    </div>
+
+    <div class="patrimonio-detalhe__principal">
+      @if (item.fotoUrl) {
+        <img class="patrimonio-detalhe__foto" [src]="item.fotoUrl" [alt]="item.descricao">
+      }
+
+      <dl class="patrimonio-detalhe__info">
+        <dt>Número de patrimônio</dt>
+        <dd>{{ item.numeroPatrimonio || '—' }}</dd>
+
+        <dt>Tipo</dt>
+        <dd>{{ item.tipoControle === 'Unitario' ? 'Unitário' : 'Quantidade (' + item.quantidadeTotal + ' no total)' }}</dd>
+
+        <dt>Situação</dt>
+        <dd>{{ item.situacao === 'Ativo' ? 'Ativo' : item.situacao === 'Inativo' ? 'Inativo' : 'Baixado' }}</dd>
+
+        <dt>Local</dt>
+        <dd>{{ item.localNome || 'Sem local definido' }}</dd>
+
+        @if (item.tipoControle === 'Quantidade') {
+          <dt>Disponível / Emprestado</dt>
+          <dd>{{ item.quantidadeDisponivel }} disponível(is) / {{ item.quantidadeEmprestada }} emprestada(s)</dd>
+        }
+
+        <dt>Observação</dt>
+        <dd>{{ item.observacao || '—' }}</dd>
+      </dl>
+    </div>
+
+    @if (item.situacao === 'Baixado') {
+      <section class="patrimonio-detalhe__baixa card">
+        <h2>Item baixado</h2>
+        @if (item.fotoDefeitoUrl) {
+          <img class="patrimonio-detalhe__foto-defeito" [src]="item.fotoDefeitoUrl" alt="Foto do defeito">
+        }
+        <p><strong>Data da baixa:</strong> {{ item.dataBaixa }}</p>
+        <p><strong>Observação:</strong> {{ item.observacaoBaixa }}</p>
+      </section>
+    } @else {
+      @if (podeEditar()) {
+        <section class="patrimonio-detalhe__acoes card">
+          <h2>Ações</h2>
+
+          <div class="patrimonio-detalhe__botoes">
+            @if (item.situacao === 'Ativo' && item.quantidadeDisponivel > 0) {
+              <button class="button button--outline" type="button" (click)="abrirEmprestimo()">Emprestar</button>
+            }
+            @if (item.situacao === 'Ativo') {
+              <button class="button button--outline" type="button" (click)="abrirSituacao('inativar')">Inativar</button>
+            } @else {
+              <button class="button button--outline" type="button" (click)="abrirSituacao('reativar')">Reativar</button>
+            }
+            <button class="button button--outline" type="button" (click)="abrirBaixa()">Dar baixa</button>
+          </div>
+
+          @if (mostrarFormEmprestimo()) {
+            <div class="patrimonio-detalhe__form-inline">
+              <h3>Registrar retirada</h3>
+              @if (item.tipoControle === 'Quantidade') {
+                <label>
+                  Quantidade
+                  <input type="number" min="1" [max]="item.quantidadeDisponivel" [(ngModel)]="quantidadeEmprestimo">
+                </label>
+              }
+              <label>
+                Quem retirou
+                <input type="text" [(ngModel)]="quemRetirou">
+              </label>
+              <label>
+                Observação
+                <textarea [(ngModel)]="observacaoRetirada"></textarea>
+              </label>
+              @if (erroEmprestimo()) {
+                <p class="patrimonio-detalhe__erro" role="alert">{{ erroEmprestimo() }}</p>
+              }
+              <div class="patrimonio-detalhe__form-inline-acoes">
+                <button
+                  class="button button--primary"
+                  type="button"
+                  [disabled]="salvandoEmprestimo()"
+                  (click)="confirmarEmprestimo()"
+                >
+                  {{ salvandoEmprestimo() ? 'Salvando…' : 'Confirmar' }}
+                </button>
+                <button class="button button--outline" type="button" (click)="cancelarEmprestimo()">Cancelar</button>
+              </div>
+            </div>
+          }
+
+          @if (mostrarFormSituacao()) {
+            <div class="patrimonio-detalhe__form-inline">
+              <h3>{{ mostrarFormSituacao() === 'inativar' ? 'Inativar item' : 'Reativar item' }}</h3>
+              <label>
+                Observação {{ mostrarFormSituacao() === 'inativar' ? '(obrigatória)' : '(opcional)' }}
+                <textarea [(ngModel)]="observacaoSituacao"></textarea>
+              </label>
+              @if (erroSituacao()) {
+                <p class="patrimonio-detalhe__erro" role="alert">{{ erroSituacao() }}</p>
+              }
+              <div class="patrimonio-detalhe__form-inline-acoes">
+                <button
+                  class="button button--primary"
+                  type="button"
+                  [disabled]="salvandoSituacao()"
+                  (click)="confirmarSituacao()"
+                >
+                  {{ salvandoSituacao() ? 'Salvando…' : 'Confirmar' }}
+                </button>
+                <button class="button button--outline" type="button" (click)="cancelarSituacao()">Cancelar</button>
+              </div>
+            </div>
+          }
+
+          @if (mostrarFormBaixa()) {
+            <div class="patrimonio-detalhe__form-inline">
+              <h3>Dar baixa</h3>
+              <label>
+                Foto do defeito
+                <input type="file" accept="image/jpeg,image/png,image/webp" (change)="onSelecionarArquivoDefeito($event)">
+              </label>
+              @if (erroArquivoBaixa()) {
+                <p class="patrimonio-detalhe__erro" role="alert">{{ erroArquivoBaixa() }}</p>
+              }
+              <label>
+                Observação (informações do descarte)
+                <textarea [(ngModel)]="observacaoBaixa"></textarea>
+              </label>
+              @if (erroBaixa()) {
+                <p class="patrimonio-detalhe__erro" role="alert">{{ erroBaixa() }}</p>
+              }
+              <div class="patrimonio-detalhe__form-inline-acoes">
+                <button
+                  class="button button--primary"
+                  type="button"
+                  [disabled]="salvandoBaixa()"
+                  (click)="confirmarBaixa()"
+                >
+                  {{ salvandoBaixa() ? 'Salvando…' : 'Confirmar baixa' }}
+                </button>
+                <button class="button button--outline" type="button" (click)="cancelarBaixa()">Cancelar</button>
+              </div>
+            </div>
+          }
+        </section>
+      }
+    }
+
+    <section class="patrimonio-detalhe__historico">
+      <h2>Histórico de empréstimos</h2>
+      @if (emprestimos().length === 0) {
+        <p>Nenhum empréstimo registrado ainda.</p>
+      } @else {
+        <div class="patrimonio-detalhe__tabela-wrap">
+          <table class="patrimonio-detalhe__tabela">
+            <thead>
+              <tr>
+                <th scope="col">Qtd.</th>
+                <th scope="col">Quem retirou</th>
+                <th scope="col">Retirada</th>
+                <th scope="col">Observação retirada</th>
+                <th scope="col">Quem devolveu</th>
+                <th scope="col">Devolução</th>
+                <th scope="col">Observação devolução</th>
+                <th scope="col"><span class="sr-only">Ações</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (emprestimo of emprestimos(); track emprestimo.id) {
+                <tr>
+                  <td>{{ emprestimo.quantidade }}</td>
+                  <td>{{ emprestimo.quemRetirou }}</td>
+                  <td>{{ emprestimo.dataHoraRetirada }}</td>
+                  <td>{{ emprestimo.observacaoRetirada }}</td>
+                  <td>{{ emprestimo.quemDevolveu || '—' }}</td>
+                  <td>{{ emprestimo.dataHoraDevolucao || '—' }}</td>
+                  <td>{{ emprestimo.observacaoDevolucao || '—' }}</td>
+                  <td>
+                    @if (podeEditar() && !emprestimo.dataHoraDevolucao) {
+                      @if (devolvendoId() === emprestimo.id) {
+                        <div class="patrimonio-detalhe__form-inline">
+                          <label>
+                            Quem devolveu
+                            <input type="text" [(ngModel)]="quemDevolveu">
+                          </label>
+                          <label>
+                            Observação
+                            <textarea [(ngModel)]="observacaoDevolucao"></textarea>
+                          </label>
+                          @if (erroDevolucao()) {
+                            <p class="patrimonio-detalhe__erro" role="alert">{{ erroDevolucao() }}</p>
+                          }
+                          <div class="patrimonio-detalhe__form-inline-acoes">
+                            <button
+                              class="button button--primary"
+                              type="button"
+                              [disabled]="salvandoDevolucao()"
+                              (click)="confirmarDevolucao()"
+                            >
+                              {{ salvandoDevolucao() ? 'Salvando…' : 'Confirmar' }}
+                            </button>
+                            <button class="button button--outline" type="button" (click)="cancelarDevolucao()">
+                              Cancelar
+                            </button>
+                          </div>
+                        </div>
+                      } @else {
+                        <button class="button button--outline" type="button" (click)="abrirDevolucao(emprestimo.id)">
+                          Devolver
+                        </button>
+                      }
+                    }
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </section>
+  }
+</div>

@@ -1,0 +1,105 @@
+<div class="patrimonio-form">
+  <h1>{{ modoEdicao ? 'Editar item de patrimônio' : 'Novo item de patrimônio' }}</h1>
+
+  @if (carregando()) {
+    <p>Carregando…</p>
+  } @else {
+    <form [formGroup]="form" novalidate (ngSubmit)="salvar()">
+      <div class="patrimonio-form__campo">
+        <label for="descricao">Descrição</label>
+        <input id="descricao" type="text" formControlName="descricao">
+        @if (form.controls.descricao.invalid && form.controls.descricao.touched) {
+          <p class="patrimonio-form__erro-campo">Informe a descrição do item.</p>
+        }
+      </div>
+
+      <div class="patrimonio-form__campo">
+        <label for="numeroPatrimonio">Número de patrimônio (opcional)</label>
+        <input id="numeroPatrimonio" type="text" formControlName="numeroPatrimonio">
+      </div>
+
+      <div class="patrimonio-form__campo">
+        <label for="tipoControle">Tipo</label>
+        <select id="tipoControle" formControlName="tipoControle">
+          <option value="Unitario">Unitário (um item, com entrada/saída individual)</option>
+          <option value="Quantidade">Quantidade (estoque, ex.: cadeiras)</option>
+        </select>
+        @if (modoEdicao) {
+          <p class="patrimonio-form__aviso">O tipo não pode ser alterado depois de criado.</p>
+        }
+      </div>
+
+      @if (form.controls.tipoControle.value === 'Quantidade') {
+        <div class="patrimonio-form__campo">
+          <label for="quantidadeTotal">Quantidade total em estoque</label>
+          <input id="quantidadeTotal" type="number" min="1" formControlName="quantidadeTotal">
+        </div>
+      }
+
+      <div class="patrimonio-form__campo">
+        <label for="localId">Local</label>
+        <select id="localId" formControlName="localId">
+          <option value="">Sem local definido</option>
+          @for (local of locais(); track local.id) {
+            <option [value]="local.id">{{ local.nome }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="patrimonio-form__campo">
+        <label for="observacao">Observação</label>
+        <textarea id="observacao" formControlName="observacao" rows="3"></textarea>
+      </div>
+
+      @if (!modoEdicao) {
+        <div class="patrimonio-form__campo">
+          <label for="arquivo">Foto (opcional, JPEG/PNG/WebP até 5&nbsp;MB)</label>
+          <input id="arquivo" type="file" accept="image/jpeg,image/png,image/webp" (change)="onSelecionarArquivo($event)">
+          @if (erroArquivo()) {
+            <p class="patrimonio-form__erro-campo">{{ erroArquivo() }}</p>
+          }
+        </div>
+      }
+
+      @if (erro()) {
+        <p class="patrimonio-form__erro" role="alert">{{ erro() }}</p>
+      }
+
+      <div class="patrimonio-form__acoes">
+        <button class="button button--primary" type="submit" [disabled]="salvando()">
+          {{ salvando() ? 'Salvando…' : 'Salvar' }}
+        </button>
+        <a class="button button--outline" routerLink="/admin/patrimonio">Cancelar</a>
+      </div>
+    </form>
+
+    @if (modoEdicao) {
+      <section class="patrimonio-form__foto card">
+        <h2>Foto</h2>
+        @if (fotoUrlAtual) {
+          <img class="patrimonio-form__preview" [src]="fotoUrlAtual" alt="Foto atual do item">
+        } @else {
+          <p>Nenhuma foto cadastrada ainda.</p>
+        }
+
+        <label class="patrimonio-form__label-arquivo" for="substituir-foto">
+          {{ enviandoFoto() ? 'Enviando…' : 'Substituir foto' }}
+        </label>
+        <input
+          id="substituir-foto"
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          [disabled]="enviandoFoto()"
+          (change)="onSelecionarArquivo($event)"
+        >
+
+        @if (erroFoto()) {
+          <p class="patrimonio-form__erro" role="alert">{{ erroFoto() }}</p>
+        }
+        @if (sucessoFoto()) {
+          <p class="patrimonio-form__sucesso" role="status">Foto atualizada!</p>
+        }
+      </section>
+    }
+  }
+</div>

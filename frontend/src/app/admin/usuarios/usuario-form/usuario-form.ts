@@ -4,7 +4,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { mensagemDeErro } from '../../../shared/errors/mensagem-erro';
-import { UsuarioCriar } from '../usuario-admin.models';
+import { PAPEIS_USUARIO, UsuarioCriar } from '../usuario-admin.models';
 import { UsuariosService } from '../usuarios.service';
 
 @Component({
@@ -24,11 +24,13 @@ export class UsuarioForm {
   protected readonly carregando = signal(false);
   protected readonly salvando = signal(false);
   protected readonly erro = signal<string | null>(null);
+  protected readonly papeis = PAPEIS_USUARIO;
 
   protected readonly form = this.fb.nonNullable.group({
     nomeCompleto: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
-    senha: ['', [Validators.required, Validators.minLength(8)]]
+    senha: ['', [Validators.required, Validators.minLength(8)]],
+    papel: ['ADMIN', Validators.required]
   });
 
   protected get modoEdicao(): boolean {
@@ -44,16 +46,18 @@ export class UsuarioForm {
     this.usuarioId.set(id);
     this.carregando.set(true);
 
-    // Edição só permite trocar o nome — email e senha não fazem parte do payload de atualização,
-    // então os controles ficam desabilitados aqui (redefinir senha é uma ação separada na lista).
+    // Edição só permite trocar o nome — email, senha e papel não fazem parte do payload de
+    // atualização (trocar o papel depois de criado fica fora de escopo por ora), então os
+    // controles ficam desabilitados aqui (redefinir senha é uma ação separada na lista).
     this.form.controls.email.disable();
     this.form.controls.senha.disable();
+    this.form.controls.papel.disable();
 
     this.usuariosService.listar().subscribe({
       next: (usuarios) => {
         const usuario = usuarios.find((u) => u.id === id);
         if (usuario) {
-          this.form.patchValue({ nomeCompleto: usuario.nomeCompleto, email: usuario.email });
+          this.form.patchValue({ nomeCompleto: usuario.nomeCompleto, email: usuario.email, papel: usuario.papel });
         } else {
           this.erro.set('Usuário não encontrado.');
         }

@@ -27,12 +27,21 @@ Criar um site institucional moderno, simples, responsivo e profissional para a I
 - Conteúdo do Site
 - Ministérios
 - Fotos
+- Patrimônio
 - Locais/Templos
 - Contribuições
 - Usuários
 - Configurações
 
 Inicialmente, pastores e secretária poderão acessar. No MVP pode existir um perfil ADMIN amplo, mas a arquitetura deve permitir futuramente perfis como PASTOR, SECRETARIA, LIDER_MINISTERIO e EDITOR_CONTEUDO. Não permitir cadastro público de administradores.
+
+**Controle de acesso por funcionalidade — papéis fixos (decisão de 2026-09-18, implementada no Patrimônio):** telas que precisam de acesso restrito usam **papéis fixos do ASP.NET Core Identity** em vez de um sistema de permissões/claims genérico — mais simples e consistente com o papel `ADMIN` já existente. Primeiro caso real: `PATRIMONIO_EDITOR`, um papel **dedicado e exclusivo** (usuário tem `ADMIN` OU `PATRIMONIO_EDITOR`, nunca os dois) para a pessoa responsável pelo controle de Patrimônio, que loga no Portal e só vê/acessa essa tela — nada mais do Portal aparece pra ela. `ADMIN` continua com acesso total a tudo, inclusive Patrimônio. Mecanismo:
+- `AdminSeeder.cs` garante que o papel exista (`PapelPatrimonioEditor`), sem atribuir a ninguém automaticamente; é dado por um ADMIN na tela de Usuários (`Criar` recebe `Papel: "ADMIN" | "PATRIMONIO_EDITOR"`, escolha única e definitiva na criação — trocar depois exige desativar e criar outro usuário).
+- `admin.guard.ts` aceita `ADMIN` **ou** `PATRIMONIO_EDITOR` pra entrar no Portal; um segundo guard (`adminOnlyGuard`) protege — via `canActivateChild` agrupando as rotas — tudo que não é Patrimônio, redirecionando quem não é `ADMIN` para `/admin/patrimonio` em vez de derrubar a sessão.
+- `admin-layout.html` só mostra os demais itens do menu para `ADMIN`; "Patrimônio" fica sempre visível a quem tem acesso ao Portal.
+- No backend, cada controller do Portal continua com `[Authorize(Roles = "ADMIN")]` de sempre (sem mudança) — um usuário só-`PATRIMONIO_EDITOR` já recebe 403 automaticamente de qualquer outra rota admin; o `PatrimonioController` é o único com leitura liberada a qualquer autenticado (`[Authorize]` na classe) e escrita exigindo `ADMIN` ou `PATRIMONIO_EDITOR` (`[Authorize(Roles = "ADMIN,PATRIMONIO_EDITOR")]` por método).
+- Endpoints que servem os **arquivos binários** das fotos (`GET .../foto/arquivo`, `.../foto-defeito/arquivo`) precisam ser anônimos (`[AllowAnonymous]`) mesmo dentro de um controller autenticado — uma tag `<img>` não envia o token Bearer, então não tem como proteger o binário em si sem reescrever toda exibição de imagem para buscar como blob via `HttpClient`. Mesmo padrão de exposição já aceito em `GaleriaController`/`ImagensSiteController`: a URL só é descoberta por quem already tem acesso à listagem (que essa sim exige login), e o conteúdo em si (fotos de patrimônio, sem dado sensível) fica acessível por URL direta com GUID imprevisível.
+- Ao adicionar um DTO com campo de enum, seguir `Domain/EnumMappings.cs` (`ToApiString()`/`Parse...()`) em vez de expor o enum do C# direto no contrato — por padrão o `System.Text.Json` serializa enum como número, e o front já espera strings (não há `JsonStringEnumConverter` global configurado).
 
 ## Dados institucionais confirmados
 - Nome oficial: Igreja Batista Nacional da Esperança do Liberdade e Vereda

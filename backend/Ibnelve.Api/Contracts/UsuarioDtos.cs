@@ -6,13 +6,15 @@ public record UsuarioAdminDto(
     Guid Id,
     string NomeCompleto,
     string Email,
-    bool Ativo
+    bool Ativo,
+    string Papel
 );
 
 public record UsuarioCriarRequest(
     [Required, MaxLength(200)] string NomeCompleto,
     [Required, EmailAddress] string Email,
-    [Required, MinLength(8)] string Senha
+    [Required, MinLength(8)] string Senha,
+    [Required] string Papel
 );
 
 public record UsuarioAtualizarRequest(

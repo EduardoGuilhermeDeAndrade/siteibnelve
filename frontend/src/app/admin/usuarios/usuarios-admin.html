@@ -19,6 +19,7 @@
           <tr>
             <th scope="col">Nome</th>
             <th scope="col">Email</th>
+            <th scope="col">Papel</th>
             <th scope="col">Status</th>
             <th scope="col"><span class="sr-only">Ações</span></th>
           </tr>
@@ -28,6 +29,7 @@
             <tr>
               <td>{{ usuario.nomeCompleto }}</td>
               <td>{{ usuario.email }}</td>
+              <td>{{ usuario.papel === 'ADMIN' ? 'Administrador geral' : 'Somente Patrimônio' }}</td>
               <td>{{ usuario.ativo ? 'Ativo' : 'Inativo' }}</td>
               <td class="usuarios-admin__acoes">
                 @if (confirmandoId() === usuario.id) {
@@ -59,7 +61,7 @@
 
             @if (sucessoSenhaId() === usuario.id) {
               <tr>
-                <td colspan="4">
+                <td colspan="5">
                   <p class="usuarios-admin__sucesso" role="status">Senha redefinida!</p>
                 </td>
               </tr>
@@ -67,7 +69,7 @@
 
             @if (redefinindoId() === usuario.id) {
               <tr>
-                <td colspan="4">
+                <td colspan="5">
                   <form
                     class="senha-form"
                     [formGroup]="senhaForm"

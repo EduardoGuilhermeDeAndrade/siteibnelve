@@ -11,18 +11,21 @@
 
   <div class="admin-shell__corpo">
     <nav class="admin-shell__nav" aria-label="Menu do Portal Admin">
-      <a routerLink="/admin" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">
-        Início
-      </a>
-      <a routerLink="/admin/agenda" routerLinkActive="is-active">Agenda</a>
-      <a routerLink="/admin/locais" routerLinkActive="is-active">Locais</a>
-      <a routerLink="/admin/conteudo" routerLinkActive="is-active">Conteúdo do Site</a>
-      <a routerLink="/admin/ministerios" routerLinkActive="is-active">Ministérios</a>
-      <a routerLink="/admin/galeria" routerLinkActive="is-active">Fotos</a>
-      <a routerLink="/admin/contribuicoes" routerLinkActive="is-active">Contribuições</a>
-      <a routerLink="/admin/pedidos-oracao" routerLinkActive="is-active">Pedidos de Oração</a>
-      <a routerLink="/admin/usuarios" routerLinkActive="is-active">Usuários</a>
-      <a routerLink="/admin/configuracoes" routerLinkActive="is-active">Configurações</a>
+      @if (authService.isAdmin()) {
+        <a routerLink="/admin" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">
+          Início
+        </a>
+        <a routerLink="/admin/agenda" routerLinkActive="is-active">Agenda</a>
+        <a routerLink="/admin/locais" routerLinkActive="is-active">Locais</a>
+        <a routerLink="/admin/conteudo" routerLinkActive="is-active">Conteúdo do Site</a>
+        <a routerLink="/admin/ministerios" routerLinkActive="is-active">Ministérios</a>
+        <a routerLink="/admin/galeria" routerLinkActive="is-active">Fotos</a>
+        <a routerLink="/admin/contribuicoes" routerLinkActive="is-active">Contribuições</a>
+        <a routerLink="/admin/pedidos-oracao" routerLinkActive="is-active">Pedidos de Oração</a>
+        <a routerLink="/admin/usuarios" routerLinkActive="is-active">Usuários</a>
+        <a routerLink="/admin/configuracoes" routerLinkActive="is-active">Configurações</a>
+      }
+      <a routerLink="/admin/patrimonio" routerLinkActive="is-active">Patrimônio</a>
     </nav>
 
     <main id="admin-main-content" class="admin-shell__conteudo" tabindex="-1">

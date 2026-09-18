@@ -1,0 +1,117 @@
+.patrimonio-detalhe__erro {
+  color: var(--color-danger);
+  margin-bottom: var(--space-4);
+}
+
+.patrimonio-detalhe__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.patrimonio-detalhe__cabecalho h1 {
+  margin-bottom: 0;
+}
+
+.patrimonio-detalhe__principal {
+  display: flex;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-6);
+}
+
+.patrimonio-detalhe__foto,
+.patrimonio-detalhe__foto-defeito {
+  width: 16rem;
+  max-width: 100%;
+  height: 12rem;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+
+.patrimonio-detalhe__info {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-1) var(--space-4);
+  align-content: start;
+}
+
+.patrimonio-detalhe__info dt {
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.patrimonio-detalhe__info dd {
+  margin: 0;
+}
+
+.patrimonio-detalhe__baixa,
+.patrimonio-detalhe__acoes {
+  margin-bottom: var(--space-6);
+}
+
+.patrimonio-detalhe__botoes {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-4);
+}
+
+.patrimonio-detalhe__form-inline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: 24rem;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-muted);
+  margin-top: var(--space-3);
+}
+
+.patrimonio-detalhe__form-inline h3 {
+  margin: 0;
+}
+
+.patrimonio-detalhe__form-inline label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.patrimonio-detalhe__form-inline input,
+.patrimonio-detalhe__form-inline textarea {
+  padding: var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.patrimonio-detalhe__form-inline-acoes {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.patrimonio-detalhe__tabela-wrap {
+  overflow-x: auto;
+}
+
+.patrimonio-detalhe__tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+
+.patrimonio-detalhe__tabela th,
+.patrimonio-detalhe__tabela td {
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: top;
+}

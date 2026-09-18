@@ -1,0 +1,151 @@
+<div class="patrimonio-admin">
+  <div class="patrimonio-admin__cabecalho">
+    <h1>Patrimônio</h1>
+    @if (podeEditar()) {
+      <a class="button button--primary" routerLink="/admin/patrimonio/novo">+ Novo item</a>
+    }
+  </div>
+
+  @if (erro()) {
+    <p class="patrimonio-admin__erro" role="alert">{{ erro() }}</p>
+  }
+
+  @if (carregando()) {
+    <p>Carregando…</p>
+  } @else if (itens().length === 0) {
+    <p>Nenhum item cadastrado ainda.</p>
+  } @else {
+    <div class="patrimonio-admin__tabela-wrap">
+      <table class="patrimonio-admin__tabela">
+        <thead>
+          <tr>
+            <th scope="col"><span class="sr-only">Foto</span></th>
+            <th scope="col">Descrição</th>
+            <th scope="col">Nº patrimônio</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Situação</th>
+            <th scope="col"><span class="sr-only">Ações</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of itens(); track item.id) {
+            <tr>
+              <td>
+                @if (item.fotoUrl) {
+                  <img class="patrimonio-admin__miniatura" [src]="item.fotoUrl" [alt]="item.descricao">
+                }
+              </td>
+              <td>
+                <a [routerLink]="['/admin/patrimonio', item.id]">{{ item.descricao }}</a>
+              </td>
+              <td>{{ item.numeroPatrimonio || '—' }}</td>
+              <td>{{ item.tipoControle === 'Unitario' ? 'Unitário' : 'Quantidade (' + item.quantidadeTotal + ')' }}</td>
+              <td>
+                <span class="patrimonio-admin__badge" [class]="'patrimonio-admin__badge--' + item.situacao.toLowerCase()">
+                  {{ item.situacao === 'Ativo' ? 'Ativo' : item.situacao === 'Inativo' ? 'Inativo' : 'Baixado' }}
+                </span>
+                <br>
+                {{ situacaoTexto(item) }}
+              </td>
+              <td class="patrimonio-admin__acoes">
+                @if (podeEditar() && item.situacao === 'Ativo') {
+                  @if (emprestandoId() === item.id) {
+                    <div class="patrimonio-admin__form-inline">
+                      @if (item.tipoControle === 'Quantidade') {
+                        <label>
+                          Quantidade
+                          <input type="number" min="1" [max]="item.quantidadeDisponivel" [(ngModel)]="quantidadeEmprestimo">
+                        </label>
+                      }
+                      <label>
+                        Quem retirou
+                        <input type="text" [(ngModel)]="quemRetirou">
+                      </label>
+                      <label>
+                        Observação
+                        <textarea [(ngModel)]="observacaoRetirada"></textarea>
+                      </label>
+                      @if (erroEmprestimo()) {
+                        <p class="patrimonio-admin__erro" role="alert">{{ erroEmprestimo() }}</p>
+                      }
+                      <div class="patrimonio-admin__form-inline-acoes">
+                        <button
+                          class="button button--primary"
+                          type="button"
+                          [disabled]="salvandoEmprestimo()"
+                          (click)="confirmarEmprestimo(item)"
+                        >
+                          {{ salvandoEmprestimo() ? 'Salvando…' : 'Confirmar' }}
+                        </button>
+                        <button class="button button--outline" type="button" (click)="cancelarEmprestimo()">
+                          Cancelar
+                        </button>
+                      </div>
+                    </div>
+                  } @else if (item.quantidadeDisponivel > 0) {
+                    <button class="button button--outline" type="button" (click)="abrirEmprestimo(item)">
+                      Emprestar
+                    </button>
+                  }
+                }
+
+                @if (podeEditar() && item.quantidadeEmprestada > 0) {
+                  @if (devolvendoId() === item.id) {
+                    <div class="patrimonio-admin__form-inline">
+                      @if (carregandoEmprestimos()) {
+                        <p>Carregando…</p>
+                      } @else if (multiplosEmprestimosAtivos()) {
+                        <p>
+                          Vários empréstimos ativos para este item —
+                          <a [routerLink]="['/admin/patrimonio', item.id]">abra o item</a> para devolver individualmente.
+                        </p>
+                      } @else if (emprestimoParaDevolver()) {
+                        <label>
+                          Quem devolveu
+                          <input type="text" [(ngModel)]="quemDevolveu">
+                        </label>
+                        <label>
+                          Observação
+                          <textarea [(ngModel)]="observacaoDevolucao"></textarea>
+                        </label>
+                        @if (erroDevolucao()) {
+                          <p class="patrimonio-admin__erro" role="alert">{{ erroDevolucao() }}</p>
+                        }
+                        <div class="patrimonio-admin__form-inline-acoes">
+                          <button
+                            class="button button--primary"
+                            type="button"
+                            [disabled]="salvandoDevolucao()"
+                            (click)="confirmarDevolucao(item)"
+                          >
+                            {{ salvandoDevolucao() ? 'Salvando…' : 'Confirmar' }}
+                          </button>
+                          <button class="button button--outline" type="button" (click)="cancelarDevolucao()">
+                            Cancelar
+                          </button>
+                        </div>
+                      }
+                      @if (!carregandoEmprestimos() && !multiplosEmprestimosAtivos()) {
+                        <button class="button button--outline" type="button" (click)="cancelarDevolucao()">
+                          Fechar
+                        </button>
+                      }
+                    </div>
+                  } @else {
+                    <button class="button button--outline" type="button" (click)="abrirDevolucao(item)">
+                      Devolver
+                    </button>
+                  }
+                }
+
+                @if (podeEditar()) {
+                  <a class="button button--outline" [routerLink]="['/admin/patrimonio', item.id]">Ver</a>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

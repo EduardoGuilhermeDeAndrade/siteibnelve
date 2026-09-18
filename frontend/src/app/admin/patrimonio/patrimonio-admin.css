@@ -1,0 +1,111 @@
+.patrimonio-admin__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.patrimonio-admin__cabecalho h1 {
+  margin-bottom: 0;
+}
+
+.patrimonio-admin__erro {
+  color: var(--color-danger);
+  margin-bottom: var(--space-4);
+}
+
+.patrimonio-admin__tabela-wrap {
+  overflow-x: auto;
+}
+
+.patrimonio-admin__tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+
+.patrimonio-admin__tabela th,
+.patrimonio-admin__tabela td {
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.patrimonio-admin__miniatura {
+  width: 3rem;
+  height: 3rem;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  display: block;
+}
+
+.patrimonio-admin__badge {
+  display: inline-block;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+}
+
+.patrimonio-admin__badge--ativo {
+  background: var(--color-success-bg, #e6f4ea);
+  color: var(--color-success, #1e7e34);
+}
+
+.patrimonio-admin__badge--inativo {
+  background: var(--color-bg-muted);
+  color: var(--color-text-muted);
+}
+
+.patrimonio-admin__badge--baixado {
+  background: #fdecea;
+  color: var(--color-danger);
+}
+
+.patrimonio-admin__acoes {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  min-width: 12rem;
+}
+
+.patrimonio-admin__acoes .button {
+  padding: var(--space-1) var(--space-3);
+}
+
+.patrimonio-admin__form-inline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 16rem;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-muted);
+}
+
+.patrimonio-admin__form-inline label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+}
+
+.patrimonio-admin__form-inline input,
+.patrimonio-admin__form-inline textarea {
+  padding: var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.patrimonio-admin__form-inline-acoes {
+  display: flex;
+  gap: var(--space-2);
+}

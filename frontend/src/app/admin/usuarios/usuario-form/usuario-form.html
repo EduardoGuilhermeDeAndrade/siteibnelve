@@ -33,6 +33,19 @@
         <p class="usuario-form__aviso">
           Combine esta senha diretamente com a pessoa — o Portal não envia e-mail de convite.
         </p>
+
+        <fieldset class="usuario-form__campo">
+          <legend>Papel</legend>
+          @for (papel of papeis; track papel.valor) {
+            <label class="usuario-form__opcao-papel">
+              <input type="radio" formControlName="papel" [value]="papel.valor">
+              {{ papel.rotulo }}
+            </label>
+          }
+          <p class="usuario-form__aviso">
+            "Somente Patrimônio" só vê e mexe na tela de Patrimônio do Portal — nada mais.
+          </p>
+        </fieldset>
       }
 
       @if (erro()) {

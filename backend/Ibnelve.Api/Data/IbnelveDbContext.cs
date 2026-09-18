@@ -16,6 +16,8 @@ public class IbnelveDbContext(DbContextOptions<IbnelveDbContext> options)
     public DbSet<ConfiguracaoContribuicao> ConfiguracoesContribuicao => Set<ConfiguracaoContribuicao>();
     public DbSet<PedidoOracao> PedidosOracao => Set<PedidoOracao>();
     public DbSet<FotoGaleria> FotosGaleria => Set<FotoGaleria>();
+    public DbSet<ItemPatrimonio> ItensPatrimonio => Set<ItemPatrimonio>();
+    public DbSet<EmprestimoPatrimonio> EmprestimosPatrimonio => Set<EmprestimoPatrimonio>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -94,6 +96,33 @@ public class IbnelveDbContext(DbContextOptions<IbnelveDbContext> options)
             entity.Property(f => f.ContentType).HasMaxLength(100).IsRequired();
             entity.Property(f => f.Legenda).HasMaxLength(300);
             entity.HasIndex(f => f.Ordem);
+        });
+
+        builder.Entity<ItemPatrimonio>(entity =>
+        {
+            entity.Property(i => i.Descricao).HasMaxLength(300).IsRequired();
+            entity.Property(i => i.NumeroPatrimonio).HasMaxLength(100);
+            entity.Property(i => i.FotoContentType).HasMaxLength(100);
+            entity.Property(i => i.FotoDefeitoContentType).HasMaxLength(100);
+            entity.Property(i => i.Observacao).HasMaxLength(1000);
+            entity.Property(i => i.ObservacaoBaixa).HasMaxLength(1000);
+            entity.HasOne(i => i.Local)
+                  .WithMany()
+                  .HasForeignKey(i => i.LocalId)
+                  .OnDelete(DeleteBehavior.SetNull);
+        });
+
+        builder.Entity<EmprestimoPatrimonio>(entity =>
+        {
+            entity.Property(e => e.QuemRetirou).HasMaxLength(200).IsRequired();
+            entity.Property(e => e.ObservacaoRetirada).HasMaxLength(1000).IsRequired();
+            entity.Property(e => e.QuemDevolveu).HasMaxLength(200);
+            entity.Property(e => e.ObservacaoDevolucao).HasMaxLength(1000);
+            entity.HasOne(e => e.Item)
+                  .WithMany(i => i.Emprestimos)
+                  .HasForeignKey(e => e.ItemPatrimonioId)
+                  .OnDelete(DeleteBehavior.Cascade);
+            entity.HasIndex(e => e.ItemPatrimonioId);
         });
     }
 }

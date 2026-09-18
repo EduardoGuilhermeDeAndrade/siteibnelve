@@ -18,10 +18,15 @@ namespace Ibnelve.Api.Controllers.Admin;
 [Authorize(Roles = AdminSeeder.PapelAdmin)]
 public class UsuariosController(UserManager<ApplicationUser> userManager) : ControllerBase
 {
+    private static readonly HashSet<string> PapeisValidos =
+        [AdminSeeder.PapelAdmin, AdminSeeder.PapelPatrimonioEditor];
+
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<UsuarioAdminDto>>> Listar()
     {
-        var usuarios = await userManager.GetUsersInRoleAsync(AdminSeeder.PapelAdmin);
+        var administradores = await userManager.GetUsersInRoleAsync(AdminSeeder.PapelAdmin);
+        var patrimonioEditores = await userManager.GetUsersInRoleAsync(AdminSeeder.PapelPatrimonioEditor);
+        var usuarios = administradores.Concat(patrimonioEditores).DistinctBy(u => u.Id);
 
         var resultado = new List<UsuarioAdminDto>();
         foreach (var usuario in usuarios.OrderBy(u => u.NomeCompleto))
@@ -35,6 +40,11 @@ public class UsuariosController(UserManager<ApplicationUser> userManager) : Cont
     [HttpPost]
     public async Task<ActionResult<UsuarioAdminDto>> Criar(UsuarioCriarRequest request)
     {
+        if (!PapeisValidos.Contains(request.Papel))
+        {
+            return BadRequest(new { message = "Papel inválido." });
+        }
+
         var usuario = new ApplicationUser
         {
             UserName = request.Email,
@@ -49,7 +59,7 @@ public class UsuariosController(UserManager<ApplicationUser> userManager) : Cont
             return BadRequest(new { message = string.Join(" ", resultado.Errors.Select(e => e.Description)) });
         }
 
-        await userManager.AddToRoleAsync(usuario, AdminSeeder.PapelAdmin);
+        await userManager.AddToRoleAsync(usuario, request.Papel);
         return CreatedAtAction(nameof(Listar), await ParaDtoAsync(usuario));
     }
 
@@ -133,11 +143,18 @@ public class UsuariosController(UserManager<ApplicationUser> userManager) : Cont
         return NoContent();
     }
 
-    private async Task<UsuarioAdminDto> ParaDtoAsync(ApplicationUser usuario) => new(
-        usuario.Id,
-        usuario.NomeCompleto,
-        usuario.Email ?? string.Empty,
-        !await userManager.IsLockedOutAsync(usuario));
+    private async Task<UsuarioAdminDto> ParaDtoAsync(ApplicationUser usuario)
+    {
+        var papeis = await userManager.GetRolesAsync(usuario);
+        var papel = papeis.Contains(AdminSeeder.PapelAdmin) ? AdminSeeder.PapelAdmin : AdminSeeder.PapelPatrimonioEditor;
+
+        return new UsuarioAdminDto(
+            usuario.Id,
+            usuario.NomeCompleto,
+            usuario.Email ?? string.Empty,
+            !await userManager.IsLockedOutAsync(usuario),
+            papel);
+    }
 
     private Guid ObterUsuarioIdAtual() =>
         Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);

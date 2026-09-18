@@ -6,6 +6,7 @@ import { API_BASE_URL } from '../api-config';
 import { LoginResponse, UsuarioLogado } from './auth.models';
 
 const PAPEL_ADMIN = 'ADMIN';
+export const PAPEL_PATRIMONIO_EDITOR = 'PATRIMONIO_EDITOR';
 
 /**
  * Sessão do Portal Administrativo. O access token vive só em memória (nunca
@@ -22,6 +23,10 @@ export class AuthService {
   readonly usuario = this.usuarioSignal.asReadonly();
   readonly autenticado = computed(() => this.accessTokenSignal() !== null);
   readonly isAdmin = computed(() => this.usuarioSignal()?.roles.includes(PAPEL_ADMIN) ?? false);
+
+  temPapel(papel: string): boolean {
+    return this.usuarioSignal()?.roles.includes(papel) ?? false;
+  }
 
   get accessToken(): string | null {
     return this.accessTokenSignal();

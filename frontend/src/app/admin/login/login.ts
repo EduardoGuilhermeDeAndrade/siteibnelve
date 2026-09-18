@@ -44,7 +44,7 @@ export class Login {
 
     try {
       await this.authService.login(email, password);
-      await this.router.navigateByUrl('/admin');
+      await this.router.navigateByUrl(this.authService.isAdmin() ? '/admin' : '/admin/patrimonio');
     } catch {
       this.erro.set('Email ou senha inválidos.');
       this.emailInput?.nativeElement.focus();
